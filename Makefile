@@ -72,6 +72,7 @@ SRCOUT = main.c \
         mx_return_action.c \
         mx_tab_action.c \
         mx_backspace_action.c \
+	mx_hist_init.c \
         mx_clear_screen.c \
 		mx_cd_l.c \
 		mx_cd_p.c \
