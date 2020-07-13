@@ -9,11 +9,9 @@ char **mx_set_arr() {
 }
 
 char **mx_alias_arr() {
-    char **arr = (char**)malloc(sizeof(char*) * 3);
+    char **arr = (char**)malloc(sizeof(char*) * 1);
 
-    arr[0] = mx_strdup("abcabcabc='echo A'");
-    arr[1] = mx_strdup("fc='echo fuck'");
-    arr[2] = NULL;
+    arr[0] = NULL;
     return arr;
 }
 

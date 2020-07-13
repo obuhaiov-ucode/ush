@@ -112,6 +112,7 @@ void runSystemCommand(t_cmd *cmd, int bg) {
 
 
 void runBuiltinCommand(t_cmd *cmd, int bg, t_app *app) {
+    bg = 1;
     switch (cmd->builtin) {
 
         case b_cd:
@@ -127,25 +128,16 @@ void runBuiltinCommand(t_cmd *cmd, int bg, t_app *app) {
             mx_pwd_builtin(cmd->argv, app);
             break;
         case b_env:
-            printf("TODO: env\n");
+            mx_env_builtin(cmd->argv) ;
             break;
         case b_export:
-            printf("TODO: export\n");
+            mx_builtin_export(app, cmd);
             break;
         case b_unset:
-            printf("TODO: unset\n");
+            mx_builtin_unset(cmd, app);
             break;
         case b_exit:
             printf("TODO: exit\n");
-            break;
-        case b_jobs:
-            printf("TODO: jobs\n");
-            break;
-        case b_fg:
-            printf("TODO: foreground\n");
-            break;
-        case b_bg:
-            printf("TODO: background\n");
             break;
         default:
             error("Unknown builtin command");

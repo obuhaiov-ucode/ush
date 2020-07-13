@@ -1,11 +1,11 @@
 #include "ush.h"
 
 static void switch_flags(char *argv[], t_echo *echo) {
-    if(argv[1] == NULL || argv[1][0] != '-' )
+    if (argv[1] == NULL || argv[1][0] != '-')
         echo->start_of_file = 1;
     else {
         for (int i = 1; argv[i] != NULL && argv[i][0] == '-'; i++) {
-            for (int j = 1; j < strlen(argv[i]); j++) {
+            for (unsigned int j = 1; j < strlen(argv[i]); j++) {
                 if (argv[i][j] == 'n')
                     echo->flag_n = 1;
                 else if (argv[i][j] == 'e')
@@ -45,6 +45,5 @@ int mx_echo_builtin(char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
 //system("leaks ush");
 //доделать вывод со слэшами и ~ (username);

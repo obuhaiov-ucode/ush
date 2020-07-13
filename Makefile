@@ -6,6 +6,8 @@ INC = ./inc/ush.h
 
 HEAD = ush.h
 
+SRC = src
+
 SRCOUT = main.c \
 		builtin_echo.c \
 		builtin_pwd.c \
@@ -72,7 +74,6 @@ SRCOUT = main.c \
         mx_return_action.c \
         mx_tab_action.c \
         mx_backspace_action.c \
-	mx_hist_init.c \
         mx_clear_screen.c \
 		mx_cd_l.c \
 		mx_cd_p.c \
@@ -82,13 +83,37 @@ SRCOUT = main.c \
 		mx_arr_length.c \
         mx_free_assumptions.c \
         mx_set_cursor.c \
+        mx_dash_spaces.c \
+        mx_builtin_alias.c \
+        mx_get_all_alias.c \
+        mx_hist_init.c \
         mx_write_hist.c \
+        builtin_env.c \
+        builtin_export.c \
+        builtin_unset.c \
+        mx_environ_handler_env.c \
+        mx_export_var_to_lists.c \
+        mx_exec_env.c \
+        mx_env_set_var.c \
+        mx_environ_copy.c \
+        mx_flags_handler_env.c \
+        mx_get_var_part.c \
+        mx_liststr_init.c \
+        mx_liststr_push_front.c \
+        mx_liststr_push_back.c \
+        mx_liststr_pop_front.c \
+        mx_liststr_length.c \
+        mx_liststr_delete.c \
+        mx_match_search.c \
+        mx_printerr.c \
+        mx_sort_arr.c \
+
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 
 OBJOUT = $(SRCOUT:%.c=%.o)
 
-CFLAG = -std=c11 -Wall -Wextra -Wpedantic -Werror
+CFLAGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
 all: install clean
 

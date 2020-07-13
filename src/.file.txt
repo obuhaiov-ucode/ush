@@ -1,0 +1,1 @@
+ls	pwd	alias rt=pwd	rt	ls	rt	which ls	export ty=pwd	echo ${ty}	env	unset ty	env	cd ~-	pwd	ls	

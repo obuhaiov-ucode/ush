@@ -28,6 +28,8 @@
 #include <signal.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <errno.h>
+#include <regex.h>
 
 
 #define CTRL_KEY(k) ((k) & 0x1f)
@@ -45,32 +47,16 @@
 #define MX_END_KEY 1007
 #define MX_DEL_KEY 1008
 
-//----------sonia
-#define MAXARGS 128
-#define MAXLINE 1024
-// maxargs used in struct, can't be variable so we have to use define
-//-------------------------for future work
-//typedef struct s_proc {
-//    char **name;
-//    pid_t pid;
-//    int index;
-//} t_proc;
-//
-//typedef struct s_prog_info {
-//    struct termios old_term;
-//    struct termios new_term;
-//    char **env;
-//    char ** history; //t_leist;
-//    char **proc;
-//    int exit_stat;
-//    char *pwd; // ets
-//    char *path;
-//    char *home;
-//    int last_stat;
-//} t_info;
-//----------------------------for future work
+// by Sonia
+#define MX_W_INT(w) (*(int *) & (w))
+#define MX_WEXITSTATUS(x) ((MX_W_INT(x) >> 8) & 0x000000ff)
+#define MX_WST(w)           (_W_INT(w) & 0177)
+#define MX_WIFEXIT(w)       (MX_WST(w) == 0)
+#define MX_EXPORT_REGEX "^[A-Za-z_]+[A-Za-z0-9_]*(=.*)?$"
+#define MX_ENV_I "^-(i*|i+.*|-.+)$"
+#define MX_UNSET_ARG "^([0-9]+|[A-Za-z_]+[0-9A-Za-z_]*)$"
 
-
+//by Sonia
 
 typedef struct s_echo {
     bool flag_n;
@@ -80,12 +66,13 @@ typedef struct s_echo {
 } t_echo;
 
 
-//typedef struct s_which {
-//    bool flag_a;
-//    int cur_arg;
-//
-//};
+typedef struct list_str {
+    char *key;
+    char *value;
+    struct list_str *next;
+} t_liststr;
 
+typedef t_liststr t_environment;
 
 typedef struct s_app { //struct for pwd and cd
     bool flag_p; //pwd
@@ -100,6 +87,7 @@ typedef struct s_app { //struct for pwd and cd
     bool dd_slesh;
     bool in_pwd;
 //    char *swp;
+    t_environment *vars;
 
 } t_app;
 
@@ -187,6 +175,9 @@ typedef struct s_config {
     char **command;
     char **buf;
     char *str;
+    char *cmd;
+    struct t_app *app;
+    struct t_st *st;
 }               t_config;
 
 
@@ -211,12 +202,18 @@ void mx_editor_processing(t_config* term, int c);
 int mx_read_key(void);
 void mx_arrows_motion(int k, t_config* term, t_hist **hist);
 void mx_die(const char *str);
-void mx_return_action(t_config *term, t_hist **hist);
+void mx_return_action(t_config *term);
 void mx_tab_action(t_config *term);
 void mx_backspace_action(t_config *term);
 void mx_clear_screen(t_config* term);
 void mx_free_assumptions(t_config *term);
 void mx_set_cursor(t_config *term);
+
+
+
+////-------------sonia
+
+int mx_which(char **argv);
 int mx_cd_builtin(char *argv[], t_app *app);
 int mx_echo_builtin(char *argv[]);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
@@ -227,16 +224,49 @@ bool mx_is_link(char *file);
 int mx_arr_len(char **arr);
 int mx_is_dot(char *argv, t_app *app);
 int mx_swap_pwd (char *ch, char *argv[], t_app *app);
-//int mx_which(char *argv[]);
-//bool mx_is_buildin(char *str);
-
-int mx_which(char **argv);
 char *mx_join(char *s1, char *s2);
 bool mx_is_buildin(char *str);
+
+
+
+int mx_match_search(char *str, char *regex);
+void mx_clearenv(void);
+int mx_print_error_env(char ch, int err, char *str);
+int mx_flags_handler_env(char **argv, int *i, char **path);
+char **mx_environ_copy(void);
+int  mx_env_builtin(char *argv[]);
+void mx_env_fill(char **src);
+int mx_exec_env(char **arr, char *path);
+void mx_putenv(char *var);
+void mx_env_fill(char **src);
+void mx_print_env(void);
+void mx_clearenv(void);
+char *mx_get_env_name(char *var);
+char *mx_get_env_value(char *var);
+void mx_print_strarr(char **arr, const char *delim);
+int mx_builtin_export(t_app *gv,  t_cmd *cmd);
+char *mx_env_get_value(char *key, t_environment *env);
+void mx_env_del_var(char *key, t_environment **env);
+void mx_env_set_var(char *key, char *value, t_environment **env);
+void mx_env_delete(t_environment **env);
+bool mx_cmp_name(void *data1, void *data2);
+void mx_sort_arr(char **arr, bool (*cmp)(void *, void*));
+void mx_export_var_to_lists(char *arg, t_app *gv);
+int mx_builtin_unset(t_cmd *cmd, t_app *app);
+
+
+
+t_liststr *mx_liststr_init(char *key, char *value);
+void mx_liststr_push_front(t_liststr **head, char *key, char *value);
+void mx_liststr_push_back(t_liststr **head, char *key, char *value);
+void mx_liststr_pop_front(t_liststr **head);
+int mx_liststr_length(t_liststr *head);
+void mx_convert_strlist_strvector(t_liststr *arguments,
+                                  char ***argv, int *argc);
+void mx_delete_strvector(char ***argv, int *argc);
+void mx_liststr_delete_node(t_liststr *node);
+void mx_liststr_delete(t_liststr **head);
 //-------------sonia
-
-
-
 
 
 
@@ -253,7 +283,7 @@ char *mx_check_env(char **arr, char *macros);
 char *mx_get_env(char *c, int k);
 int mx_complex_cmd(t_st *st, char **commands, int i, int passed_cmd);
 char *mx_cmd_return_alias(t_st *st, char *cmd, char *tmp, char *res);
-void mx_check_quotes(t_st *st);
+int mx_check_quotes(char *cmd);
 char *mx_tilda_prefix(int start, char *cmd);
 int mx_final_exe(t_st *st, char **args);
 int mx_count_pipes(t_st *st, char **tokens);
@@ -282,6 +312,8 @@ int mx_xcombcounter(char cmd1, char cmd2, char *first_need, int count);
 void mx_del_conveer(t_st *st);
 int mx_get_start_sub(char *cmd);
 void mx_del_chararr(char *arr);
-int mx_which(char **argv);
+char *mx_dash_spaces(char *cmd, char *res, int i, int k);
+int mx_builtin_alias(t_st *st, char **tokens, char *name, char *all);
+char *mx_get_all_alias(char **tok, int cur);
 
 #endif

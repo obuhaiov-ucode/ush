@@ -94,4 +94,3 @@ void mx_arrows_motion(int k, t_config* term, t_hist **hist) {
             break;
     }
 }
-

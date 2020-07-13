@@ -31,38 +31,26 @@ static void write_hist(int len, char *str) {
     free(tmp);
 }
 
-static int nobuf(char *tok) {
-    if (strstr(tok, "cd ")
-        || strstr(tok, "export ")
-        || strstr(tok, "unset ")
-        || strstr(tok, "exit ")
-        || strstr(tok, "cd"))
-        return 1;
-    return 0;
-}
-
 static void reset(t_config* term, t_hist **hist) {
-    int n = 0;
-
+    write_hist(term->str_len, term->str);
     term->reset = 0;
     write(1, "\n\r\x1b[0J", 6);
     mx_cooked_mode_on();
     tcsetattr(0, TCSAFLUSH, &term->origin);
 
-//    if (term->cmd != NULL)
-//        mx_loop(term->cmd, term, (t_st *)term->st);
-//    else
-        mx_loop(term->str, term, (t_st *)term->st);
-    //write(1, hist[term->entry]->line, hist[term->entry]->len);
-    n = nobuf(hist[term->entry]->line);
+    mx_loop(term->str, term, (t_st *)term->st);
+    //write(1, term->str, term->str_len);
 
-    term->entry++;
-    term->total = term->entry;
+    if (hist[0]->line != NULL) {
+        for (int i = 0; i < term->entry; i++) {
+            free(hist[i]->line);
+            hist[i]->line = NULL;
+            hist[i]->len = 0;
+        }
+    }
     clean_up(term);
     mx_raw_mode_on();
-    if (n == 0)
-        write(1, "\r\n", 2);
-
+    //write(1, "\r\n", 2);
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
     mx_refresh_line(term, 5);
@@ -75,10 +63,12 @@ static void inner_loop(t_config* term, t_hist **hist) {
     write(1, "\x1b[?25l", 6);
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
-    if (!term->quo[0])
+    if (!term->quo[0]) {
         mx_refresh_screen(term, 5);
-    else
+    }
+    else {
         mx_refresh_screen(term, 12);
+    }
     if (term->reset)
         reset(term, hist);
 }

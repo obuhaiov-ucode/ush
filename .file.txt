@@ -1,0 +1,1 @@
+make	./ush	pwd	cd src	alias rt=pwd	rt	

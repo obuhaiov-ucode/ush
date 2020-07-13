@@ -4,7 +4,7 @@ int main(int argc, char **argv, char **env) {
     t_config *term = mx_config_init();
     t_hist **hist = mx_hist_init();
     char line[8192];
-    write (2, "here\n", 5);
+//    write (2, "here\n", 5);
 //    signal(SIGTSTP, SIG_IGN);
 //    signal(SIGINT, SIG_IGN);
 //    signal(SIGSEGV, SIG_IGN);
@@ -28,6 +28,12 @@ int main(int argc, char **argv, char **env) {
     }
     else {
         mx_loop(term->cmd, term, (t_st *)term->st);
+        pid_t pid = fork();
+        if (pid == 0)
+            return 0;
+        wait(&pid);
+        execl("./ush", NULL);
+
         //write(2, "HERE\n", 5);
         dup2(0, STDIN_FILENO);
         dup2(1, STDOUT_FILENO);

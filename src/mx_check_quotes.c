@@ -44,16 +44,15 @@ static int odd_quotes(char *cmd, char q, int opened, int closed) {
     return 0;
 }
 
-void mx_check_quotes(t_st *st) {
-    for (int i = 0; st->cmd[i] != '\0'; i++) {
-        if (strncmp(&st->cmd[i], "'", 1) == 0
-            || st->cmd[i] == '"' ||  st->cmd[i] == '('
-            || st->cmd[i] == ')' ||  st->cmd[i] == '{'
-            || st->cmd[i] == '}' ||  st->cmd[i] == '`') {
-            if (odd_quotes(st->cmd, st->cmd[i], 0, 0) != 0) {
-                write(2, "Odd number of quotes.\n", 22);
-                exit(1);
-            }
+int mx_check_quotes(char *cmd) {
+    for (int i = 0; cmd[i] != '\0'; i++) {
+        if (strncmp(&cmd[i], "'", 1) == 0
+            || cmd[i] == '"' ||  cmd[i] == '('
+            || cmd[i] == ')' ||  cmd[i] == '{'
+            || cmd[i] == '}' ||  cmd[i] == '`') {
+            if (odd_quotes(cmd, cmd[i], 0, 0) != 0)
+                return 1;
         }
     }
+    return 0;
 }
