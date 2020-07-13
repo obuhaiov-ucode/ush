@@ -1,1 +1,1 @@
-make	./ush	pwd	cd src	alias rt=pwd	rt	
+make	./ush	pwd	cd src	alias rt=pwd	rt	cd src	echo ${PWD}	echo ${PWD}	echo $PWD	echo $PWD	echo ${PWD}	cd src	echo $PWD	echo ${PWD}	export rt=pwd	echo $rt	export rt=pwd	echo $rt	export rt=pwd	echo $rt	export rt=pwd	echo $rt	make	echo $rt	export rt=pwd	echo $rt	export rt=pw	echo $rt	echo $rt	export rt=pw	echo $rt	echo $PWD	echo $SHELL	cd sr	env	unset rt	env	echo $rt	export rt=PWD	echo $rt	env	

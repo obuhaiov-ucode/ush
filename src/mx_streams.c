@@ -137,6 +137,9 @@ void runBuiltinCommand(t_cmd *cmd, int bg, t_app *app) {
             mx_builtin_unset(cmd, app);
             break;
         case b_exit:
+            system("leaks -q ush");
+            while(1) {}
+            //exit(0);
             printf("TODO: exit\n");
             break;
         default:
