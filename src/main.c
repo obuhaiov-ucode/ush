@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv, char **env) {
     t_config *term = mx_config_init();
-    t_hist **hist = (t_hist **)malloc(sizeof(t_hist) * 200);
+    t_hist **hist = mx_hist_init();
     char line[8192];
     write (2, "here\n", 5);
 //    signal(SIGTSTP, SIG_IGN);

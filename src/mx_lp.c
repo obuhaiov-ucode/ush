@@ -6,6 +6,8 @@ static void clean_up(t_config* term) {
     free(term->out->line);
     free(term->out->tail);
     free(term->quo);
+    free(term->str);
+    term->str = NULL;
     term->out->tail = NULL;
     term->out->line = NULL;
     term->quo = NULL;
@@ -15,6 +17,18 @@ static void clean_up(t_config* term) {
     term->q_id = 0;
     term->out->len = 0;
     term->pos = 0;
+    term->total = 0;
+    term->entry = 0;
+}
+
+static void write_hist(int len, char *str) {
+    char *tmp = mx_strndup(str, len);
+    FILE * fp;
+
+    fp = fopen (".file.txt", "a");
+    fprintf(fp, "%s\t", tmp);
+    fclose(fp);
+    free(tmp);
 }
 
 static int nobuf(char *tok) {
@@ -38,7 +52,7 @@ static void reset(t_config* term, t_hist **hist) {
 //    if (term->cmd != NULL)
 //        mx_loop(term->cmd, term, (t_st *)term->st);
 //    else
-        mx_loop(hist[term->entry]->line, term, (t_st *)term->st);
+        mx_loop(term->str, term, (t_st *)term->st);
     //write(1, hist[term->entry]->line, hist[term->entry]->len);
     n = nobuf(hist[term->entry]->line);
 
@@ -49,7 +63,8 @@ static void reset(t_config* term, t_hist **hist) {
     if (n == 0)
         write(1, "\r\n", 2);
 
-    term->mo_x = term->mo_x + 2;
+    mx_get_cursor(&term->y, &term->x);
+    term->mo_x = term->x;
     mx_refresh_line(term, 5);
 }
 

@@ -82,7 +82,7 @@ SRCOUT = main.c \
 		mx_arr_length.c \
         mx_free_assumptions.c \
         mx_set_cursor.c \
-		
+        mx_write_hist.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 
