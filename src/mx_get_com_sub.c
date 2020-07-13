@@ -12,7 +12,7 @@ static int sub_child(t_st *st, char *midl, int *sub1, t_config* term) {
     exit(st->stat_sub);
 }
 
-static char *sub_parent(t_st *st, char *cmd, int n) {
+static char *sub_parent(t_st *st, char *cmd, int n, pid_t pid) {
     char line[8192];
 
     memset(line, 0, 8192);
@@ -20,6 +20,7 @@ static char *sub_parent(t_st *st, char *cmd, int n) {
     if ((n = read(st->sub1[0], line, 8192)) < 0)
         perror("ush: ");
     close(st->sub1[0]);
+    wait(&pid);
     n = mx_strlen(line);
     line[n - 1] = '\0';
     cmd = mx_strndup(line, n - 1);
@@ -35,8 +36,10 @@ static char *sub_run(t_st *st, char *midl, char *cmd, t_config* term) {
         perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
-    else if (pid > 0)
-        cmd = sub_parent(st, cmd, 0);
+    else if (pid > 0) {
+        cmd = sub_parent(st, cmd, 0, pid);
+    }
+
     else
         st->stat_sub = sub_child(st, midl, st->sub1, term);
     return cmd;

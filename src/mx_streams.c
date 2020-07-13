@@ -98,8 +98,8 @@ void runSystemCommand(t_cmd *cmd, int bg) {
     else if (childPid == 0) { // I'm the child and could run a command
         // EXECVP !!!!
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
-            printf("%s: Command not found\n", cmd->argv[0]);
-            exit(0);
+            printf("ush: %s: Command not found\n", cmd->argv[0]);
+            exit(1);
         }
     }
     else { // I'm the parent. Shell continues here.
