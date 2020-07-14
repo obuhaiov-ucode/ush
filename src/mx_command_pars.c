@@ -56,14 +56,15 @@ int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
     char **tokens = NULL;
 
     c = cmd_del_spaces(c);
-    tokens = midl_pars(st, c, 0, bufsize);
+    tokens = midl_pars(st, c, k, bufsize);
+//    for (int i = 0; tokens[i] != NULL; i++)
+//        printf("%s\n", tokens[i]);
     if (mx_strcmp(tokens[0], "alias") == 0)
         st->status = mx_builtin_alias(st, tokens, NULL, NULL);
-    else if (no_buf(tokens) == 1)
+    else if (no_buf(tokens) == 1 && mx_strcmp(tokens[0], "echo") != 0
+        && mx_strcmp(tokens[0], "pwd") != 0)
         st->status = mx_streams(st, tokens, (t_app *)term->app);
     else
         st->status = mx_conveer(st, tokens, term);
-    if (k == 1)
-        exit(0);
     return st->status;
 }
