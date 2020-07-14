@@ -22,17 +22,19 @@ static char *cmd_del_spaces(char *cmd) {
     return cmd;
 }
 
+//static char *without_slash(char *c, int i)
+
 static char **midl_pars(t_st *st, char *c, int k, int bufsize) {
     char **tokens = malloc(bufsize * sizeof(char*));
 
     for (int i = 0; c[i] != '\0'; i++) {
-        if (c[i] == '|' || c[i] == '<' || c[i] == '>' || c[i] == '\\') {
+        if (c[i] == '|' || c[i] == '<' || c[i] == '>') {
             tokens[k++] = strndup(&c[i], 1);
             mx_counter(c[i], '|', st->pipe);
         }
         else if (c[i] != ' ') {
-            tokens[k++] = strndup(&c[i], strcspn(&c[i], " <>|\\"));
-            i += strcspn(&c[i], " <>|\\") - 1;
+            tokens[k++] = strndup(&c[i], strcspn(&c[i], " <>|"));
+            i += strcspn(&c[i], " <>|") - 1;
         }
         tokens = mx_split_backup(tokens, bufsize, k);
         if (k >= bufsize)
@@ -57,14 +59,18 @@ int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
 
     c = cmd_del_spaces(c);
     tokens = midl_pars(st, c, k, bufsize);
-//    for (int i = 0; tokens[i] != NULL; i++)
-//        printf("%s\n", tokens[i]);
     if (mx_strcmp(tokens[0], "alias") == 0)
         st->status = mx_builtin_alias(st, tokens, NULL, NULL);
     else if (no_buf(tokens) == 1 && mx_strcmp(tokens[0], "echo") != 0
-        && mx_strcmp(tokens[0], "pwd") != 0)
+        && mx_strcmp(tokens[0], "pwd") != 0 && mx_strcmp(tokens[0], "/bin/pwd") != 0
+        && mx_strcmp(tokens[0], "/bin/echo") != 0) {
+        //printf("HERR\n");
         st->status = mx_streams(st, tokens, (t_app *)term->app);
-    else
+    }
+    else {
+        //printf("HERE\n");
         st->status = mx_conveer(st, tokens, term);
+    }
+
     return st->status;
 }

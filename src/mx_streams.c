@@ -169,7 +169,7 @@ void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
 //    for (int i = 0; tokens[i] != NULL; i++)
-//        printf("%s\n", tokens[i]);
+//        printf("%d = %s\n", i, tokens[i]);
 //    printf("\n");
     t_cmd *cmd = malloc(sizeof(t_cmd));
 

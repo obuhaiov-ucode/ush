@@ -11,6 +11,7 @@ int mx_swap_pwd (char *ch, char *argv[], t_app *app) {
         app->old_pwd_l = app->pwd_l == NULL ? app->pwd_ll : app->pwd_l;
         app->pwd_l = ch;
         app->pwd_p = getwd(NULL);
+        setenv("PWD", app->pwd_l, 1);
 
         return 0;
     }
