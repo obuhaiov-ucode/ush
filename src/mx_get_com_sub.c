@@ -8,11 +8,11 @@ static int sub_child(t_st *st, char *midl, int *sub1, t_config* term) {
             perror("ush: ");
         close(sub1[1]);
     }
-    st->stat_sub = mx_command_pars(st, midl, 0, term);
+    st->stat_sub = mx_command_pars(st, midl, 1, term);
     exit(st->stat_sub);
 }
 
-static char *sub_parent(t_st *st, char *cmd, int n, pid_t pid) {
+static char *sub_parent(t_st *st, char *cmd, int n) {
     char line[8192];
 
     memset(line, 0, 8192);
@@ -20,7 +20,6 @@ static char *sub_parent(t_st *st, char *cmd, int n, pid_t pid) {
     if ((n = read(st->sub1[0], line, 8192)) < 0)
         perror("ush: ");
     close(st->sub1[0]);
-    wait(&pid);
     n = mx_strlen(line);
     line[n - 1] = '\0';
     cmd = mx_strndup(line, n - 1);
@@ -30,27 +29,37 @@ static char *sub_parent(t_st *st, char *cmd, int n, pid_t pid) {
 static char *sub_run(t_st *st, char *midl, char *cmd, t_config* term) {
     pid_t pid;
 
-    st->sub1[0] = 0;
-    st->sub1[1] = 0;
     if (pipe(st->sub1) < 0)
         perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
-    else if (pid > 0) {
-        cmd = sub_parent(st, cmd, 0, pid);
-    }
-
+    else if (pid > 0)
+        cmd = sub_parent(st, cmd, 0);
     else
         st->stat_sub = sub_child(st, midl, st->sub1, term);
     return cmd;
 }
 
+static char *maybe_final(char *cmd, char *final) {
+    char *tmp = NULL;
+
+    tmp = mx_strjoin(cmd, final);
+    free(final);
+    free(cmd);
+    return tmp;
+}
+
 char *mx_get_com_sub(t_config* term, char *begin, char *midl, char *final) {
+    //printf("midl = %s\n", midl);
     char *cmd = sub_run((t_st *)term->st, midl, NULL, term);
     char *tmp = NULL;
 
+//    printf("begin = %s\n", begin);
+//    printf("cmd = %s\n", cmd);
+//    printf("final = %s\n", final);
     if (begin != NULL) {
         tmp = mx_strjoin(begin, cmd);
+
         free(begin);
         free(cmd);
         if (final != NULL) {
@@ -58,12 +67,11 @@ char *mx_get_com_sub(t_config* term, char *begin, char *midl, char *final) {
             free(tmp);
             free(final);
         }
+        else
+            cmd = tmp;
     }
-    else if (final != NULL) {
-        tmp = mx_strjoin(cmd, final);
-        free(final);
-        free(cmd);
-        cmd = tmp;
-    }
+    else if (final != NULL)
+        cmd = maybe_final(cmd, final);
+    //printf("fin = %s\n", cmd);
     return cmd;
 }

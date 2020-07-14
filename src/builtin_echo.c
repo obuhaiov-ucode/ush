@@ -29,8 +29,11 @@ int mx_echo_builtin(char *argv[]) {
     //print echo
     if (argv[echo->start_of_file] != NULL){
             for (int i = echo->start_of_file; argv[i] != NULL; i++) {
-                if (argv[i + 1] != NULL)
-                    printf("%s ", argv[i]);
+                if (argv[i + 1] != NULL) {
+                    write (1, &argv[i], mx_strlen(argv[i]));
+                    write (1, "\n", 1);
+                }
+                    //printf("%s ", argv[i]);
                 else {
                     if (!echo->flag_n)
                         printf("%s\n", argv[i]); // + \n from terminal
