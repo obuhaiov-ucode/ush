@@ -37,10 +37,7 @@ static void reset(t_config* term, t_hist **hist) {
     write(1, "\n\r\x1b[0J", 6);
     mx_cooked_mode_on();
     tcsetattr(0, TCSAFLUSH, &term->origin);
-
     mx_loop(term->str, term, (t_st *)term->st);
-    //write(1, term->str, term->str_len);
-
     if (hist[0]->line != NULL) {
         for (int i = 0; i < term->entry; i++) {
             free(hist[i]->line);
@@ -50,7 +47,6 @@ static void reset(t_config* term, t_hist **hist) {
     }
     clean_up(term);
     mx_raw_mode_on();
-    //write(1, "\r\n", 2);
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
     mx_refresh_line(term, 5);
@@ -63,12 +59,12 @@ static void inner_loop(t_config* term, t_hist **hist) {
     write(1, "\x1b[?25l", 6);
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
-    if (!term->quo[0]) {
+    if (!term->quo[0])
         mx_refresh_screen(term, 5);
-    }
-    else {
-        mx_refresh_screen(term, 12);
-    }
+    else if (term->quo[0] == 39 && term->quo[1] != 96)
+        mx_refresh_screen(term, 0);
+    else
+        mx_refresh_screen(term, 1);
     if (term->reset)
         reset(term, hist);
 }

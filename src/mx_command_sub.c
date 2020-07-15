@@ -74,7 +74,8 @@ char *mx_command_sub(t_st *st, char *cmd, char *begin, t_config* term) {
         cmd = mx_get_com_sub(term, begin, midl, final);
     }
     //printf("CMD = %s\n", cmd);
-    if ((start = mx_get_start_sub(cmd)) != -1)
+    start = mx_get_start_sub(cmd);
+    if (start != -1 && get_end_sub(cmd, start) != -1)
         cmd = mx_command_sub(st, cmd, NULL, term);
     return cmd;
 }
