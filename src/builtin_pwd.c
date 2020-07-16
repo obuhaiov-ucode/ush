@@ -27,14 +27,14 @@ int mx_pwd_builtin(char *argv[], t_app *pwd) {
     if(switch_flags(argv,pwd)) {
 
     if (pwd->flag_p) {
-        write (1, pwd->pwd_p, mx_strlen(pwd->pwd_p));
-        write (1, "\n", 1);
-        //printf("%s\n", pwd->pwd_p);//todo how to validate?
+//        write (1, pwd->pwd_p, mx_strlen(pwd->pwd_p));
+//        write (1, "\n", 1);
+        printf("%s\n", pwd->pwd_p);//todo how to validate?
     }
     else if (!pwd->flag_p) {
-        write (1, pwd->pwd_l, mx_strlen(pwd->pwd_l));
-        write (1, "\n", 1);
-        //printf("%s\n", pwd->pwd_l);//todo how to validate?
+//        write (1, pwd->pwd_l, mx_strlen(pwd->pwd_l));
+//        write (1, "\n", 1);
+        printf("%s\n", pwd->pwd_l);//todo how to validate?
         }
     else
         return EXIT_FAILURE;

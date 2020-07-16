@@ -176,6 +176,7 @@ typedef struct s_config {
     char **buf;
     char *str;
     char *cmd;
+    char *file_hist;
     struct t_app *app;
     struct t_st *st;
 }               t_config;

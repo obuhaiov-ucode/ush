@@ -21,18 +21,18 @@ static void clean_up(t_config* term) {
     term->entry = 0;
 }
 
-static void write_hist(int len, char *str) {
+static void write_hist(int len, char *str, char *file) {
     char *tmp = mx_strndup(str, len);
     FILE * fp;
 
-    fp = fopen (".file.txt", "a");
+    fp = fopen (file, "a");
     fprintf(fp, "%s\t", tmp);
     fclose(fp);
     free(tmp);
 }
 
 static void reset(t_config* term, t_hist **hist) {
-    write_hist(term->str_len, term->str);
+    write_hist(term->str_len, term->str, term->file_hist);
     term->reset = 0;
     write(1, "\n\r\x1b[0J", 6);
     mx_cooked_mode_on();

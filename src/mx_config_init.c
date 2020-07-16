@@ -11,6 +11,7 @@ static void qoutes_init(t_config *term) {
     term->quo[0] = 0;
     term->quo[1] = 0;
     term->q_id = 0;
+    term->file_hist = mx_strjoin(getenv("PWD"), "/.file.txt");
 }
 
 t_config *mx_config_init(void) {

@@ -54,7 +54,7 @@ static void create_history(t_config* term, t_hist **hist) {
         char tmp[1024];
         FILE *fp;
 
-        if ((fp = fopen (".file.txt", "r"))) {
+        if ((fp = fopen (term->file_hist, "r"))) {
             fgets(tmp, 1024, (FILE*)fp);
             fclose(fp);
         }

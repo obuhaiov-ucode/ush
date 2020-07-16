@@ -159,6 +159,9 @@ void eval(t_app *app, t_cmd *cmd) {
     if (cmd->argv[0] == NULL) return;
 
     if (cmd->builtin == b_none) {
+        signal(SIGSEGV, SIG_DFL);
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTSTP, SIG_DFL);
         runSystemCommand(cmd, bg);
     }
     else {
@@ -167,10 +170,12 @@ void eval(t_app *app, t_cmd *cmd) {
     }
 }
 
+
 int mx_streams(t_st *st, char **tokens, t_app *app) {
 //    for (int i = 0; tokens[i] != NULL; i++)
 //        printf("%d = %s\n", i, tokens[i]);
 //    printf("\n");
+
     t_cmd *cmd = malloc(sizeof(t_cmd));
 
     cmd->argc = 0;
@@ -184,3 +189,9 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
 
     return st->status;
 }
+
+
+
+
+
+
