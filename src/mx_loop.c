@@ -3,6 +3,7 @@
 void mx_loop(char *cmd, t_config* term, t_st *st) {
 
     st->cmd = cmd;
+    //printf("%s\n", cmd);
     if (mx_check_quotes(st->cmd) == 1) {
         write(2, "Odd number of quotes.\n", 22);
         exit(1);

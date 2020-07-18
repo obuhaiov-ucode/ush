@@ -209,6 +209,9 @@ void mx_backspace_action(t_config *term);
 void mx_clear_screen(t_config* term);
 void mx_free_assumptions(t_config *term);
 void mx_set_cursor(t_config *term);
+void mx_clear(void);
+void mx_history(void);
+void mx_sighandler(int signum);
 
 
 
@@ -316,5 +319,10 @@ void mx_del_chararr(char *arr);
 char *mx_dash_spaces(char *cmd, char *res, int i, int k);
 int mx_builtin_alias(t_st *st, char **tokens, char *name, char *all);
 char *mx_get_all_alias(char **tok, int cur);
+char **mx_streams_cd(char *c, int k, int bufsize, char *main_c);
+char **mx_streams_pars(char *c, int k, int bufsize, char *main_c);
+char *mx_without_slash(char *c, char *res, int k, int n);
+int mx_any_count(char c);
+void mx_help(void);
 
 #endif

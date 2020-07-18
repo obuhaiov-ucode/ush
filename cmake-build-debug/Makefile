@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/alex/Desktop/SHELL
+CMAKE_SOURCE_DIR = /Users/alex/Desktop/NEW
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/alex/Desktop/SHELL/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/alex/Desktop/NEW/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SHELL/cmake-build-debug/CMakeFiles /Users/alex/Desktop/SHELL/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/NEW/cmake-build-debug/CMakeFiles /Users/alex/Desktop/NEW/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SHELL/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/NEW/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -3781,33 +3781,6 @@ src/mx_ncounter.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_ncounter.c.s
 .PHONY : src/mx_ncounter.c.s
 
-src/mx_only_command.o: src/mx_only_command.c.o
-
-.PHONY : src/mx_only_command.o
-
-# target to build an object file
-src/mx_only_command.c.o:
-	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_only_command.c.o
-.PHONY : src/mx_only_command.c.o
-
-src/mx_only_command.i: src/mx_only_command.c.i
-
-.PHONY : src/mx_only_command.i
-
-# target to preprocess a source file
-src/mx_only_command.c.i:
-	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_only_command.c.i
-.PHONY : src/mx_only_command.c.i
-
-src/mx_only_command.s: src/mx_only_command.c.s
-
-.PHONY : src/mx_only_command.s
-
-# target to generate assembly for a file
-src/mx_only_command.c.s:
-	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_only_command.c.s
-.PHONY : src/mx_only_command.c.s
-
 src/mx_piped_child.o: src/mx_piped_child.c.o
 
 .PHONY : src/mx_piped_child.o
@@ -4952,9 +4925,6 @@ help:
 	@echo "... src/mx_ncounter.o"
 	@echo "... src/mx_ncounter.i"
 	@echo "... src/mx_ncounter.s"
-	@echo "... src/mx_only_command.o"
-	@echo "... src/mx_only_command.i"
-	@echo "... src/mx_only_command.s"
 	@echo "... src/mx_piped_child.o"
 	@echo "... src/mx_piped_child.i"
 	@echo "... src/mx_piped_child.s"

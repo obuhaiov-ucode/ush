@@ -72,7 +72,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/readline.dir/src/mx_malloc_err.c.o"
   "CMakeFiles/readline.dir/src/mx_match_search.c.o"
   "CMakeFiles/readline.dir/src/mx_ncounter.c.o"
-  "CMakeFiles/readline.dir/src/mx_only_command.c.o"
   "CMakeFiles/readline.dir/src/mx_piped_child.c.o"
   "CMakeFiles/readline.dir/src/mx_printerr.c.o"
   "CMakeFiles/readline.dir/src/mx_process_key.c.o"

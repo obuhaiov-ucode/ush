@@ -137,9 +137,7 @@ void runBuiltinCommand(t_cmd *cmd, int bg, t_app *app) {
             mx_builtin_unset(cmd, app);
             break;
         case b_exit:
-            system("leaks -q ush");
-            while(1) {}
-            //exit(0);
+            exit(0);
             printf("TODO: exit\n");
             break;
         default:
@@ -159,9 +157,6 @@ void eval(t_app *app, t_cmd *cmd) {
     if (cmd->argv[0] == NULL) return;
 
     if (cmd->builtin == b_none) {
-        signal(SIGSEGV, SIG_DFL);
-        signal(SIGINT, SIG_DFL);
-        signal(SIGTSTP, SIG_DFL);
         runSystemCommand(cmd, bg);
     }
     else {

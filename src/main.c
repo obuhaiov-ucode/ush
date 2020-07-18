@@ -29,7 +29,3 @@ int main(int argc, char **argv, char **env) {
     //system("leaks -q ush");
     //return 0;
 }
-//    write (2, "here\n", 5);
-//    signal(SIGTSTP, SIG_IGN);
-//    signal(SIGINT, SIG_IGN);
-//    signal(SIGSEGV, SIG_IGN);

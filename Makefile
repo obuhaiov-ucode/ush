@@ -107,6 +107,14 @@ SRCOUT = main.c \
         mx_match_search.c \
         mx_printerr.c \
         mx_sort_arr.c \
+        mx_clear.c \
+        mx_history.c \
+        mx_sighandler.c \
+        mx_streams_cd.c \
+        mx_streams_pars.c \
+        mx_without_slash.c \
+        mx_any_count.c \
+        mx_help.c \
 
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
