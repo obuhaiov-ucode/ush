@@ -15,7 +15,7 @@ static int check_ddslesh(char *argv, t_app *app) {
         if (strcmp("..", arr_dot[j]) != 0) {
             app->dot_dir = 0;
             fprintf(stderr,
-                    "dd_sl ! cd: no such file or directory: %s\n", argv);
+                    "cd: no such file or directory: %s\n", argv);
             return - 1;
         }
         else {
@@ -37,7 +37,7 @@ static int calculate_dot(char *argv, t_app *app) {
         else {
             app->dot_dir = 0;
             fprintf(stderr,
-                    "dottt ! cd: no such file or directory: %s\n", argv);
+                    "cd: no such file or directory: %s\n", argv);
             return -1;
         }
     }

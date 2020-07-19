@@ -36,6 +36,20 @@ static void sig_action(t_config *term) {
     mx_refresh_line(term, 5);
 }
 
+static void exit_action(t_config *term) {
+    if (term->out->line != NULL) {
+        free(term->out->line);
+        term->out->line = NULL;
+        term->out->len = 0;
+    }
+    write(1, "\x1b[0J", 4);
+    write (1, "\n", 1);
+    term->mo_x++;
+    mx_get_cursor(&term->y, &term->x);
+    term->mo_x = term->x;
+    exit(0);
+}
+
 void mx_process_key(t_config *term, t_hist **hist) {
     int c = mx_read_key();
 
@@ -50,7 +64,7 @@ void mx_process_key(t_config *term, t_hist **hist) {
     else if (c == CTRL_KEY('c'))
         sig_action(term);
     else if (c == CTRL_KEY('d'))
-        sig_action(term);
+        exit_action(term);
     else if ((c >= 1000 && c <= 1008) || c == 127)
         arrow_keys(term, hist, c);
     else if (c >= 32 && c <= 126)

@@ -86,7 +86,10 @@ typedef struct s_app { //struct for pwd and cd
     char * home;
     bool dd_slesh;
     bool in_pwd;
-//    char *swp;
+    bool env_path_deleted;
+    bool wch_is_biltin;
+    char *in_bin;
+
     t_environment *vars;
 
 } t_app;
@@ -217,7 +220,7 @@ void mx_sighandler(int signum);
 
 ////-------------sonia
 
-int mx_which(char **argv);
+int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
 int mx_echo_builtin(char *argv[]);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
@@ -228,8 +231,8 @@ bool mx_is_link(char *file);
 int mx_arr_len(char **arr);
 int mx_is_dot(char *argv, t_app *app);
 int mx_swap_pwd (char *ch, char *argv[], t_app *app);
-char *mx_join(char *s1, char *s2);
-bool mx_is_buildin(char *str);
+char *mx_join_to_path(char *dst, char *str);
+bool mx_is_builtin(char *str);
 
 
 

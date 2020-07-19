@@ -14,8 +14,8 @@ SRCOUT = main.c \
 		builtin_cd.c \
 		builtin_init_stract.c \
 		builtin_which.c \
-		mx_is_buildin.c \
-		mx_join.c \
+		mx_is_builtin.c \
+		mx_join_to_path.c \
         mx_init_struct.c \
         mx_replace_cmd.c \
         mx_malloc_err.c \
@@ -104,7 +104,7 @@ SRCOUT = main.c \
         mx_liststr_pop_front.c \
         mx_liststr_length.c \
         mx_liststr_delete.c \
-        mx_match_search.c \
+        mx_reg.c \
         mx_printerr.c \
         mx_sort_arr.c \
         mx_clear.c \

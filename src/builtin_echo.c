@@ -22,6 +22,8 @@ static void switch_flags(char *argv[], t_echo *echo) {
     }
 }
 
+
+
 int mx_echo_builtin(char *argv[]) {
     t_echo *echo  = malloc(sizeof(t_echo));
     switch_flags(argv, echo);
@@ -38,7 +40,7 @@ int mx_echo_builtin(char *argv[]) {
                     if (!echo->flag_n)
                         printf("%s\n", argv[i]); // + \n from terminal
                     else
-                        printf("%s%c\n", argv[i], '%'); //% надо вставлять?
+                        printf("%s\n", argv[i]); //% надо вставлять?
                 }
             }
     }

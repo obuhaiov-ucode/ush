@@ -4,13 +4,15 @@ char *mx_without_slash(char *c, char *res, int k, int n) {
     for (int i = 0; c[i] != '\0'; i++) {
         if (c[i] == '\\' && c[i + 1] == '\\') {
             for (k = i; c[k] == '\\'; k++);
-            if ((k - i) % 2 == 0)
-                n += (k - i) / 2;
-            else if (mx_any_count(c[k]))
-                n += (k - i - 1) / 2;
-            else {
-                write(2, "Odd number of back slashes.\n", 28);
-                exit(1);
+            if ((k - i) % 2 == 0) {
+                n += (k - i) / 4;
+                if ((k - i) % 4 > 0)
+                    n++;
+            }
+            else if (mx_any_count(c[k]) && (k - i) > 2) {
+                n += (k - i - 1) / 4;
+                if ((k - i - 1) % 4 > 0)
+                    n++;
             }
             i = k - 1;
         }
@@ -27,11 +29,19 @@ char *mx_without_slash(char *c, char *res, int k, int n) {
             if (c[i] == '\\' && c[i + 1] == '\\') {
                 for (k = i; c[k] == '\\'; k++);
                 if ((k - i) % 2 == 0) {
-                    for (int j = 0; j < (k - i) / 2; j++)
+                    if (c[i + 2] == '\\') {
+                        for (int j = 0; j < (k - i) / 4; j++)
+                            res[n++] = c[i];
+                        if ((k - i) % 4 > 0)
+                            res[n++] = c[i];
+                    }
+                    else
                         res[n++] = c[i];
                 }
-                else if (mx_any_count(c[k])) {
-                    for (int j = 0; j < (k - i - 1) / 2; j++)
+                else if (mx_any_count(c[k]) && (k - i) > 2) {
+                    for (int j = 0; j < (k - i - 1) / 4; j++)
+                        res[n++] = c[i];
+                    if ((k - i - 1) % 4 > 0)
                         res[n++] = c[i];
                 }
                 i = k - 1;

@@ -4,7 +4,7 @@ int mx_swap_pwd (char *ch, char *argv[], t_app *app) {
     if (ch) {
         if (chdir(ch) < 0) {
             fprintf(stderr,
-                    "argv 1 l cd: no such file or directory: %s\n", argv[app->cur_arg]);
+                    "cd: no such file or directory: %s\n", argv[app->cur_arg]);
             return -1;
         }
         app->old_pwd_p = app->pwd_p;
