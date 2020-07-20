@@ -67,7 +67,6 @@ typedef struct list_str {
 typedef t_liststr t_environment;
 
 typedef struct s_app {
-    int status;
     bool flag_p; //pwd
     char *pwd_p;
     char *old_pwd_p;

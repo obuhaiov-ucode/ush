@@ -48,10 +48,17 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = /Users/alex/Desktop/SONYA_3
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /Users/alex/Desktop/SONYA_3/cmake-build-debug
+=======
+CMAKE_SOURCE_DIR = /Users/alex/Desktop/SONYA
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /Users/alex/Desktop/SONYA/cmake-build-debug
+>>>>>>> a900399771a2b36fb056994b3e733208fb229576
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +87,15 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles 0
+>>>>>>> a900399771a2b36fb056994b3e733208fb229576
 .PHONY : all
 
 # The main clean target

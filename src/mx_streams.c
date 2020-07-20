@@ -1,5 +1,6 @@
 #include "ush.h"
 
+<<<<<<< HEAD
 void mx_builtin_exit(t_cmd *cmd, t_app *app) {
     int stat = 0;
 
@@ -11,6 +12,8 @@ void mx_builtin_exit(t_cmd *cmd, t_app *app) {
         exit(app->status);
 }
 
+=======
+>>>>>>> a900399771a2b36fb056994b3e733208fb229576
 enum builtin_t parse_builtin(t_cmd *cmd) {
     if (!strcmp(cmd->argv[0], "cd")) 
         return b_cd;
@@ -49,6 +52,7 @@ void run_system_command(t_cmd *cmd) {
 
 void run_builtin_command(t_cmd *cmd, t_app *app) {
         if (cmd->builtin == b_cd)
+<<<<<<< HEAD
             app->status = mx_cd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
@@ -64,6 +68,23 @@ void run_builtin_command(t_cmd *cmd, t_app *app) {
             app->status = mx_builtin_unset(cmd, app);
         else if (cmd->builtin == b_exit)
             mx_builtin_exit(cmd, app);
+=======
+            mx_cd_builtin(cmd->argv, app);
+        else if (cmd->builtin == b_which)
+            mx_which(cmd->argv, app);
+         else if (cmd->builtin == b_echo) 
+            mx_echo_builtin(cmd->argv, app);
+        else if (cmd->builtin == b_pwd)
+            mx_pwd_builtin(cmd->argv, app);
+        else if (cmd->builtin == b_env)
+            mx_env_builtin(cmd->argv);
+        else if (cmd->builtin == b_export)
+            mx_builtin_export(app, cmd);
+        else if (cmd->builtin == b_unset)
+            mx_builtin_unset(cmd, app);
+        else if (cmd->builtin == b_exit)
+            exit(0);
+>>>>>>> a900399771a2b36fb056994b3e733208fb229576
         else
             return;
 }
@@ -118,36 +139,25 @@ void eval(t_app *app, t_cmd *cmd) {
         fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
 }
 
-int mx_shlvl_check(char *cmd, int n, char *tmp) {
-    tmp = getenv("SHLVL");
-    if (mx_strcmp(cmd, "./ush") == 0) {
-        n = atoi(tmp) + 1;
-        sprintf(tmp, "%d", n);
-        //printf("%s\n", tmp);
-        unsetenv("SHLVL");
-        setenv("SHLVL", tmp, 1);
+int mx_status_check(char **tokens, t_app *app) {
+    if (mx_strcmp(tokens[0], "echo") == 0 && tokens[1][0] == '$' && tokens[1][1] == '?') {
+        mx_printint(app->status);
+        write(1, "\n", 1);
         return 0;
     }
     return 1;
-}
 
-int mx_status_check(char **tokens, t_app *app, char *tmp) {
-    if (mx_strcmp(tokens[0], "echo") && tokens[1][0] == '$' && tokens[1][1] == '?') {
-        printf("HERE\n");
-        sprintf(tmp, "%d\n", app->status);
-        write(1, tmp, mx_strlen(tmp));
-        return 0;
-    }
-    return 1;
 }
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    
+
     app->status = st->status;
-    if (mx_shlvl_check(tokens[0], 0, NULL) || mx_status_check(tokens, app, NULL)) {
-        // for (int i = 0; tokens[i] != NULL; i++)
-        //     printf("%s\n", tokens[i]);
+    tokens = mx_shlvl_check(tokens, 0, NULL, NULL);
+    
+    if (mx_status_check(tokens, app)) { 
+        printf("%s\n", tokens[0]);
+        printf("%s\n", tokens[1]);
         cmd->argc = 0;
         cmd->argv = tokens;
         for (int i = 0; tokens[i] != NULL; i++)
@@ -156,6 +166,5 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
     }
     else
         st->status = 0;
-
     return st->status;
 }

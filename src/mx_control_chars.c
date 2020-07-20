@@ -46,4 +46,3 @@ char *mx_control_chars(char *argv) {
     continue_constrol_chars(&after_repl);
     return after_repl;
 }
-

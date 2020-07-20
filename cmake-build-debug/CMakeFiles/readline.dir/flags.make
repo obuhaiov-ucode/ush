@@ -6,5 +6,9 @@ C_FLAGS = -g
 
 C_DEFINES = 
 
+<<<<<<< HEAD
 C_INCLUDES = -I/Users/alex/Desktop/SONYA_3/./inc -I/Users/alex/Desktop/SONYA_3/libmx/inc -I/Users/alex/Desktop/SONYA_3/libmx 
+=======
+C_INCLUDES = -I/Users/alex/Desktop/SONYA/./inc -I/Users/alex/Desktop/SONYA/libmx/inc -I/Users/alex/Desktop/SONYA/libmx 
+>>>>>>> a900399771a2b36fb056994b3e733208fb229576
 

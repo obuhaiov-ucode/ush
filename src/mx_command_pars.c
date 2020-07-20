@@ -58,6 +58,25 @@ static int no_buf(char *main_c, char *cmd) {
     return 0;
 }
 
+char *mx_shlvl_check(char *tok, int n, char *res, char *tmp) {
+    tmp = getenv("SHLVL");
+    if (mx_strcmp(tok, "./ush") == 0 && tmp != NULL) {
+        n = atoi(tmp) + 1;
+        tmp = mx_itoa(n);
+        tmp = mx_strjoin("SHLVL=", tmp);
+        res = (char **)malloc(sizeof(char *) * (3));
+        res[0] = mx_strdup("export");
+        res[1] = tmp;
+        res[2] = NULL;
+        //printf("%s\n", res[1]);
+        mx_del_strarr(&tok);
+        return res;
+    }
+    else if (tmp == NULL)
+        setenv("SHLVL", "1", 1);
+    return tok;
+}
+
 int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
     int bufsize = 64;
     char **tokens = NULL;
@@ -65,6 +84,7 @@ int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
 
     c = cmd_del_spaces(c);
     c = mx_without_slash(c, NULL, 0, 0);
+    c = 
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(main_c, c) == 1) {
         if (mx_strcmp(main_c, "cd") == 0)
@@ -75,7 +95,6 @@ int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
         else
             st->status = mx_streams(st, tokens, (t_app *)term->app);
-        
     }
     else {
         tokens = midl_pars(st, c, k, bufsize);
