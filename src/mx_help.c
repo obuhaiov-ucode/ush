@@ -23,20 +23,30 @@ static void answer_is(char *str) {
         write(1, " - to look up the breadcrumbs", 29);
 }
 
-void mx_help(void) {
+static void print_spaces(char *str) {
+    for (int j = 0; j < 15 - (int)strlen(str); j++)
+        write(1, " ", 1);
+}
+
+void mx_help(char *str) {
     char *command[12] = {"pwd -L -P", "cd -s, -P", "echo -n, -E, -e",
-                          "which -a, -s", "env -i, -u", "export",
-                          "unset", "alias", "history", "exit", "clear"};
-    write(1, "Hello, stranger! Choose any function on your favor:", 51);
-    for (int i = 0; i < 10; i++) {
-        write(1, "\n        ", 9);
-        write(1, "\x1b[1m\x1b[34m", strlen("\x1b[1m\x1b[34m"));
-        write(1, command[i], strlen(command[i]));
-        write(1, "\x1b[0m", strlen("\x1b[0m"));
-        if (strlen(command[i]) < 15) {
-            for (int j = 0; j < 15 - (int)strlen(command[i]); j++)
-                write(1, " ", 1);
+                         "which -a, -s", "env -i, -u", "export",
+                         "unset", "alias", "history", "exit", "clear"};
+
+    if (!strcmp("help", str)) {
+        write(1, "Hello, stranger! Choose any function on your favor:", 51);
+        for (int i = 0; i < 10; i++) {
+            write(1, "\r\n        ", 10);
+            write(1, "\x1b[1m\x1b[34m", strlen("\x1b[1m\x1b[34m"));
+            write(1, command[i], strlen(command[i]));
+            write(1, "\x1b[0m", strlen("\x1b[0m"));
+            if (strlen(command[i]) < 15) {
+                print_spaces(command[i]);
+            }
+            answer_is(command[i]);
         }
-        answer_is(command[i]);
+        write(1, "\r\n", 2);
     }
+    else
+        write(1, "\rush: history: too many arguments\r\n", 35);
 }
