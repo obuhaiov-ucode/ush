@@ -8,8 +8,6 @@ char **mx_alias_arr() {
 }
 
 void mx_init_struct(t_st *st, char **env) {
-    char *tmp = NULL;
-    int n = 0;
 
     st->env = env;
     st->alias = mx_alias_arr();

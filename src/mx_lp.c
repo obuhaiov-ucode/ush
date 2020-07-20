@@ -39,11 +39,11 @@ static void reset(t_config* term, t_hist **hist) {
     tcsetattr(0, TCSAFLUSH, &term->origin);
     signal(SIGINT, mx_sighandler);
     signal(SIGQUIT, mx_sighandler);
-    if (!strcmp("clear", term->str))
+    if (!strncmp("clear", term->str, 5))
         mx_clear(term->str);
-    else if (!strcmp("history", term->str))
+    else if (!strncmp("history", term->str, 7))
         mx_history(term->str);
-    else if (!strcmp("help", term->str))
+    else if (!strncmp("help", term->str, 4))
         mx_help(term->str);
     else
         mx_loop(term->str, term, (t_st *)term->st);

@@ -1,6 +1,5 @@
 #include "ush.h"
 
-<<<<<<< HEAD
 void mx_builtin_exit(t_cmd *cmd, t_app *app) {
     int stat = 0;
 
@@ -12,8 +11,6 @@ void mx_builtin_exit(t_cmd *cmd, t_app *app) {
         exit(app->status);
 }
 
-=======
->>>>>>> a900399771a2b36fb056994b3e733208fb229576
 enum builtin_t parse_builtin(t_cmd *cmd) {
     if (!strcmp(cmd->argv[0], "cd")) 
         return b_cd;
@@ -52,7 +49,6 @@ void run_system_command(t_cmd *cmd) {
 
 void run_builtin_command(t_cmd *cmd, t_app *app) {
         if (cmd->builtin == b_cd)
-<<<<<<< HEAD
             app->status = mx_cd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
@@ -68,23 +64,6 @@ void run_builtin_command(t_cmd *cmd, t_app *app) {
             app->status = mx_builtin_unset(cmd, app);
         else if (cmd->builtin == b_exit)
             mx_builtin_exit(cmd, app);
-=======
-            mx_cd_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_which)
-            mx_which(cmd->argv, app);
-         else if (cmd->builtin == b_echo) 
-            mx_echo_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_pwd)
-            mx_pwd_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_env)
-            mx_env_builtin(cmd->argv);
-        else if (cmd->builtin == b_export)
-            mx_builtin_export(app, cmd);
-        else if (cmd->builtin == b_unset)
-            mx_builtin_unset(cmd, app);
-        else if (cmd->builtin == b_exit)
-            exit(0);
->>>>>>> a900399771a2b36fb056994b3e733208fb229576
         else
             return;
 }
@@ -153,7 +132,6 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
 
     app->status = st->status;
-    tokens = mx_shlvl_check(tokens, 0, NULL, NULL);
     
     if (mx_status_check(tokens, app)) { 
         printf("%s\n", tokens[0]);

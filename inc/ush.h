@@ -67,6 +67,7 @@ typedef struct list_str {
 typedef t_liststr t_environment;
 
 typedef struct s_app {
+    int status;
     bool flag_p; //pwd
     char *pwd_p;
     char *old_pwd_p;
@@ -208,8 +209,8 @@ void mx_backspace_action(t_config *term);
 void mx_clear_screen(t_config* term);
 void mx_free_assumptions(t_config *term);
 void mx_set_cursor(t_config *term);
-void mx_clear(void);
-void mx_history(void);
+void mx_clear(char *str);
+void mx_history(char *str);
 void mx_sighandler(int signum);
 
 
@@ -322,6 +323,6 @@ char **mx_streams_cd(char *c, int k, int bufsize, char *main_c);
 char **mx_streams_pars(char *c, int k, int bufsize, char *main_c);
 char *mx_without_slash(char *c, char *res, int k, int n);
 int mx_any_count(char c);
-void mx_help(void);
+void mx_help(char *str);
 
 #endif
