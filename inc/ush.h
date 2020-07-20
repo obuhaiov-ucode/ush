@@ -58,14 +58,6 @@
 
 //by Sonia
 
-typedef struct s_echo {
-    bool flag_n;
-    bool flag_E;
-    bool flag_e;
-    int start_of_file;
-} t_echo;
-
-
 typedef struct list_str {
     char *key;
     char *value;
@@ -74,7 +66,8 @@ typedef struct list_str {
 
 typedef t_liststr t_environment;
 
-typedef struct s_app { //struct for pwd and cd
+typedef struct s_app {
+    int status;
     bool flag_p; //pwd
     char *pwd_p;
     char *old_pwd_p;
@@ -89,7 +82,11 @@ typedef struct s_app { //struct for pwd and cd
     bool env_path_deleted;
     bool wch_is_biltin;
     char *in_bin;
-
+    bool echo_only_sound;
+    bool echo_flag_n;
+    bool echo_flag_E;
+    bool echo_flag_e;
+    int echo_start_of_file;
     t_environment *vars;
 
 } t_app;
@@ -222,7 +219,7 @@ void mx_sighandler(int signum);
 
 int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
-int mx_echo_builtin(char *argv[]);
+int mx_echo_builtin(char *argv[], t_app *app);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
 int mx_cd_p(char *argv[], t_app *pwd, int *flag);
 int mx_cd_l(char *argv[], t_app *app, int *flag);
@@ -260,7 +257,7 @@ bool mx_cmp_name(void *data1, void *data2);
 void mx_sort_arr(char **arr, bool (*cmp)(void *, void*));
 void mx_export_var_to_lists(char *arg, t_app *gv);
 int mx_builtin_unset(t_cmd *cmd, t_app *app);
-
+char *mx_control_chars(char *argv);
 
 
 t_liststr *mx_liststr_init(char *key, char *value);

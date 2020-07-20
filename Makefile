@@ -115,7 +115,7 @@ SRCOUT = main.c \
         mx_without_slash.c \
         mx_any_count.c \
         mx_help.c \
-
+        mx_control_chars.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

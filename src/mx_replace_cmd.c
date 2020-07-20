@@ -71,7 +71,8 @@ static char *replace_pwd(int i, char *cmd, char *tail) {
 char *mx_replace_cmd(t_st *st, char *cmd) {
     for (int i = 1; cmd[i] != '\0'; i++) {
         if (cmd[i] == '$' && cmd[i + 1] != '('
-            && mx_check_slash(cmd, i - 1) == 0) {
+            && mx_check_slash(cmd, i - 1) == 0
+            && cmd[i + 1] != '?') {
             cmd = replace_env(i, cmd, NULL);
         }
     }

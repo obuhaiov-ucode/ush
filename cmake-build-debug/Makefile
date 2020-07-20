@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/alex/Desktop/SONYA
+CMAKE_SOURCE_DIR = /Users/alex/Desktop/SONYA_3
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/alex/Desktop/SONYA/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/alex/Desktop/SONYA_3/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -2053,6 +2053,33 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/mx_any_count.o: src/mx_any_count.c.o
+
+.PHONY : src/mx_any_count.o
+
+# target to build an object file
+src/mx_any_count.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_any_count.c.o
+.PHONY : src/mx_any_count.c.o
+
+src/mx_any_count.i: src/mx_any_count.c.i
+
+.PHONY : src/mx_any_count.i
+
+# target to preprocess a source file
+src/mx_any_count.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_any_count.c.i
+.PHONY : src/mx_any_count.c.i
+
+src/mx_any_count.s: src/mx_any_count.c.s
+
+.PHONY : src/mx_any_count.s
+
+# target to generate assembly for a file
+src/mx_any_count.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_any_count.c.s
+.PHONY : src/mx_any_count.c.s
+
 src/mx_arr_length.o: src/mx_arr_length.c.o
 
 .PHONY : src/mx_arr_length.o
@@ -2296,6 +2323,33 @@ src/mx_check_slash.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_check_slash.c.s
 .PHONY : src/mx_check_slash.c.s
 
+src/mx_clear.o: src/mx_clear.c.o
+
+.PHONY : src/mx_clear.o
+
+# target to build an object file
+src/mx_clear.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_clear.c.o
+.PHONY : src/mx_clear.c.o
+
+src/mx_clear.i: src/mx_clear.c.i
+
+.PHONY : src/mx_clear.i
+
+# target to preprocess a source file
+src/mx_clear.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_clear.c.i
+.PHONY : src/mx_clear.c.i
+
+src/mx_clear.s: src/mx_clear.c.s
+
+.PHONY : src/mx_clear.s
+
+# target to generate assembly for a file
+src/mx_clear.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_clear.c.s
+.PHONY : src/mx_clear.c.s
+
 src/mx_clear_screen.o: src/mx_clear_screen.c.o
 
 .PHONY : src/mx_clear_screen.o
@@ -2484,6 +2538,33 @@ src/mx_config_init.s: src/mx_config_init.c.s
 src/mx_config_init.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_config_init.c.s
 .PHONY : src/mx_config_init.c.s
+
+src/mx_control_chars.o: src/mx_control_chars.c.o
+
+.PHONY : src/mx_control_chars.o
+
+# target to build an object file
+src/mx_control_chars.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_control_chars.c.o
+.PHONY : src/mx_control_chars.c.o
+
+src/mx_control_chars.i: src/mx_control_chars.c.i
+
+.PHONY : src/mx_control_chars.i
+
+# target to preprocess a source file
+src/mx_control_chars.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_control_chars.c.i
+.PHONY : src/mx_control_chars.c.i
+
+src/mx_control_chars.s: src/mx_control_chars.c.s
+
+.PHONY : src/mx_control_chars.s
+
+# target to generate assembly for a file
+src/mx_control_chars.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_control_chars.c.s
+.PHONY : src/mx_control_chars.c.s
 
 src/mx_conveer.o: src/mx_conveer.c.o
 
@@ -3295,6 +3376,33 @@ src/mx_get_var_part.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_get_var_part.c.s
 .PHONY : src/mx_get_var_part.c.s
 
+src/mx_help.o: src/mx_help.c.o
+
+.PHONY : src/mx_help.o
+
+# target to build an object file
+src/mx_help.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_help.c.o
+.PHONY : src/mx_help.c.o
+
+src/mx_help.i: src/mx_help.c.i
+
+.PHONY : src/mx_help.i
+
+# target to preprocess a source file
+src/mx_help.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_help.c.i
+.PHONY : src/mx_help.c.i
+
+src/mx_help.s: src/mx_help.c.s
+
+.PHONY : src/mx_help.s
+
+# target to generate assembly for a file
+src/mx_help.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_help.c.s
+.PHONY : src/mx_help.c.s
+
 src/mx_hist_init.o: src/mx_hist_init.c.o
 
 .PHONY : src/mx_hist_init.o
@@ -3321,6 +3429,33 @@ src/mx_hist_init.s: src/mx_hist_init.c.s
 src/mx_hist_init.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_hist_init.c.s
 .PHONY : src/mx_hist_init.c.s
+
+src/mx_history.o: src/mx_history.c.o
+
+.PHONY : src/mx_history.o
+
+# target to build an object file
+src/mx_history.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_history.c.o
+.PHONY : src/mx_history.c.o
+
+src/mx_history.i: src/mx_history.c.i
+
+.PHONY : src/mx_history.i
+
+# target to preprocess a source file
+src/mx_history.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_history.c.i
+.PHONY : src/mx_history.c.i
+
+src/mx_history.s: src/mx_history.c.s
+
+.PHONY : src/mx_history.s
+
+# target to generate assembly for a file
+src/mx_history.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_history.c.s
+.PHONY : src/mx_history.c.s
 
 src/mx_init_struct.o: src/mx_init_struct.c.o
 
@@ -4051,6 +4186,33 @@ src/mx_set_cursor.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_set_cursor.c.s
 .PHONY : src/mx_set_cursor.c.s
 
+src/mx_sighandler.o: src/mx_sighandler.c.o
+
+.PHONY : src/mx_sighandler.o
+
+# target to build an object file
+src/mx_sighandler.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_sighandler.c.o
+.PHONY : src/mx_sighandler.c.o
+
+src/mx_sighandler.i: src/mx_sighandler.c.i
+
+.PHONY : src/mx_sighandler.i
+
+# target to preprocess a source file
+src/mx_sighandler.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_sighandler.c.i
+.PHONY : src/mx_sighandler.c.i
+
+src/mx_sighandler.s: src/mx_sighandler.c.s
+
+.PHONY : src/mx_sighandler.s
+
+# target to generate assembly for a file
+src/mx_sighandler.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_sighandler.c.s
+.PHONY : src/mx_sighandler.c.s
+
 src/mx_simple_commands.o: src/mx_simple_commands.c.o
 
 .PHONY : src/mx_simple_commands.o
@@ -4213,6 +4375,33 @@ src/mx_streams.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams.c.s
 .PHONY : src/mx_streams.c.s
 
+src/mx_streams_cd.o: src/mx_streams_cd.c.o
+
+.PHONY : src/mx_streams_cd.o
+
+# target to build an object file
+src/mx_streams_cd.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_cd.c.o
+.PHONY : src/mx_streams_cd.c.o
+
+src/mx_streams_cd.i: src/mx_streams_cd.c.i
+
+.PHONY : src/mx_streams_cd.i
+
+# target to preprocess a source file
+src/mx_streams_cd.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_cd.c.i
+.PHONY : src/mx_streams_cd.c.i
+
+src/mx_streams_cd.s: src/mx_streams_cd.c.s
+
+.PHONY : src/mx_streams_cd.s
+
+# target to generate assembly for a file
+src/mx_streams_cd.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_cd.c.s
+.PHONY : src/mx_streams_cd.c.s
+
 src/mx_streams_endout.o: src/mx_streams_endout.c.o
 
 .PHONY : src/mx_streams_endout.o
@@ -4321,6 +4510,33 @@ src/mx_streams_out.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_out.c.s
 .PHONY : src/mx_streams_out.c.s
 
+src/mx_streams_pars.o: src/mx_streams_pars.c.o
+
+.PHONY : src/mx_streams_pars.o
+
+# target to build an object file
+src/mx_streams_pars.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_pars.c.o
+.PHONY : src/mx_streams_pars.c.o
+
+src/mx_streams_pars.i: src/mx_streams_pars.c.i
+
+.PHONY : src/mx_streams_pars.i
+
+# target to preprocess a source file
+src/mx_streams_pars.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_pars.c.i
+.PHONY : src/mx_streams_pars.c.i
+
+src/mx_streams_pars.s: src/mx_streams_pars.c.s
+
+.PHONY : src/mx_streams_pars.s
+
+# target to generate assembly for a file
+src/mx_streams_pars.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_streams_pars.c.s
+.PHONY : src/mx_streams_pars.c.s
+
 src/mx_swap_pwd.o: src/mx_swap_pwd.c.o
 
 .PHONY : src/mx_swap_pwd.o
@@ -4401,6 +4617,33 @@ src/mx_tilda_prefix.s: src/mx_tilda_prefix.c.s
 src/mx_tilda_prefix.c.s:
 	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_tilda_prefix.c.s
 .PHONY : src/mx_tilda_prefix.c.s
+
+src/mx_without_slash.o: src/mx_without_slash.c.o
+
+.PHONY : src/mx_without_slash.o
+
+# target to build an object file
+src/mx_without_slash.c.o:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_without_slash.c.o
+.PHONY : src/mx_without_slash.c.o
+
+src/mx_without_slash.i: src/mx_without_slash.c.i
+
+.PHONY : src/mx_without_slash.i
+
+# target to preprocess a source file
+src/mx_without_slash.c.i:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_without_slash.c.i
+.PHONY : src/mx_without_slash.c.i
+
+src/mx_without_slash.s: src/mx_without_slash.c.s
+
+.PHONY : src/mx_without_slash.s
+
+# target to generate assembly for a file
+src/mx_without_slash.c.s:
+	$(MAKE) -f CMakeFiles/readline.dir/build.make CMakeFiles/readline.dir/src/mx_without_slash.c.s
+.PHONY : src/mx_without_slash.c.s
 
 src/mx_write_hist.o: src/mx_write_hist.c.o
 
@@ -4706,6 +4949,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/mx_any_count.o"
+	@echo "... src/mx_any_count.i"
+	@echo "... src/mx_any_count.s"
 	@echo "... src/mx_arr_length.o"
 	@echo "... src/mx_arr_length.i"
 	@echo "... src/mx_arr_length.s"
@@ -4733,6 +4979,9 @@ help:
 	@echo "... src/mx_check_slash.o"
 	@echo "... src/mx_check_slash.i"
 	@echo "... src/mx_check_slash.s"
+	@echo "... src/mx_clear.o"
+	@echo "... src/mx_clear.i"
+	@echo "... src/mx_clear.s"
 	@echo "... src/mx_clear_screen.o"
 	@echo "... src/mx_clear_screen.i"
 	@echo "... src/mx_clear_screen.s"
@@ -4754,6 +5003,9 @@ help:
 	@echo "... src/mx_config_init.o"
 	@echo "... src/mx_config_init.i"
 	@echo "... src/mx_config_init.s"
+	@echo "... src/mx_control_chars.o"
+	@echo "... src/mx_control_chars.i"
+	@echo "... src/mx_control_chars.s"
 	@echo "... src/mx_conveer.o"
 	@echo "... src/mx_conveer.i"
 	@echo "... src/mx_conveer.s"
@@ -4844,9 +5096,15 @@ help:
 	@echo "... src/mx_get_var_part.o"
 	@echo "... src/mx_get_var_part.i"
 	@echo "... src/mx_get_var_part.s"
+	@echo "... src/mx_help.o"
+	@echo "... src/mx_help.i"
+	@echo "... src/mx_help.s"
 	@echo "... src/mx_hist_init.o"
 	@echo "... src/mx_hist_init.i"
 	@echo "... src/mx_hist_init.s"
+	@echo "... src/mx_history.o"
+	@echo "... src/mx_history.i"
+	@echo "... src/mx_history.s"
 	@echo "... src/mx_init_struct.o"
 	@echo "... src/mx_init_struct.i"
 	@echo "... src/mx_init_struct.s"
@@ -4928,6 +5186,9 @@ help:
 	@echo "... src/mx_set_cursor.o"
 	@echo "... src/mx_set_cursor.i"
 	@echo "... src/mx_set_cursor.s"
+	@echo "... src/mx_sighandler.o"
+	@echo "... src/mx_sighandler.i"
+	@echo "... src/mx_sighandler.s"
 	@echo "... src/mx_simple_commands.o"
 	@echo "... src/mx_simple_commands.i"
 	@echo "... src/mx_simple_commands.s"
@@ -4946,6 +5207,9 @@ help:
 	@echo "... src/mx_streams.o"
 	@echo "... src/mx_streams.i"
 	@echo "... src/mx_streams.s"
+	@echo "... src/mx_streams_cd.o"
+	@echo "... src/mx_streams_cd.i"
+	@echo "... src/mx_streams_cd.s"
 	@echo "... src/mx_streams_endout.o"
 	@echo "... src/mx_streams_endout.i"
 	@echo "... src/mx_streams_endout.s"
@@ -4958,6 +5222,9 @@ help:
 	@echo "... src/mx_streams_out.o"
 	@echo "... src/mx_streams_out.i"
 	@echo "... src/mx_streams_out.s"
+	@echo "... src/mx_streams_pars.o"
+	@echo "... src/mx_streams_pars.i"
+	@echo "... src/mx_streams_pars.s"
 	@echo "... src/mx_swap_pwd.o"
 	@echo "... src/mx_swap_pwd.i"
 	@echo "... src/mx_swap_pwd.s"
@@ -4967,6 +5234,9 @@ help:
 	@echo "... src/mx_tilda_prefix.o"
 	@echo "... src/mx_tilda_prefix.i"
 	@echo "... src/mx_tilda_prefix.s"
+	@echo "... src/mx_without_slash.o"
+	@echo "... src/mx_without_slash.i"
+	@echo "... src/mx_without_slash.s"
 	@echo "... src/mx_write_hist.o"
 	@echo "... src/mx_write_hist.i"
 	@echo "... src/mx_write_hist.s"

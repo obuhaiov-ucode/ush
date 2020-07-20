@@ -1,4 +1,4 @@
-/Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/readline.dir
-/Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/alex/Desktop/SONYA/cmake-build-debug/CMakeFiles/mx.dir
+/Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/readline.dir
+/Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/alex/Desktop/SONYA_3/cmake-build-debug/CMakeFiles/mx.dir
