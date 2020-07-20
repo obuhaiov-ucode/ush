@@ -58,20 +58,6 @@ static int no_buf(char *main_c, char *cmd) {
     return 0;
 }
 
-char *mx_shlvl_check(char *tok, int n, char *tmp) {
-    tmp = getenv("SHLVL");
-    if (mx_strcmp(tok, "./ush") == 0 && tmp != NULL) {
-        n = atoi(tmp) + 1;
-        tmp = mx_itoa(n);
-        tmp = mx_strjoin("export SHLVL=", tmp);
-        free(tok);
-        return tmp;
-    }
-    else if (tmp == NULL)
-        setenv("SHLVL", "1", 1);
-    return tok;
-}
-
 int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
     int bufsize = 64;
     char **tokens = NULL;
@@ -79,7 +65,6 @@ int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
 
     c = cmd_del_spaces(c);
     c = mx_without_slash(c, NULL, 0, 0);
-    c = mx_shlvl_check(c, 0, NULL);
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(main_c, c) == 1) {
         if (mx_strcmp(main_c, "cd") == 0)
