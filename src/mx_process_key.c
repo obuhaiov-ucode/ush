@@ -42,11 +42,11 @@ static void exit_action(t_config *term) {
         term->out->line = NULL;
         term->out->len = 0;
     }
-    write(1, "\x1b[0J", 4);
-    write (1, "\n", 1);
-    term->mo_x++;
-    mx_get_cursor(&term->y, &term->x);
-    term->mo_x = term->x;
+    // write(1, "\x1b[0J", 4);
+    // write (1, "\n", 1);
+    // term->mo_x++;
+    // mx_get_cursor(&term->y, &term->x);
+    // term->mo_x = term->x;
     exit(0);
 }
 

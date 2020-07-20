@@ -146,8 +146,8 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
     
     app->status = st->status;
     if (mx_shlvl_check(tokens[0], 0, NULL) || mx_status_check(tokens, app, NULL)) {
-        for (int i = 0; tokens[i] != NULL; i++)
-            printf("%s\n", tokens[i]);
+        // for (int i = 0; tokens[i] != NULL; i++)
+        //     printf("%s\n", tokens[i]);
         cmd->argc = 0;
         cmd->argv = tokens;
         for (int i = 0; tokens[i] != NULL; i++)
