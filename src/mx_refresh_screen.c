@@ -32,7 +32,7 @@ void mx_refresh_screen(t_config* term, int offset) {
     const char *str = make_name();
     int len = 0;
 
-    if (offset != 12 && str != NULL) {
+    if (offset == 5 && str != NULL) {
         len = strlen(str) + 3;
         write(1, "\x1b[", 2);
         write(1, mx_itoa(term->mo_x), strlen(mx_itoa(term->mo_x)));

@@ -64,7 +64,6 @@ char *mx_shlvl_check(char *tok, int n, char *tmp) {
         n = atoi(tmp) + 1;
         tmp = mx_itoa(n);
         tmp = mx_strjoin("export SHLVL=", tmp);
-        //printf("%s\n", res[1]);
         free(tok);
         return tmp;
     }

@@ -32,19 +32,21 @@ enum builtin_t parse_builtin(t_cmd *cmd) {
         return b_none;
 }
 
-void run_system_command(t_cmd *cmd) {
+void run_system_command(t_cmd *cmd, t_app *app) {
     pid_t childPid;
 
     if ((childPid = fork()) < 0)
         fprintf(stderr, "fork() error\n");
     else if (childPid == 0) {
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
-            printf("ush: %s: command not found:\n", cmd->argv[0]);
+            printf("HERE\n");
+            fprintf(stderr, "ush: %s: command not found:\n", cmd->argv[0]);
+            app->status = 1;
             exit(1);
         }
     }
-    else 
-        wait(&childPid);
+    else if (!WIFEXITED(app->status) && !WIFSIGNALED(app->status))
+        waitpid(childPid, &app->status, WUNTRACED);
 }
 
 void run_builtin_command(t_cmd *cmd, t_app *app) {
@@ -108,7 +110,7 @@ void eval(t_app *app, t_cmd *cmd) {
     if (cmd->argv[0] == NULL) return;
     if (mx_without_path(app, cmd)) {
         if (cmd->builtin == b_none)
-            run_system_command(cmd);
+            run_system_command(cmd, app);
         else 
             run_builtin_command(cmd, app);
     }
@@ -134,8 +136,8 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
     app->status = st->status;
     
     if (mx_status_check(tokens, app)) { 
-        printf("%s\n", tokens[0]);
-        printf("%s\n", tokens[1]);
+        // printf("%s\n", tokens[0]);
+        // printf("%s\n", tokens[1]);
         cmd->argc = 0;
         cmd->argv = tokens;
         for (int i = 0; tokens[i] != NULL; i++)

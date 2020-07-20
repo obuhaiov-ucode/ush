@@ -71,9 +71,9 @@ static void inner_loop(t_config* term, t_hist **hist) {
     if (!term->quo[0])
         mx_refresh_screen(term, 5);
     else if (term->quo[0] == 39 && term->quo[1] != 96)
-        mx_refresh_screen(term, 0);
+        mx_refresh_screen(term, 7);
     else
-        mx_refresh_screen(term, 1);
+        mx_refresh_screen(term, 8);
     if (term->reset)
         reset(term, hist);
 }

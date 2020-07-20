@@ -22,7 +22,7 @@ static void arrow_keys(t_config *term, t_hist **hist, int c) {
     }
 }
 
-static void sig_action(t_config *term) {
+static void sig_action(t_config *term, t_app *app) {
     if (term->out->line != NULL) {
         free(term->out->line);
         term->out->line = NULL;
@@ -34,6 +34,7 @@ static void sig_action(t_config *term) {
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
     mx_refresh_line(term, 5);
+    app->status = 130;
 }
 
 static void exit_action(t_config *term) {
@@ -43,6 +44,10 @@ static void exit_action(t_config *term) {
         term->out->line = NULL;
         term->out->len = 0;
     }
+    if (term->mo_x >= term->row)
+        term->mo_x++;
+    term->mo_x++;
+    write(1, "\n\r", 2);
     write(1, "\r\x1b[0J", 5);
     mx_cooked_mode_on();
     tcsetattr(0, TCSAFLUSH, &term->origin);
@@ -61,7 +66,7 @@ void mx_process_key(t_config *term, t_hist **hist) {
     else if (c == CTRL_KEY('g'))
         write(1, "\a", 1);
     else if (c == CTRL_KEY('c'))
-        sig_action(term);
+        sig_action(term, (t_app *)term->app);
     else if (c == CTRL_KEY('d'))
         exit_action(term);
     else if ((c >= 1000 && c <= 1008) || c == 127)
