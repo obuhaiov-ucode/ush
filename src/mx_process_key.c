@@ -37,16 +37,15 @@ static void sig_action(t_config *term) {
 }
 
 static void exit_action(t_config *term) {
+    fflush(stdout);
     if (term->out->line != NULL) {
         free(term->out->line);
         term->out->line = NULL;
         term->out->len = 0;
     }
-    // write(1, "\x1b[0J", 4);
-    // write (1, "\n", 1);
-    // term->mo_x++;
-    // mx_get_cursor(&term->y, &term->x);
-    // term->mo_x = term->x;
+    write(1, "\r\x1b[0J", 5);
+    mx_cooked_mode_on();
+    tcsetattr(0, TCSAFLUSH, &term->origin);
     exit(0);
 }
 
