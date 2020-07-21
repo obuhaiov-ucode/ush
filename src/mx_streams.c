@@ -39,9 +39,7 @@ void run_system_command(t_cmd *cmd, t_app *app) {
         fprintf(stderr, "fork() error\n");
     else if (childPid == 0) {
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
-            printf("HERE\n");
-            fprintf(stderr, "ush: %s: command not found:\n", cmd->argv[0]);
-            app->status = 1;
+            fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
             exit(1);
         }
     }
@@ -54,8 +52,11 @@ void run_builtin_command(t_cmd *cmd, t_app *app) {
             app->status = mx_cd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
-         else if (cmd->builtin == b_echo) 
-            app->status = mx_echo_builtin(cmd->argv, app);
+        else if (cmd->builtin == b_echo) {
+            write(1, cmd->argv[1], mx_strlen(cmd->argv[1]));
+            write(1, "\n", 1);
+        }
+            
         else if (cmd->builtin == b_pwd)
             app->status = mx_pwd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_env)
@@ -135,9 +136,7 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
 
     app->status = st->status;
     
-    if (mx_status_check(tokens, app)) { 
-        // printf("%s\n", tokens[0]);
-        // printf("%s\n", tokens[1]);
+    if (mx_status_check(tokens, app)) {
         cmd->argc = 0;
         cmd->argv = tokens;
         for (int i = 0; tokens[i] != NULL; i++)

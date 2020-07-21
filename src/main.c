@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env) {
     //signal(SIGQUIT, mx_sighandler);
     t_config *term = mx_config_init();
     t_hist **hist = mx_hist_init();
-    printf("HERE\n");
+    //printf("HERE\n");
     term->st = malloc(sizeof(t_st));
     mx_init_struct((t_st *)term->st, env);
     term->app = malloc(sizeof(t_app));

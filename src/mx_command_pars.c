@@ -51,6 +51,9 @@ static int no_buf(char *main_c, char *cmd) {
         || mx_strcmp(main_c, "vim") == 0
         || mx_strcmp(main_c, "emacs") == 0
         || mx_strcmp(main_c, "alias") == 0
+        || mx_strcmp(main_c, "rm") == 0
+        || mx_strcmp(main_c, "touch") == 0
+        || mx_strcmp(main_c, "mkdir") == 0
         || (mx_strlen(cmd) > 6
         && mx_strcmp(main_c, "echo") == 0
         && cmd[5] == '$' && cmd[6] == '?'))
@@ -58,23 +61,42 @@ static int no_buf(char *main_c, char *cmd) {
     return 0;
 }
 
+int mx_cmd_concate(char *main_c) {
+    if (mx_strcmp(main_c, "cd") == 0
+        || mx_strcmp(main_c, "rm") == 0
+        || mx_strcmp(main_c, "touch") == 0
+        || mx_strcmp(main_c, "mkdir") == 0)
+        return 1;
+    return 0;
+}
+
 int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
     int bufsize = 64;
     char **tokens = NULL;
+    char **res = NULL;
     char *main_c = NULL;
 
     c = cmd_del_spaces(c);
     c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
-    if (no_buf(main_c, c) == 1) {
-        if (mx_strcmp(main_c, "cd") == 0)
-            tokens = mx_streams_cd(c, 1, bufsize, main_c);
-        else
-            tokens = mx_streams_pars(c, 1, bufsize, main_c);
+    if (mx_strcmp(main_c, "echo") == 0) {
+        res = mx_streams_pars(c, 1, bufsize, main_c);
+        tokens = malloc(sizeof(char *) * 3);
+        tokens[0] = mx_strdup(main_c);
+        tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
+        tokens[2] = NULL;
+        mx_del_strarr(&res);
+        st->status = mx_conveer(st, tokens, term);
+    }
+    else if (no_buf(main_c, c) == 1) {
         if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
+        else if (mx_cmd_concate(main_c)) {
+            tokens = mx_streams_cd(c, 1, bufsize, main_c);
+        }
         else
-            st->status = mx_streams(st, tokens, (t_app *)term->app);
+            tokens = mx_streams_pars(c, 1, bufsize, main_c);
+        st->status = mx_streams(st, tokens, (t_app *)term->app);
     }
     else {
         tokens = midl_pars(st, c, k, bufsize);

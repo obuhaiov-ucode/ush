@@ -1,11 +1,17 @@
 #include "ush.h"
 
-static int only_quotes(char *cmd, char q, int n) {
+static int only_quotes(char *cmd, char q, int n, int k) {
     for (int i = 0; cmd[i] != '\0'; i++) {
         if (cmd[i] == q && i == 0)
             n++;
         else if (cmd[i] == q && cmd[i - 1] != '\\')
             n++;
+        else if (cmd[i] == q && cmd[i - 1] == '\\') {
+            k = i;
+            for (; k > 0 && cmd[k - 1] == '\\'; k--);
+            if ((i - k) % 2 == 0)
+                n++;
+        }
     }
     if (n % 2 != 0)
         return -1;
@@ -14,15 +20,15 @@ static int only_quotes(char *cmd, char q, int n) {
 
 static int end_quotes(char *cmd, char q, int n) {
     if (q == '`')
-        n = only_quotes(cmd, q, n);
+        n = only_quotes(cmd, q, n, 0);
     if (n == -1)
         return 1;
     if (q == '"')
-        n = only_quotes(cmd, q, n);
+        n = only_quotes(cmd, q, n, 0);
     if (n == -1)
         return 1;
     if (q == 39)
-        n = only_quotes(cmd, q, n);
+        n = only_quotes(cmd, q, n, 0);
     if (n == -1)
         return 1;
     return 0;

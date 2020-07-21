@@ -1,12 +1,5 @@
 #include "ush.h"
 
-static bool check_sound(char *out) {
-    for (int i = 0; out[i] != '\0'; i++)
-        if (out[i] != '\a')
-            return false;
-    return true;
-}
-
 static void switch_flags(char *argv[], t_app *app) {
     if (argv[1] == NULL || argv[1][0] != '-')
         app->echo_start_of_file = 1;
@@ -29,57 +22,58 @@ static void switch_flags(char *argv[], t_app *app) {
     }
 }
 
-static void print_new_line(t_app *app) {
+static char *print_new_line(char *res, t_app *app) {
     if(!app->echo_flag_n) {
         if(app->echo_only_sound)
-            return;
+            return res;
         // else if (isatty(1))
         //     printf("\x1b[0;47;30m%%\x1b[0m\n");
     }
     else 
-        mx_printstr("\n");
-
+        res = mx_strjoin(res, "\n");
+    return res;
 }
 
-// static void cheсk_quotes(char *argv[]) {
-//     char *buf = NULL;
-//     int arr_len = mx_arr_len(argv);
-//     int len_last_str = mx_strlen(argv[arr_len]);
+static void cheсk_quotes(char *argv[]) {
+    char *buf = NULL;
+    int arr_len = mx_arr_len(argv) - 1;
+    int len_first_str = mx_strlen(argv[1]) - 1;
+    int len_last_str = mx_strlen(argv[arr_len]);
 
-//     if(argv[1][0] == '"' && argv[arr_len][len_last_str - 1] == '"') {
-//         buf = mx_strndup(&argv[1][1], argv[arr_len][len_last_str - 2] == '"');
-//         mx_strdel(&argv[1]);
-//         argv[1] = mx_strdup(buf);
-//         mx_strdel(&buf);
-//         buf = mx_strndup(&argv[arr_len], argv[arr_len][len_last_str - 2]);
-//         mx_strdel(&argv[arr_len]);
-//         mx_strdel(&buf);
-//     }
-//     else
-//         return;    
-// }       
+    if(argv[1][0] == '"' && argv[arr_len][len_last_str] == '"') {
+        buf = mx_strndup(&argv[1][1], len_first_str);
+        mx_strdel(&argv[1]);
+        argv[1] = mx_strdup(buf);
+        mx_strdel(&buf);
+        buf = mx_strndup(argv[arr_len], len_last_str - 1);
+        mx_strdel(&argv[arr_len]);
+        mx_strdel(&buf);
+    }
+    else
+        return;    
+}       
 
-int mx_echo_builtin(char *argv[], t_app *app) {
+char *mx_echo_builtin(char *argv[], t_app *app) {
+    char *res = NULL;
     char *checked_argv = NULL;
-    //  printf("argv[i] = %s\n", argv[app->echo_start_of_file]);
-    // cheсk_quotes(argv);
+
+    cheсk_quotes(argv);
     switch_flags(argv, app);
-    if (argv[app->echo_start_of_file] != NULL){
+    if (argv[app->echo_start_of_file] != NULL) {
             for (int i = app->echo_start_of_file; argv[i] != NULL; i++) {
                 if(app->echo_flag_E)
-                    mx_printstr(argv[i]);
+                    res = mx_strjoin(res, argv[i]);
                 else {
                     checked_argv = mx_control_chars(argv[i]);
-                    mx_printstr(checked_argv);
+                    res = mx_strjoin(res, argv[i]);
                     mx_strdel(&checked_argv);
-                    app->echo_only_sound = check_sound(checked_argv);
                 }
                 if(argv[i+1])
-                    mx_printchar(' ');
+                    res = mx_strjoin(res, " ");
             }
     }
-    print_new_line(app);
-    return EXIT_SUCCESS;
+    res = print_new_line(res, app);
+    return res;
 }
 
 

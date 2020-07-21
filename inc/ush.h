@@ -219,7 +219,8 @@ void mx_sighandler(int signum);
 
 int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
-int mx_echo_builtin(char *argv[], t_app *app);
+char *mx_echo_builtin(char *argv[], t_app *app);
+// int mx_echo_builtin(char *argv[], t_app *app);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
 int mx_cd_p(char *argv[], t_app *pwd, int *flag);
 int mx_cd_l(char *argv[], t_app *app, int *flag);
@@ -324,5 +325,7 @@ char **mx_streams_pars(char *c, int k, int bufsize, char *main_c);
 char *mx_without_slash(char *c, char *res, int k, int n);
 int mx_any_count(char c);
 void mx_help(char *str);
+int mx_check_cmd(char *c);
+char *mx_shlvl_check(char *tok, int n, char *tmp);
 
 #endif
