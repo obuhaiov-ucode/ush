@@ -73,22 +73,22 @@ int mx_cmd_concate(char *main_c) {
 int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
     int bufsize = 64;
     char **tokens = NULL;
-    char **res = NULL;
+    //char **res = NULL;
     char *main_c = NULL;
 
     c = cmd_del_spaces(c);
     c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
-    if (mx_strcmp(main_c, "echo") == 0) {
-        res = mx_streams_pars(c, 1, bufsize, main_c);
-        tokens = malloc(sizeof(char *) * 3);
-        tokens[0] = mx_strdup(main_c);
-        tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
-        tokens[2] = NULL;
-        mx_del_strarr(&res);
-        st->status = mx_conveer(st, tokens, term);
-    }
-    else if (no_buf(main_c, c) == 1) {
+    // if (mx_strcmp(main_c, "echo") == 0) {
+    //     res = mx_streams_pars(c, 1, bufsize, main_c);
+    //     tokens = malloc(sizeof(char *) * 3);
+    //     tokens[0] = mx_strdup(main_c);
+    //     tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
+    //     tokens[2] = NULL;
+    //     mx_del_strarr(&res);
+    //     st->status = mx_conveer(st, tokens, term);
+    // }
+    if (no_buf(main_c, c) == 1) {
         if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
         else if (mx_cmd_concate(main_c)) {

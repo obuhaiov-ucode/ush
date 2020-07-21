@@ -48,9 +48,13 @@ static int piped_run(t_st *st, char **tokens, int i, t_config* term) {
 }
 
 int mx_conveer(t_st *st, char **tokens, t_config* term) {
-    char ***tok = mx_streams_get(st, tokens);
+    char ***tok = mx_streams_get(st, tokens, (t_app *)term->app);
     int i = 0;
 
+    // for (int j = 0; tok[j] != NULL; j++) {
+    //     for (int i = 0; tok[j][i] != NULL; i++)
+    //         printf("%s\n", tok[j][i]);
+    // }
     for (i = 0; tok[i] != NULL; i++) {
         st->status = piped_run(st, tok[i], i, term);
         if (mx_strcmp(tok[i][0], "echo") != 0) {

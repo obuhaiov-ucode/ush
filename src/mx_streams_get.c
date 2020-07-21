@@ -26,10 +26,12 @@ static void streams_get_midl(t_st *st, int n) {
     st->fbuf[n] = NULL;
 }
 
-char ***mx_streams_get(t_st *st, char **tokens) {
+char ***mx_streams_get(t_st *st, char **tokens, t_app *app) {
     int n = mx_count_pipes(st, tokens) + 1;
     char ***tok = (char ***)malloc(sizeof(char **) * (n + 1));
     char **tmp = NULL;
+    //char **res = NULL;
+    (void)app;
 
     tok[n] = NULL;
     streams_get_midl(st, n);
@@ -38,6 +40,14 @@ char ***mx_streams_get(t_st *st, char **tokens) {
         st->fbuf[i] = NULL;
         tmp = mx_get_cmd_tok(st, tokens, i, st->pipes[i]);
         tok[i] = for_each_pipe(st, tmp, i);
+        // if (mx_strcmp(tok[i][0], "echo") == 0) {
+        //     res = mx_streams_pars(c, 1, bufsize, main_c);
+        //     tokens = malloc(sizeof(char *) * 3);
+        //     tokens[0] = mx_strdup(tok[i][0]);
+        //     tokens[1] = mx_echo_builtin(tok[i], app);
+        //     tokens[2] = NULL;
+        //     mx_del_strarr(&res);
+        // }
     }
     mx_del_strarr(&tokens);
     return tok;

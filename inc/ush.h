@@ -304,7 +304,7 @@ int mx_count_term(char **tokens, char c);
 char **mx_streams_in(t_st *st, char **tokens, int pipe, int i);
 char **mx_streams_out(t_st *st, char **tokens, int pipe, int i);
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
-char ***mx_streams_get(t_st *st, char **tokens);
+char ***mx_streams_get(t_st *st, char **tokens, t_app *app);
 int mx_counter(char cmd, char need, int count);
 int mx_ncounter(char cmd, char *need, int count, int n);
 int mx_combcounter(char cmd1, char cmd2, char *need, int count);
