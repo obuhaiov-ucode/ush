@@ -185,7 +185,7 @@ typedef struct s_config {
 
 
 
-int main(int argc, char **argv, char **envp);
+int main(int argc, char **argv, char **env);
 void mx_get_commands(t_config *term);
 t_config *mx_config_init(void);
 t_hist **mx_hist_init(void);

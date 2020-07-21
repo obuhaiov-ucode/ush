@@ -56,7 +56,6 @@ void run_builtin_command(t_cmd *cmd, t_app *app) {
             write(1, cmd->argv[1], mx_strlen(cmd->argv[1]));
             write(1, "\n", 1);
         }
-            
         else if (cmd->builtin == b_pwd)
             app->status = mx_pwd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_env)
