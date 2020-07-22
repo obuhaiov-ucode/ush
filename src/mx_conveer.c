@@ -60,7 +60,7 @@ int mx_conveer(t_st *st, char **tokens, t_config* term) {
     }
     if (!st->out[st->pipe] && !st->end[st->pipe])
         piped_print(st);
-//    mx_del_conveer(st);
+   mx_del_conveer(st);
 
     return st->status;
 }

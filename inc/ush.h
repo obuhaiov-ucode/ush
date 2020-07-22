@@ -325,7 +325,7 @@ char **mx_streams_pars(char *c, int k, int bufsize, char *main_c);
 char *mx_without_slash(char *c, char *res, int k, int n);
 int mx_any_count(char c);
 void mx_help(char *str);
-int mx_check_cmd(char *c);
+int mx_check_cmd(char *c, int i);
 char *mx_shlvl_check(char *tok, int n, char *tmp);
 
 #endif

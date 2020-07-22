@@ -2,7 +2,7 @@
 
 void mx_loop(char *cmd, t_config* term, t_st *st) {
     //printf("%s\n", cmd);
-    if (cmd != NULL && mx_check_cmd(cmd)) {
+    if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
         if (mx_check_quotes(st->cmd) == 1) {

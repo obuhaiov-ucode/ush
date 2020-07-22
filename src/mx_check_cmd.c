@@ -1,21 +1,12 @@
 #include "ush.h"
 
-static int check_any_cmd(char *c, int n, int i, int k) {
-    for (; c[n] != '\0'; n++) {
-        for (; c[n] != '\0' && c[i] != '\\'; n++);
-        if ()
-        for (i = n; c[i] == '\\' && c[i] != '\0'; i++);
-        printf("n = %d  i = %d\n", n, i);
-        if (i - n > 0 && (i - n) % 2 == 1 && mx_any_count(c[i]) != 1) {
-            write (2, "Odd number of backslashes.\n", 27);
-            exit(1);
-        }
-    }
-    for (int i = 0; c[i] != '\0';) {
+static int midl_check(char *c, int i, int k) {
+    for (; c[i] != '\0';) {
         for (; c[i] == ' ' && c[i] != '\0'; i++);
         if (!(c[i] == '|' || c[i] == '&' || c[i] == ';' || c[i] == '\0')) {
             for (; (c[i] != '|' && c[i] != '&' && c[i] != ';' && c[i] != '\0'
-                && c[i] != ' ') || (c[i] == '\\' && c[i + 1] == '\\'); i++)
+                && c[i] != ' ') || (c[i] == '\\' && c[i + 1] == '\\'
+                && c[i + 1] != '\0'); i++)
                 k++;
         }
         if (k == 0)
@@ -25,9 +16,28 @@ static int check_any_cmd(char *c, int n, int i, int k) {
     return 1;
 }
 
-int mx_check_cmd(char *c) {
-    if (check_any_cmd(c, 0, 0, 0)) {
-        for (int i = 0; c[i] != '\0';) {
+static int check_any_cmd(char *c, int n, int i) {
+    for (; c[n] != '\0'; n++) {
+        for (; c[n] != '\0' && c[n] != '\\'; n++);
+        for (i = n; c[i] == '\\' && c[i] != '\0'; i++);
+        if ((i - n) % 2 == 1 && mx_any_count(c[i]) != 1) {
+            write (2, "Odd number of backslashes.\n", 27);
+            exit(1);
+        }
+        n = i;
+    }
+    if (c[n - 1] == '\\' && c[n - 2] == ' ') {
+        write (2, "Odd number of backslashes.\n", 27);
+        exit(1);
+    }
+    if (midl_check(c, 0, 0))
+        return 1;
+    return 0;
+}
+
+int mx_check_cmd(char *c, int i) {
+    if (check_any_cmd(c, 0, 0)) {
+        for (i = 0; c[i] != '\0';) {
             for (; c[i] == ' ' && c[i] != '\0'; i++);
             if (c[i] == '|' || c[i] == '&' || c[i] == ';' || c[i] == '\0')
                 return 0;

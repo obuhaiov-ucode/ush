@@ -17,7 +17,7 @@ static void pipe_or_file(t_config *term, char *file) {
 int main(int argc, char **argv, char **env) {
     //signal(SIGINT, mx_sighandler);
     //signal(SIGQUIT, mx_sighandler);
-
+   
     t_config *term = mx_config_init();
     t_hist **hist = mx_hist_init();
     //printf("HERE\n");
