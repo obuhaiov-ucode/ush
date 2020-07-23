@@ -52,8 +52,8 @@ static char *search_in_bin(char *argv, char **split_path) {
     return NULL;
 }
 
-static void print_which(char *argv, int flag, t_app *app) { // what about nout found commands?? now I just don't print them
-    if(app->wch_is_biltin || app->in_bin) {
+static void print_which(char *argv, int flag, t_app *app) {
+    if (app->wch_is_biltin || app->in_bin) {
         if (flag == 1)
             return;
         if (flag == 0) {
@@ -72,7 +72,6 @@ static void print_which(char *argv, int flag, t_app *app) { // what about nout f
             printf("%s not found\n", argv);
     }
 }
-
 
 int mx_which(char *argv[], t_app *app) {
     char **spl_path = mx_strsplit(getenv("PATH"), ':');
@@ -97,10 +96,5 @@ return not_found;
 }
 
 
-// printf("return = %d\n", not_found);
-//printf("fl = %d\n", flag);
-//printf("ind_of_com = %s\n", argv[i]);
-//printf("app->in_bin = %s\n",  app->in_bin);
-//printf("app->wch_is_biltin = %d\n", app->wch_is_biltin);
 
 

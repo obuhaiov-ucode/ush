@@ -40,24 +40,36 @@ static char *check_path(char *argv[], t_app *app) {
     return ch;
 }
 
-int mx_cd_p(char *argv[], t_app *app, int * flag) {
-    char *ch = NULL;
-
-    if (mx_strcmp(argv[app->cur_arg], "-")  == 0) {
-        ch = app->old_pwd_p ? mx_strdup(app->old_pwd_p) : mx_strdup(app->pwd_p);
-        if((mx_is_link(app->old_pwd_l) == 1 && flag[0] == 1)) {
-            fprintf(stderr, "cd: not a directory: %s\n", app->old_pwd_l);
-            return -1;
-        }
-    }
-    else
-        ch = check_path(argv, app);
-    if(app->in_pwd && mx_is_link(ch) == 1 && flag[0] == 1) {
+static int check_other_variant(char *argv[], t_app *app, int *flag, char *ch) {
+    if (app->in_pwd && mx_is_link(ch) == 1 && flag[0] == 1) {
+        free(flag);
+        mx_strdel(&ch);
         fprintf(stderr, "cd: not a directory: %s\n", getwd(argv[app->cur_arg]));
         return -1;
     }
-    if(mx_swap_pwd(ch, argv, app) == 0)
+    if (mx_swap_pwd(ch, argv, app, flag) == 0) {
+        free(app->pwd_l);
+        app->pwd_l = mx_strdup(app->pwd_p);
         return 0;
+    }
     return -1;
+}
+
+int mx_cd_p(char *argv[], t_app *app, int *flag) {
+    char *ch = NULL;
+    int res = -1;
+
+    if (mx_strcmp(argv[app->cur_arg], "-")  == 0) {
+        if ((mx_is_link(app->old_pwd_l) == 1 && flag[0] == 1)) {
+            fprintf(stderr, "cd: not a directory: %s\n", app->old_pwd_l);
+            free(flag);
+            return -1;
+        }
+        ch = app->old_pwd_p ? mx_strdup(app->old_pwd_p) : mx_strdup(app->pwd_p);
+    }
+    else
+        ch = check_path(argv, app);
+    res = check_other_variant(argv, app, flag, ch);
+    return res;
 }
 

@@ -42,7 +42,6 @@ static void check_double_slesh(t_app *app) {
         i++;
       else
         break;
-     
     }
     if(app->pwd_l[0] == '/' && app->pwd_l[1] == '/') {
       buf = mx_strndup(&app->pwd_l[i - 1], (mx_strlen(app->pwd_l) - i + 1));

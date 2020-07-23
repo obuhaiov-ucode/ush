@@ -25,15 +25,17 @@ static void run_system_command(t_cmd *cmd, t_app *app) {
     pid_t childPid;
 
     if ((childPid = fork()) < 0)
-        fprintf(stderr, "fork() error\n");
+        perror("ush: ");
     else if (childPid == 0) {
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
             fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
             exit(1);
         }
     }
-    else if (!WIFEXITED(app->status) && !WIFSIGNALED(app->status))
+    if (!WIFEXITED(app->status) && !WIFSIGNALED(app->status))
         waitpid(childPid, &app->status, WUNTRACED);
+    app->status = WEXITSTATUS(app->status);
+    wait(&childPid);
 }
 
 static void run_builtin_command(t_cmd *cmd, t_app *app) {
@@ -42,7 +44,7 @@ static void run_builtin_command(t_cmd *cmd, t_app *app) {
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
         else if (cmd->builtin == b_echo)
-            write(1, cmd->argv[1], mx_strlen(cmd->argv[1]));
+            app->status = mx_echo_builtin(cmd->argv, app);
         else if (cmd->builtin == b_pwd)
             app->status = mx_pwd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_env)
@@ -77,7 +79,8 @@ int mx_streams(t_st *st, char **tokens, t_app *app) {
     // for (int i = 0; tokens[i] != NULL; i++)
     //     printf("%s\n", tokens[i]);
 
-    app->status = st->status;
+
+    //app->status = st->status;
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;
         cmd->argv = tokens;

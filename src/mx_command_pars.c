@@ -57,31 +57,32 @@ static int no_buf(char *c, int i, int n) {
     return 1;
 }
 
-static int streams_echo(char *main_c, t_st *st, t_config* term, char *c) {
-    char **tokens = malloc(sizeof(char *) * 3);
-    char **res = NULL;
+// static int streams_echo(char *main_c, t_st *st, t_config* term, char *c) {
+//     char **tokens = malloc(sizeof(char *) * 3);
+//     char **res = NULL;
 
-    res = mx_streams_cd(c, 1, 64, main_c);
-    tokens[0] = mx_strdup(main_c);
-    tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
-    tokens[2] = NULL;
-    mx_del_strarr(&res);
-    st->status = mx_streams(st, tokens, (t_app *)term->app);
-    return st->status;
-}
+//     res = mx_streams_cd(c, st, 64, main_c);
+//     tokens[0] = mx_strdup(main_c);
+//     tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
+//     tokens[2] = NULL;
+//     mx_del_strarr(&res);
+//     st->status = mx_streams(st, tokens, (t_app *)term->app);
+//     return st->status;
+// }
 
 int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     char **tokens = NULL;
     
     c = cmd_del_spaces(c);
+    c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(c, 0, 0) == 1) {
-        if (mx_strcmp(main_c, "echo") == 0)
-            st->status = streams_echo(main_c, st, term, c);
-        else if (mx_strcmp(main_c, "alias") == 0)
+        // if (mx_strcmp(main_c, "echo") == 0)
+        //     st->status = streams_echo(main_c, st, term, c);
+        if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
         else {
-            tokens = mx_streams_cd(c, 1, 64, main_c);
+            tokens = mx_streams_cd(c, st, 64, main_c);
             st->status = mx_streams(st, tokens, (t_app *)term->app);
         }
     }

@@ -107,6 +107,7 @@ typedef struct s_info {
 
     int i;
     int n;
+    int k;
 
     char **fbuf;
     char **buf;
@@ -224,8 +225,8 @@ void mx_sighandler(int signum);
 
 int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
-char *mx_echo_builtin(char *argv[], t_app *app);
-// int mx_echo_builtin(char *argv[], t_app *app);
+//char *mx_echo_builtin(char *argv[], t_app *app);
+int mx_echo_builtin(char *argv[], t_app *app);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
 int mx_cd_p(char *argv[], t_app *pwd, int *flag);
 int mx_cd_l(char *argv[], t_app *app, int *flag);
@@ -233,7 +234,7 @@ void mx_init (t_app *pwd);
 bool mx_is_link(char *file);
 int mx_arr_len(char **arr);
 int mx_is_dot(char *argv, t_app *app);
-int mx_swap_pwd (char *ch, char *argv[], t_app *app);
+int mx_swap_pwd (char *ch, char *argv[], t_app *app, int *flag);
 char *mx_join_to_path(char *dst, char *str);
 bool mx_is_builtin(char *str);
 
@@ -323,7 +324,7 @@ int mx_get_start_sub(char *cmd);
 void mx_del_chararr(char *arr);
 int mx_builtin_alias(t_st *st, char **tokens, char *name, char *all);
 char *mx_get_all_alias(char **tok, int cur);
-char **mx_streams_cd(char *c, int k, int bufsize, char *main_c);
+char **mx_streams_cd(char *c, t_st *st, int bufsize, char *main_c);
 char **mx_streams_pars(char *c, int k, int bufsize, char *main_c);
 char *mx_without_slash(char *c, char *res, int k, int n);
 int mx_any_count(char c);

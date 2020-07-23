@@ -33,10 +33,14 @@ static char *sub_run(t_st *st, char *midl, char *cmd, t_config* term) {
         perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
-    else if (pid > 0)
-        cmd = sub_parent(st, cmd, 0);
-    else
+    if (pid == 0)
         st->stat_sub = sub_child(st, midl, st->sub1, term);
+    else    
+        cmd = sub_parent(st, cmd, 0);
+    if (!WIFEXITED(st->status) && !WIFSIGNALED(st->status))
+        waitpid(pid, &st->status, WUNTRACED);
+    st->status = WEXITSTATUS(st->status);
+    wait(&pid);
     return cmd;
 }
 

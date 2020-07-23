@@ -43,10 +43,14 @@ static int piped_run(t_st *st, char **tokens, int i, t_config* term) {
         perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
-    else if (pid > 0)
-        st->status = piped_parent(st, i);
-    else
+    if (pid == 0)
         mx_piped_child(st, tokens, term);
+    else    
+        st->status = piped_parent(st, i);
+    if (!WIFEXITED(st->status) && !WIFSIGNALED(st->status))
+        waitpid(pid, &st->status, WUNTRACED);
+    st->status = WEXITSTATUS(st->status);
+    wait(&pid);
     return st->status;
 }
 

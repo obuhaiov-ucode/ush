@@ -57,31 +57,12 @@ static void reset(t_config* term, t_hist **hist) {
     }
     clean_up(term);
     mx_raw_mode_on();
-    
-    tcgetattr(STDIN_FILENO, &term->raw);
-    term->raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-    term->raw.c_oflag &= ~(OPOST);
-    term->raw.c_cflag |= (CS8);
-    term->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-    term->raw.c_cc[VMIN] = 1;
-    term->raw.c_cc[VTIME] = 0;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term->raw);
-
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
     mx_refresh_line(term, 5);
 }
 
 static void inner_loop(t_config* term, t_hist **hist) {
-    tcgetattr(STDIN_FILENO, &term->raw);
-    term->raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-    term->raw.c_oflag &= ~(OPOST);
-    term->raw.c_cflag |= (CS8);
-    term->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-    term->raw.c_cc[VMIN] = 1;
-    term->raw.c_cc[VTIME] = 0;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term->raw);
-
     mx_get_term_params(term);
     write(1, "\x1b[?25h", 6);
     mx_process_key(term, hist);
@@ -101,25 +82,13 @@ static void inner_loop(t_config* term, t_hist **hist) {
 void mx_lp(t_config* term, t_hist **hist) {
     mx_get_commands(term);
     mx_get_term_params(term);
-
     mx_raw_mode_on();
-    
-    tcgetattr(STDIN_FILENO, &term->raw);
-    term->raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-    term->raw.c_oflag &= ~(OPOST);
-    term->raw.c_cflag |= (CS8);
-    term->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-    term->raw.c_cc[VMIN] = 0;
-    term->raw.c_cc[VTIME] = 1;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term->raw);
-
     mx_get_cursor(&term->y, &term->x);
     term->mo_x = term->x;
     term->mo_y = term->y;
     mx_refresh_line(term, 5);
     while (1)
         inner_loop(term, hist);
-    //write(1, "\r\neven here\r\n", strlen("\r\neven here\r\n"));
-    // mx_cooked_mode_on();
-    // tcsetattr(0, TCSAFLUSH, &term->origin);
+    mx_cooked_mode_on();
+    tcsetattr(0, TCSAFLUSH, &term->origin);
 }

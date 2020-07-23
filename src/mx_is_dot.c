@@ -11,7 +11,7 @@ static int check_ddslesh(char *argv, t_app *app) {
     char **arr_dot = NULL;
 
     arr_dot = mx_strsplit(argv, '/');
-    for(int j = 0; arr_dot[j] != NULL; j++) {
+    for (int j = 0; arr_dot[j] != NULL; j++) {
         if (strcmp("..", arr_dot[j]) != 0) {
             app->dot_dir = 0;
             fprintf(stderr,
@@ -48,10 +48,10 @@ int mx_is_dot(char *argv, t_app *app) {
     app->dot_dir = 0;
     int res = 0;
 
-    if(argv[0] == '.' && !argv[1])
+    if (argv[0] == '.' && !argv[1])
         return 0;
     else {
-        if(dd_slesh(argv)) {
+        if (dd_slesh(argv)) {
             res = check_ddslesh(argv, app);
             return res;
         }
