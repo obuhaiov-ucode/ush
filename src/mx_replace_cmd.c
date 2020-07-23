@@ -72,17 +72,16 @@ char *mx_replace_cmd(t_st *st, char *cmd) {
     for (int i = 1; cmd[i] != '\0'; i++) {
         if (cmd[i] == '$' && cmd[i + 1] != '('
             && mx_check_slash(cmd, i - 1) == 0
-            && cmd[i + 1] != '?') {
+            && cmd[i + 1] != '?') 
             cmd = replace_env(i, cmd, NULL);
-        }
     }
     for (int i = 0; cmd[i] != '\0'; i++) {
         if (cmd[i] == '~'
             && ((cmd[i - 1] == ' ' && i != 0) || i == 0)) {
             if (((cmd[i + 1] == '-' || cmd[i + 1] == '+')
-                 && (cmd[i + 2] == ' ' || cmd[i + 2] == '/'
-                 || cmd[i + 2] == '\0')) || (cmd[i + 1] == ' '
-                 || cmd[i + 1] == '/' || cmd[i + 1] == '\0'))
+                && (cmd[i + 2] == ' ' || cmd[i + 2] == '/'
+                || cmd[i + 2] == '\0')) || (cmd[i + 1] == ' '
+                || cmd[i + 1] == '/' || cmd[i + 1] == '\0'))
                 cmd = replace_pwd(i, cmd, NULL);
             else
                 cmd = mx_tilda_prefix(i, cmd);

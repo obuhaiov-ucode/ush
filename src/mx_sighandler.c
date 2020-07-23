@@ -2,5 +2,4 @@
 
 void mx_sighandler(int signum) {
     (void)signum;
-    printf("SIGNAL\n");
 }

@@ -2,13 +2,12 @@
 
 char *mx_get_argv(char *file, char *res) {
     FILE *mf;
-    char line[4096];
+    char line[8192];
 
-    if ((mf = fopen(file, "r")) == NULL) {
+    if ((mf = fopen(file, "r")) == NULL)
         return NULL;
-    }
     while(!feof(mf))
-        fgets(line, 4095, mf);
+        fgets(line, 8191, mf);
     fclose(mf);
     res = mx_strdup(line);
     return res;

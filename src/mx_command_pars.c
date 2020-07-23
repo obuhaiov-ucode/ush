@@ -42,67 +42,51 @@ static char **midl_pars(t_st *st, char *c, int k, int bufsize) {
     return tokens;
 }
 
-static int no_buf(char *main_c, char *cmd) {
-    if (mx_strcmp(main_c, "cd") == 0
-        || mx_strcmp(main_c, "export") == 0
-        || mx_strcmp(main_c, "unset") == 0
-        || mx_strcmp(main_c, "exit") == 0
-        || mx_strcmp(main_c, "env") == 0
-        || mx_strcmp(main_c, "vim") == 0
-        || mx_strcmp(main_c, "emacs") == 0
-        || mx_strcmp(main_c, "alias") == 0
-        || mx_strcmp(main_c, "rm") == 0
-        || mx_strcmp(main_c, "touch") == 0
-        || mx_strcmp(main_c, "mkdir") == 0
-        || (mx_strlen(cmd) > 6
-        && mx_strcmp(main_c, "echo") == 0
-        && cmd[5] == '$' && cmd[6] == '?'))
-        return 1;
-    return 0;
+static int no_buf(char *c, int i, int n) {
+    for (; c[n] != '\0'; n++) {
+        for (; c[n] != '\0' && c[n] != '|' && c[n] != '<' 
+            && c[n] != '>'; n++);
+        for (; c[n] != '\0' && c[n] != '\\' && c[n] != '|' && c[n] != '<'
+            && c[n] != '>'; n++);
+        for (i = n; c[i] == '\\' && c[i] != '\0' && c[i] != '|'
+            && c[i] != '<' && c[i] != '>'; i++);
+        if ((i - n) % 2 == 0 && (c[i] == '|' || c[i] == '<' || c[i] == '>'))
+            return 0;
+        n = i;
+    }
+    return 1;
 }
 
-// int mx_cmd_concate(char *main_c) {
-//     if (mx_strcmp(main_c, "cd") == 0
-//         || mx_strcmp(main_c, "rm") == 0
-//         || mx_strcmp(main_c, "touch") == 0
-//         || mx_strcmp(main_c, "mkdir") == 0)
-//         return 1;
-//     return 0;
-// }
+static int streams_echo(char *main_c, t_st *st, t_config* term, char *c) {
+    char **tokens = malloc(sizeof(char *) * 3);
+    char **res = NULL;
 
-int mx_command_pars(t_st *st, char *c, int k, t_config* term) {
-    int bufsize = 64;
+    res = mx_streams_cd(c, 1, 64, main_c);
+    tokens[0] = mx_strdup(main_c);
+    tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
+    tokens[2] = NULL;
+    mx_del_strarr(&res);
+    st->status = mx_streams(st, tokens, (t_app *)term->app);
+    return st->status;
+}
+
+int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     char **tokens = NULL;
-    char *main_c = NULL;
-    pid_t pid;
-
+    
     c = cmd_del_spaces(c);
-    //c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
-    if (no_buf(main_c, c) == 1) {
-        if (mx_strcmp(main_c, "alias") == 0)
+    if (no_buf(c, 0, 0) == 1) {
+        if (mx_strcmp(main_c, "echo") == 0)
+            st->status = streams_echo(main_c, st, term, c);
+        else if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
         else {
-            tokens = mx_streams_cd(c, 1, bufsize, main_c);
-            // for (int i = 0; tokens[i] != NULL; i++)
-            //     printf("%s\n", tokens[i]);
+            tokens = mx_streams_cd(c, 1, 64, main_c);
             st->status = mx_streams(st, tokens, (t_app *)term->app);
         }
     }
-    else if (mx_strcmp(main_c, "cat") == 0 && c[3] == '\0') {
-        if ((pid = fork()) < 0)
-            perror("ush: ");
-        if (pid == 0) {
-            tokens = malloc(sizeof(char *) * 3);
-            tokens[0] = mx_strdup("/bin/cat");
-            tokens[1] = NULL;
-            execvp(tokens[0], tokens);
-        }
-        else 
-            wait(&pid);  
-    }
     else {
-        tokens = midl_pars(st, c, k, bufsize);
+        tokens = midl_pars(st, c, 0, 64);
         st->status = mx_conveer(st, tokens, term);
     }
     return st->status;

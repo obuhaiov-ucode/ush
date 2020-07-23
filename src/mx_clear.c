@@ -8,5 +8,5 @@ void mx_clear(char *str) {
         write(1, "\x1b[1;1H", 6);
     }
     else
-        write(1, "\rush: clear: too many arguments\r\n", 33);
+        write(2, "\rush: clear: too many arguments\r\n", 33);
 }

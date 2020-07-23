@@ -105,6 +105,9 @@ typedef struct s_info {
     int *pipes;
     int pipe;
 
+    int i;
+    int n;
+
     char **fbuf;
     char **buf;
 
@@ -193,6 +196,8 @@ void mx_write_hist(int len, char *str);
 void mx_get_term_params(t_config *term);
 void mx_lp(t_config *term, t_hist **hist);
 void mx_raw_mode_on(void);
+// void mx_raw_mode_on(t_config* term);
+// void mx_cooked_mode_on(t_config* term);
 void mx_get_cursor(int *y, int *x);
 void mx_refresh_line(t_config* term, int offset);
 void mx_refresh_screen(t_config* term, int offset);
@@ -282,7 +287,7 @@ char **mx_split_line(char *line, int bufsize, int j, int k);
 char **mx_split_backup(char **tokens, int bufsize, int k);
 void mx_loop(char *cmd, t_config* term, t_st *st);
 int mx_simple_commands(t_st *st, char **commands, t_config* term);
-int mx_command_pars(t_st *st, char *c, int k, t_config* term);
+int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term);
 int mx_check_slash(char *line, int end);
 char *mx_check_env(char **arr, char *macros);
 char *mx_get_env(char *c, int k);
@@ -290,7 +295,6 @@ int mx_complex_cmd(t_st *st, char **commands, int i, int passed_cmd);
 char *mx_cmd_return_alias(t_st *st, char *cmd, char *tmp, char *res);
 int mx_check_quotes(char *cmd);
 char *mx_tilda_prefix(int start, char *cmd);
-int mx_final_exe(t_st *st, char **args);
 int mx_count_pipes(t_st *st, char **tokens);
 int mx_conveer(t_st *st, char **tokens, t_config* term);
 char **mx_get_cmd_tok(t_st *st, char **tokens, int start, int end);
@@ -317,7 +321,6 @@ int mx_xcombcounter(char cmd1, char cmd2, char *first_need, int count);
 void mx_del_conveer(t_st *st);
 int mx_get_start_sub(char *cmd);
 void mx_del_chararr(char *arr);
-char *mx_dash_spaces(char *cmd, char *res, int i, int k);
 int mx_builtin_alias(t_st *st, char **tokens, char *name, char *all);
 char *mx_get_all_alias(char **tok, int cur);
 char **mx_streams_cd(char *c, int k, int bufsize, char *main_c);
@@ -327,5 +330,10 @@ int mx_any_count(char c);
 void mx_help(char *str);
 int mx_check_cmd(char *c, int i);
 char *mx_shlvl_check(char *tok, int n, char *tmp);
+void mx_which_unset(t_cmd *cmd, int cur);
+int mx_status_check(char **tokens, t_app *app);
+void mx_builtin_exit(t_cmd *cmd, t_app *app);
+int mx_without_path(t_app *app, t_cmd *cmd);
+int mx_all_builtin(t_cmd *cmd, int k);
 
 #endif

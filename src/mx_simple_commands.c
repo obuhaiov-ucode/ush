@@ -5,7 +5,7 @@ int mx_simple_commands(t_st *st, char **commands, t_config* term) {
         if (i % 2 == 0 && commands[i][0] != '\0') {
             commands[i] = mx_replace_cmd(st, commands[i]);
             commands[i] = mx_command_sub(st, commands[i], NULL, term);
-            st->status = mx_command_pars(st, commands[i], 0, term);
+            st->status = mx_command_pars(st, commands[i], NULL, term);
         }
         else {
             if ((commands[i][0] == '|' || commands[i][0] == '&')

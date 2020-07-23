@@ -15,7 +15,7 @@ static int get_end_sub(char *cmd, int start) {
             && (open + close > 1 || scopes != 0)) {
             if (cmd[i + 1] == '`')
                 return i + 2;
-            if  (cmd[i] == ')')
+            if (cmd[i] == ')')
                 return i + 1;
         }
     }
@@ -73,8 +73,7 @@ char *mx_command_sub(t_st *st, char *cmd, char *begin, t_config* term) {
         midl = without_slash(midl, 0, 0, 0);
         cmd = mx_get_com_sub(term, begin, midl, final);
     }
-    start = mx_get_start_sub(cmd);
-    if (start != -1 && get_end_sub(cmd, start) != -1)
+    if ((start = mx_get_start_sub(cmd)) && get_end_sub(cmd, start) != -1)
         cmd = mx_command_sub(st, cmd, NULL, term);
     return cmd;
 }

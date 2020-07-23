@@ -21,7 +21,6 @@ void mx_env_fill(char **src) {
 
 void mx_print_env(void) {
     extern char **environ;
-//    printf("hello\n");
     mx_print_strarr(environ, "\n");
 }
 

@@ -17,8 +17,7 @@ static int piped_parent(t_st *st, int pipe) {
     int n = 0;
     char line[8192];
 
-    for (int i = 0; i < 8192; i++)
-        line[i] = '\0';
+    memset(line, 0, 8192);
     close(st->fd0[0]);
     close(st->fd1[1]);
     if (st->buf[pipe - 1] != NULL && pipe > 0)
@@ -34,8 +33,12 @@ static int piped_parent(t_st *st, int pipe) {
 }
 
 static int piped_run(t_st *st, char **tokens, int i, t_config* term) {
-    pid_t pid;
+    pid_t pid = 0;
 
+    st->fd0[0] = 0;
+    st->fd0[1] = 0;
+    st->fd1[0] = 0;
+    st->fd1[1] = 0;
     if (pipe(st->fd0) < 0 || pipe(st->fd1) < 0)
         perror("ush: ");
     if ((pid = fork()) < 0)
@@ -60,7 +63,6 @@ int mx_conveer(t_st *st, char **tokens, t_config* term) {
     }
     if (!st->out[st->pipe] && !st->end[st->pipe])
         piped_print(st);
-   mx_del_conveer(st);
-
+    //mx_del_conveer(st);
     return st->status;
 }

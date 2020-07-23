@@ -36,5 +36,5 @@ void mx_history(char *str) {
         write(1, "\r\n", 2);
     }
     else
-        write(1, "\rush: history: too many arguments\r\n", 36);
+        write(2, "\rush: history: too many arguments\r\n", 36);
 }

@@ -20,13 +20,13 @@ void mx_file_output(t_st *st, int pipe) {
 
     for (int i = 0; i < st->out[pipe]; i++) {
         if ((begin = fopen(st->output[pipe][i], "w")) == NULL)
-            printf("ошибка из канала");
+            perror("ush: ");
         out_print(st, begin, pipe, NULL);
         fclose(begin);
     }
     for (int i = 0; i < st->end[pipe]; i++) {
         if ((end = fopen(st->endout[pipe][i], "a")) == NULL)
-            printf("ошибка из канала");
+            perror("ush: ");
         out_print(st, end, pipe, NULL);
         fclose(end);
     }

@@ -110,7 +110,6 @@ SRCOUT = main.c \
         mx_cmd_return_alias.c \
         mx_check_quotes.c \
         mx_tilda_prefix.c \
-        mx_final_exe.c \
         mx_count_pipes.c \
         mx_conveer.c \
         mx_get_cmd_tok.c \
@@ -162,7 +161,6 @@ SRCOUT = main.c \
 		mx_arr_length.c \
         mx_free_assumptions.c \
         mx_set_cursor.c \
-        mx_dash_spaces.c \
         mx_builtin_alias.c \
         mx_get_all_alias.c \
         mx_hist_init.c \
@@ -197,6 +195,11 @@ SRCOUT = main.c \
         mx_control_chars.c \
         mx_shlvl_check.c \
         mx_check_cmd.c \
+        mx_which_unset.c \
+        mx_status_check.c \
+        mx_builtin_exit.c \
+        mx_without_path.c \
+        mx_all_builtin.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

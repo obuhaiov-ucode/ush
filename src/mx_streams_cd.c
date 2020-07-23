@@ -32,6 +32,29 @@ static char *get_tok(char *c, int i, int n, int num) {
     return res;
 }
 
+// static int midl_pars_cd(char *c, int i, int k, char **tokens) {
+//     int n = 0;
+
+//     if (c[i] == '-' && c[i - 1] == ' ') {
+//         tokens[k++] = strndup(&c[i], strcspn(&c[i], " \0"));
+//         i += strcspn(&c[i], " \0") - 1;
+//     }
+//     else {
+//         n = strcspn(&c[i], " \0");
+//         if (c[i + n - 1] != '\\') {
+//             tokens[k++] = strndup(&c[i], n);
+//             i += strcspn(&c[i], " \0") - 1;
+//         }
+//         else {
+//             n = count_noslash(c, i);
+//             tokens[k++] = get_tok(c, i, n - i, 0);
+//             i = n - 1;
+//         }
+//     }
+//     return i;
+// }
+
+
 char **mx_streams_cd(char *c, int k, int bufsize, char *main_c) {
     char **tokens = malloc(bufsize * sizeof(char*));
     int i = strcspn(c, " \0");
@@ -46,7 +69,7 @@ char **mx_streams_cd(char *c, int k, int bufsize, char *main_c) {
             }
             else {
                 n = strcspn(&c[i], " \0");
-                if (c[i + n - 1] != '\\') {
+                    if (c[i + n - 1] != '\\') {
                     tokens[k++] = strndup(&c[i], n);
                     i += strcspn(&c[i], " \0") - 1;
                 }
@@ -56,8 +79,8 @@ char **mx_streams_cd(char *c, int k, int bufsize, char *main_c) {
                     i = n - 1;
                 }
             }
-
         }
+            //i = midl_pars_cd(c, i, k, tokens);
         tokens = mx_split_backup(tokens, bufsize, k);
         if (k >= bufsize)
             bufsize += 64;

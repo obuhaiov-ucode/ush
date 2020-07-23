@@ -1,4 +1,5 @@
 #include "ush.h"
+
 char *mx_join_to_path(char *dst, char *str) {
     int dst_len = 0;
     char *s = NULL;

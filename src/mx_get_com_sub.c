@@ -8,7 +8,7 @@ static int sub_child(t_st *st, char *midl, int *sub1, t_config* term) {
             perror("ush: ");
         close(sub1[1]);
     }
-    st->stat_sub = mx_command_pars(st, midl, 0, term);
+    st->stat_sub = mx_command_pars(st, midl, NULL, term);
     exit(st->stat_sub);
 }
 

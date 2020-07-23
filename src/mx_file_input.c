@@ -2,12 +2,12 @@
 
 static char *multinput(char *file, char *tmp, char *res) {
     FILE *mf;
-    char line[4096];
+    char line[8192];
 
     if ((mf = fopen(file, "r")) == NULL)
-        printf("ошибка чтения из канала");
+        perror("ush: ");
     while(!feof(mf))
-        fgets(line, 4095, mf);
+        fgets(line, 8191, mf);
     fclose(mf);
     if (tmp != NULL) {
         res = mx_strjoin(tmp, line);
