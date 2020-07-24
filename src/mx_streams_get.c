@@ -1,24 +1,5 @@
 #include "ush.h"
 
-char **mx_weird_slash(char **tok, char **res, t_st *st, char *c) {
-    char *main_c = NULL;
-    char tmp[8192];
-    int n = 0;
-
-    for (int i = 0; tok[i] != NULL; i++) {
-        for (int j = 0; tok[i][j] != '\0'; j++) 
-            tmp[n++] = tok[i][j];
-        if (tok[i + 1] != NULL)
-            tmp[n++] = ' ';
-    }
-    tmp[n] = '\0';
-    c = mx_strdup(tmp);
-    main_c = strndup(c, strcspn(c, " \0"));
-    res = mx_streams_cd(c, st, 64, main_c);
-    mx_del_strarr(&tok);
-    return res;
-}
-
 static char **for_each_pipe(t_st *st, char **tokens, int k) {
     if ((st->in[k] = mx_count_streams(tokens, '<', 0, 0)) > 0)
         tokens = mx_streams_in(st, tokens, k, 0);
@@ -46,19 +27,11 @@ static void streams_get_midl(t_st *st, int n) {
     st->fbuf[n] = NULL;
 }
 
-// static char **run_echo(char **tok, t_app *app, char **res) {
-//     res = malloc(sizeof(char *) * 3);
-//     res[0] = mx_strdup(tok[0]);
-//     res[1] = mx_echo_builtin(tok, app);
-//     res[2] = NULL;
-//     mx_del_strarr(&tok);
-//     return res;
-// }
-
 char ***mx_streams_get(t_st *st, char **tokens, t_app *app) {
     int n = mx_count_pipes(st, tokens) + 1;
     char ***tok = (char ***)malloc(sizeof(char **) * (n + 1));
     char **tmp = NULL;
+
     (void)app;
     tok[n] = NULL;
     streams_get_midl(st, n);
@@ -67,8 +40,6 @@ char ***mx_streams_get(t_st *st, char **tokens, t_app *app) {
         st->fbuf[i] = NULL;
         tmp = mx_get_cmd_tok(st, tokens, i, st->pipes[i]);
         tok[i] = for_each_pipe(st, tmp, i);
-        // if (mx_strcmp(tok[i][0], "echo") == 0)
-        //     tok[i] = run_echo(tok[i], app, NULL);
     }
     mx_del_strarr(&tokens);
     return tok;

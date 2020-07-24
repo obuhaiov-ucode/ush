@@ -102,16 +102,15 @@ typedef struct s_comand {
 typedef struct s_info {
     char **commands; // simple commands
     char *cmd; // input
-    int *pipes;
-    int pipe;
 
     int i;
     int n;
     int k;
 
+    int *pipes;
+    int pipe;
     char **fbuf;
     char **buf;
-
     char ***input;
     char ***output;
     char ***endout;
@@ -119,26 +118,26 @@ typedef struct s_info {
     int *out;
     int *end;
 
+    char *cfbuf;
+    char *cbuf;
+    char **cinput;
+    char **coutput;
+    char **cendout;
+    int cin;
+    int cout;
+    int cend;
+    int cfd0[2];
+    int cfd1[2];
+
+
     int fd0[2];
     int fd1[2];
     int sub1[2];
     int status;
     int stat_sub;
 
-    char *pwd_l;
-    char *pwd_p;
-    char *pwd_home;
-    char *path;
-
-    char *pwd;
-    char *pwd_old;
-    char *home;
-
-
     char **env;
-    char **set;
     char **alias;
-
 }              t_st;
 
 typedef struct s_history {
@@ -301,13 +300,21 @@ int mx_conveer(t_st *st, char **tokens, t_config* term);
 char **mx_get_cmd_tok(t_st *st, char **tokens, int start, int end);
 void mx_piped_child(t_st *st, char **tokens, t_config* term);
 int mx_streams(t_st *st, char **tokens, t_app *app);
-char **mx_streams_endout(t_st *st, char **tokens, int pipe, int i);
 char *mx_file_input(t_st *st, int pipe);
 void mx_file_output(t_st *st, int pipe);
 int mx_count_streams(char **tokens, char c, int n, int dubl);
 int mx_count_term(char **tokens, char c);
 char **mx_streams_in(t_st *st, char **tokens, int pipe, int i);
 char **mx_streams_out(t_st *st, char **tokens, int pipe, int i);
+char **mx_streams_endout(t_st *st, char **tokens, int pipe, int i);
+
+char **mx_streams_cin(t_st *st, char **tokens, int i);
+char **mx_streams_cout(t_st *st, char **tokens, int i);
+char **mx_streams_cendout(t_st *st, char **tokens, int i);
+char *mx_file_input_cat(t_st *st);
+void mx_file_output_cat(t_st *st);
+char **mx_weird_slash(char **tok, char **res, t_st *st, char *c);
+
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
 char ***mx_streams_get(t_st *st, char **tokens, t_app *app);
 int mx_counter(char cmd, char need, int count);

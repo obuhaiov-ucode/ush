@@ -200,6 +200,12 @@ SRCOUT = main.c \
         mx_builtin_exit.c \
         mx_without_path.c \
         mx_all_builtin.c \
+        mx_weird_slash.c \
+        mx_file_output_cat.c \
+        mx_file_input_cat.c \
+        mx_streams_cin.c \
+        mx_streams_cout.c \
+        mx_streams_cendout.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

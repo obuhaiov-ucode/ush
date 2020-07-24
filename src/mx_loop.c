@@ -1,43 +1,170 @@
 #include "ush.h"
 
-static void run_cat(char *cmd, int i, char **tok) {
+static char **without_redir(t_st *st, char **tokens) {
+    st->cin = 0;
+    st->cout = 0;
+    st->cend = 0;
+
+    st->cbuf = NULL;
+    st->cfbuf = NULL;
+    if (st->cbuf)
+        mx_del_chararr(st->cbuf);
+    if (st->cfbuf)
+        mx_del_chararr(st->cfbuf);
+    if (st->cinput)
+        mx_del_strarr(&st->cinput);
+    if (st->coutput)
+        mx_del_strarr(&st->coutput);
+    if (st->cendout)
+        mx_del_strarr(&st->cendout);
+
+    if ((st->cin = mx_count_streams(tokens, '<', 0, 0)) > 0)
+        tokens = mx_streams_cin(st, tokens, 0);
+    if ((st->cout = mx_count_streams(tokens, '>', 0, 0)) > 0)
+        tokens = mx_streams_cout(st, tokens, 0);
+    if ((st->cend = mx_count_streams(tokens, '>', 0, 1)) > 0)
+        tokens = mx_streams_cendout(st, tokens, 0);
+    tokens = mx_weird_slash(tokens, NULL, st, NULL);
+    return tokens;
+}
+
+static char **cat_pars(t_st *st, char *c, int k, int bufsize) {
+    char **tokens = malloc(bufsize * sizeof(char*));
+
+    for (int i = 0; c[i] != '\0'; i++) {
+        if (c[i] == '|' || c[i] == '<' || c[i] == '>')
+            tokens[k++] = strndup(&c[i], 1);
+        else if (c[i] != ' ') {
+            tokens[k++] = strndup(&c[i], strcspn(&c[i], " <>|"));
+            i += strcspn(&c[i], " <>|") - 1;
+        }
+        tokens = mx_split_backup(tokens, bufsize, k);
+        if (k >= bufsize)
+            bufsize += 64;
+    }
+    tokens[k] = NULL;
+    tokens = without_redir(st, tokens);
+    return tokens;
+}
+
+void mx_run_inout_cat(t_st *st, char **tok) {
+    close(st->cfd0[1]);
+    close(st->cfd1[0]);
+
+    if (st->cfd0[0] != STDIN_FILENO) {
+        if (dup2(st->cfd0[0], STDIN_FILENO) != STDIN_FILENO)
+            perror("ush: ");
+        close(st->cfd0[0]);
+    }
+    if (st->cfd1[1] != STDOUT_FILENO) {
+        if (dup2(st->cfd1[1], STDOUT_FILENO) != STDOUT_FILENO)
+            perror("ush: ");
+        close(st->cfd1[1]);
+    }
+    execvp(tok[0], tok);
+}
+
+void mx_run_in_cat(t_st *st, char **tok) {
+    close(st->cfd0[1]);
+    close(st->cfd1[1]);
+    close(st->cfd1[0]);
+
+    if (st->cfd0[0] != STDIN_FILENO) {
+        if (dup2(st->cfd0[0], STDIN_FILENO) != STDIN_FILENO)
+            perror("ush: ");
+        close(st->cfd0[0]);
+    }
+    execvp(tok[0], tok);
+}
+
+void mx_run_out_cat(t_st *st, char **tok) {
+    close(st->cfd1[0]);
+    close(st->cfd0[1]);
+    close(st->cfd0[0]);
+
+    if (st->cfd1[1] != STDOUT_FILENO) {
+        if (dup2(st->cfd1[1], STDOUT_FILENO) != STDOUT_FILENO)
+            perror("ush: ");
+        close(st->cfd1[0]);
+    }
+    execvp(tok[0], tok);
+}
+
+int mx_parent_cat(t_st *st) {
+    int n = 0;
+    char line[8192];
+
+    close(st->cfd0[0]);
+    close(st->cfd1[1]);
+    if (st->cin > 0)
+        write(st->cfd0[1], st->cfbuf, mx_strlen(st->cfbuf));
+    close(st->cfd0[1]);
+    if (st->cout > 0 || st->cend > 0) {
+        memset(line, 0, 8192);
+        if ((n = read(st->cfd1[0], line, 8192)) < 0)
+            perror("ush: ");
+        n = mx_strlen(line);
+        line[n] = '\0';
+        st->cbuf = mx_strndup(line, n);
+    }
+    close(st->cfd1[0]);
+    return st->status;
+}
+
+static void run_cat(t_st *st, char *cmd, char **tok) {
     pid_t pid = 0;
 
-    dup2(0, STDIN_FILENO);
-    dup2(1, STDOUT_FILENO);
+    tok = cat_pars(st, cmd, 0, 64);
+    st->cfd0[0] = 0;
+    st->cfd0[1] = 0;
+    st->cfd1[0] = 0;
+    st->cfd1[1] = 0;
+    st->cfbuf = mx_file_input_cat(st);
+    if (pipe(st->cfd0) < 0 || pipe(st->cfd1) < 0)
+        perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
     if (pid == 0) {
-        tok = malloc(sizeof(char *) * 3);
-        tok[0] = strdup("/bin/cat");
-        i = strcspn(cmd, " \0");
-        if (i == mx_strlen(cmd))
-            tok[1] = NULL;
+        usleep(1000);
+        if (st->cin > 0 && (st->cout > 0 || st->cend > 0))
+            mx_run_inout_cat(st, tok);
+        else if (st->cin > 0)
+            mx_run_in_cat(st, tok);
+        else if (st->cout > 0 || st->cend > 0)
+            mx_run_out_cat(st, tok);
         else
-            tok[1] = strndup(&cmd[i + 1], strcspn(&cmd[i], "\0"));
-        tok[2] = NULL;
-        execvp(tok[0], tok);
+            execvp(tok[0], tok);
     }
     else
-        wait(&pid);
+        st->status = mx_parent_cat(st);
+    if (!WIFEXITED(st->status))
+        waitpid(pid, &st->status, WUNTRACED);
+    st->status = WEXITSTATUS(st->status);
+    wait(&pid);
+    //printf("HERE4\n");
+    //if (st->cout > 0 || st->cend > 0)
+        mx_file_output_cat(st);
+    if (st->cout == 0 && st->cend == 0 && st->cin != 0)
+        write(1, "\n", 1);
 }
 
 void mx_loop(char *cmd, t_config* term, t_st *st) {
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
-        // if (mx_check_quotes(st->cmd) == 1) {
-        //     write(2, "Odd number of quotes.\n", 22);
-        //     exit(1);
-        // }
+        if (mx_check_quotes(st->cmd) == 1) {
+            write(2, "Odd number of quotes.\n", 22);
+            exit(1);
+        }
         if (strstr(cmd, "cat") && (int)strcspn(cmd, "|") == mx_strlen(cmd))
-            run_cat(cmd, 0, NULL);
+            run_cat(st, cmd, NULL);
         else {
             st->commands = mx_split_line(st->cmd, 64, 0, 0);
             st->status = mx_simple_commands(st, st->commands, term);
-            //mx_del_strarr(&st->commands);
+            mx_del_strarr(&st->commands);
         }
     } 
+    //printf("AFTER\n");
     fflush(stdin);
     fflush(stdout);
 }

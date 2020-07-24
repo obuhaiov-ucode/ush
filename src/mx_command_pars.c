@@ -77,14 +77,11 @@ int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(c, 0, 0) == 1) {
-        // if (mx_strcmp(main_c, "echo") == 0)
-        //     st->status = streams_echo(main_c, st, term, c);
+        tokens = mx_streams_cd(c, st, 64, main_c);
         if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
-        else {
-            tokens = mx_streams_cd(c, st, 64, main_c);
+        else
             st->status = mx_streams(st, tokens, (t_app *)term->app);
-        }
     }
     else {
         tokens = midl_pars(st, c, 0, 64);
