@@ -6,10 +6,11 @@ static void piped_print(t_st *st) {
     if (st->buf[st->pipe] != NULL)
         write(1, st->buf[st->pipe], n);
     if (st->fbuf[st->pipe] != NULL) {
-        if (st->buf[st->pipe] != NULL)
-            write(1, "\n", 1);
+        // if (st->buf[st->pipe] != NULL)
+        //     
         n = mx_strlen(st->fbuf[st->pipe]);
         write(1, st->fbuf[st->pipe], n);
+        write(1, "\n", 1);
     }
 }
 

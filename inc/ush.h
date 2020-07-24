@@ -314,6 +314,10 @@ char **mx_streams_cendout(t_st *st, char **tokens, int i);
 char *mx_file_input_cat(t_st *st);
 void mx_file_output_cat(t_st *st);
 char **mx_weird_slash(char **tok, char **res, t_st *st, char *c);
+int mx_parent_cat(t_st *st, int n, pid_t pid, char line[8192]);
+void mx_run_out_cat(t_st *st, char **tok);
+void mx_run_inout_cat(t_st *st, char **tok);
+void mx_run_in_cat(t_st *st, char **tok);
 
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
 char ***mx_streams_get(t_st *st, char **tokens, t_app *app);

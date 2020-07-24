@@ -3,12 +3,17 @@
 static char *multinput(char *file, char *tmp, char *res) {
     FILE *mf;
     char line[8192];
+    int n = 0;
 
+    memset(line, 0, 8192);
     if ((mf = fopen(file, "r")) == NULL)
         perror("ush: ");
-    while(!feof(mf))
-        fgets(line, 8191, mf);
+    if ((n = fread(line, sizeof(char), 8192, mf)) < 0)
+        perror("ush: ");
     fclose(mf);
+    n = mx_strlen(line);
+    for (; line[n] != '\n'; n--);
+    line[n] = '\0';
     if (tmp != NULL) {
         res = mx_strjoin(tmp, line);
         mx_del_chararr(tmp);
@@ -23,14 +28,9 @@ char *mx_file_input_cat(t_st *st) {
     char *res = NULL;
 
     if (st->cin > 0) {
-        for (int i = 0; i < st->cin; i++) {
-            printf("in = %d = %s\n", i, st->cinput[i]);
+        for (int i = 0; i < st->cin; i++)
             tmp = multinput(st->cinput[i], tmp, NULL);
-            printf("tmp = %d = %s\n", i, tmp);
-        }
-            
         res = tmp;
-        //printf("All input = %s\n", res);
     }
     return res;
 }

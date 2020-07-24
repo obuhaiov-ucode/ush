@@ -1,10 +1,9 @@
 #include "ush.h"
 
-static char **without_redir(t_st *st, char **tokens) {
+static void init_redir(t_st *st) {
     st->cin = 0;
     st->cout = 0;
     st->cend = 0;
-
     st->cbuf = NULL;
     st->cfbuf = NULL;
     if (st->cbuf)
@@ -17,7 +16,10 @@ static char **without_redir(t_st *st, char **tokens) {
         mx_del_strarr(&st->coutput);
     if (st->cendout)
         mx_del_strarr(&st->cendout);
+}
 
+static char **without_redir(t_st *st, char **tokens) {
+    init_redir(st);
     if ((st->cin = mx_count_streams(tokens, '<', 0, 0)) > 0)
         tokens = mx_streams_cin(st, tokens, 0);
     if ((st->cout = mx_count_streams(tokens, '>', 0, 0)) > 0)
@@ -47,85 +49,16 @@ static char **cat_pars(t_st *st, char *c, int k, int bufsize) {
     return tokens;
 }
 
-void mx_run_inout_cat(t_st *st, char **tok) {
-    close(st->cfd0[1]);
-    close(st->cfd1[0]);
-
-    if (st->cfd0[0] != STDIN_FILENO) {
-        if (dup2(st->cfd0[0], STDIN_FILENO) != STDIN_FILENO)
-            perror("ush: ");
-        close(st->cfd0[0]);
-    }
-    if (st->cfd1[1] != STDOUT_FILENO) {
-        if (dup2(st->cfd1[1], STDOUT_FILENO) != STDOUT_FILENO)
-            perror("ush: ");
-        close(st->cfd1[1]);
-    }
-    execvp(tok[0], tok);
-}
-
-void mx_run_in_cat(t_st *st, char **tok) {
-    close(st->cfd0[1]);
-    close(st->cfd1[1]);
-    close(st->cfd1[0]);
-
-    if (st->cfd0[0] != STDIN_FILENO) {
-        if (dup2(st->cfd0[0], STDIN_FILENO) != STDIN_FILENO)
-            perror("ush: ");
-        close(st->cfd0[0]);
-    }
-    execvp(tok[0], tok);
-}
-
-void mx_run_out_cat(t_st *st, char **tok) {
-    close(st->cfd1[0]);
-    close(st->cfd0[1]);
-    close(st->cfd0[0]);
-
-    if (st->cfd1[1] != STDOUT_FILENO) {
-        if (dup2(st->cfd1[1], STDOUT_FILENO) != STDOUT_FILENO)
-            perror("ush: ");
-        close(st->cfd1[0]);
-    }
-    execvp(tok[0], tok);
-}
-
-int mx_parent_cat(t_st *st) {
-    int n = 0;
+static void run_cat(t_st *st, char *cmd, char **tok, pid_t pid) {
     char line[8192];
 
-    close(st->cfd0[0]);
-    close(st->cfd1[1]);
-    if (st->cin > 0)
-        write(st->cfd0[1], st->cfbuf, mx_strlen(st->cfbuf));
-    close(st->cfd0[1]);
-    if (st->cout > 0 || st->cend > 0) {
-        memset(line, 0, 8192);
-        if ((n = read(st->cfd1[0], line, 8192)) < 0)
-            perror("ush: ");
-        n = mx_strlen(line);
-        line[n] = '\0';
-        st->cbuf = mx_strndup(line, n);
-    }
-    close(st->cfd1[0]);
-    return st->status;
-}
-
-static void run_cat(t_st *st, char *cmd, char **tok) {
-    pid_t pid = 0;
-
     tok = cat_pars(st, cmd, 0, 64);
-    st->cfd0[0] = 0;
-    st->cfd0[1] = 0;
-    st->cfd1[0] = 0;
-    st->cfd1[1] = 0;
     st->cfbuf = mx_file_input_cat(st);
     if (pipe(st->cfd0) < 0 || pipe(st->cfd1) < 0)
         perror("ush: ");
     if ((pid = fork()) < 0)
         perror("ush: ");
     if (pid == 0) {
-        usleep(1000);
         if (st->cin > 0 && (st->cout > 0 || st->cend > 0))
             mx_run_inout_cat(st, tok);
         else if (st->cin > 0)
@@ -136,16 +69,7 @@ static void run_cat(t_st *st, char *cmd, char **tok) {
             execvp(tok[0], tok);
     }
     else
-        st->status = mx_parent_cat(st);
-    if (!WIFEXITED(st->status))
-        waitpid(pid, &st->status, WUNTRACED);
-    st->status = WEXITSTATUS(st->status);
-    wait(&pid);
-    //printf("HERE4\n");
-    //if (st->cout > 0 || st->cend > 0)
-        mx_file_output_cat(st);
-    if (st->cout == 0 && st->cend == 0 && st->cin != 0)
-        write(1, "\n", 1);
+        st->status = mx_parent_cat(st, 0, pid, line);
 }
 
 void mx_loop(char *cmd, t_config* term, t_st *st) {
@@ -157,14 +81,13 @@ void mx_loop(char *cmd, t_config* term, t_st *st) {
             exit(1);
         }
         if (strstr(cmd, "cat") && (int)strcspn(cmd, "|") == mx_strlen(cmd))
-            run_cat(st, cmd, NULL);
+            run_cat(st, cmd, NULL, 0);
         else {
             st->commands = mx_split_line(st->cmd, 64, 0, 0);
             st->status = mx_simple_commands(st, st->commands, term);
             mx_del_strarr(&st->commands);
         }
     } 
-    //printf("AFTER\n");
     fflush(stdin);
     fflush(stdout);
 }
