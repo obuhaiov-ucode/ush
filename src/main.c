@@ -11,7 +11,7 @@ static void pipe_or_file(t_config *term, char *file) {
     }
     else
         term->cmd = mx_get_argv(file, NULL);
-    mx_loop(term->cmd, term, (t_st *)term->st);
+    mx_loop(term->cmd, 0, term, (t_st *)term->st);
     mx_del_chararr(term->cmd);
 }
 

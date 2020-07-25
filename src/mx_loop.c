@@ -72,8 +72,12 @@ static void run_cat(t_st *st, char *cmd, char **tok, pid_t pid) {
         st->status = mx_parent_cat(st, 0, pid, line);
 }
 
-void mx_loop(char *cmd, t_config* term, t_st *st) {
-    //system("leaks -q ush");
+void mx_loop(char *c, int len, t_config* term, t_st *st) {  
+    char *cmd = NULL;
+
+    if (len > 0)
+        cmd = mx_strndup(c, len);
+    printf("%s\n", cmd);
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
