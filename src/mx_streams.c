@@ -31,7 +31,6 @@ static void run_system_command(t_cmd *cmd, t_app *app) {
         if ((cmd->argv[0][0] == 39 && cmd->argv[0][n] == 39)
             || (cmd->argv[0][0] == '"' && cmd->argv[0][n] == '"'))
             cmd->argv[0] = mx_get_clear_cmd(cmd->argv[0], 0);
-        // printf("binarniki\n");
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
             fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
             app->status = 127;

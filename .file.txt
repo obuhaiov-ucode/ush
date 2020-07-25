@@ -4,4 +4,4 @@ files"		exit		echo \'		echo '\'		echo '\'\'		echo "$(echo -n "Ave, Ceasr"), $(ec
 asd"		echo "some
 "		"
 "		'
-'		\'		\'		'\'		'\\\\\'		\'\'		'\'\'		"\"""		'\'''		`\```		echo \'\"\$\(\\\)\`file\ name		
+'		\'		\'		'\'		'\\\\\'		\'\'		'\'\'		"\"""		'\'''		`\```		echo \'\"\$\(\\\)\`file\ name		echo		echo 123		pwd		
