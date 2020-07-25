@@ -1,0 +1,7 @@
+echo 123 | cat -e		echo 123 | cat -e		pwd | cat -e		ls | cat -e		echo "some
+files"		echo "some
+files"		exit		echo \'		echo '\'		echo '\'\'		echo "$(echo -n "Ave, Ceasr"), $(echo -n "morituri te salutant"\!)"		mkdir /tmp/dir\ \`\\name		cd /tmp/dir\ \`\\name		touch \'\"\$\(\\\)\`file\ name		ls		cd -		rm -rf /tmp/dir\ \`\\name		echo '\'		echo "some
+asd"		echo "some
+"		"
+"		'
+'		\'		\'		'\'		'\\\\\'		\'\'		'\'\'		"\"""		'\'''		`\```		echo \'\"\$\(\\\)\`file\ name		
