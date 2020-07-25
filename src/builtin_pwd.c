@@ -1,24 +1,24 @@
 #include "ush.h"
 
 static bool switch_flags(char *argv[], t_app *pwd) {
-        for (int i = 1; argv[i] != NULL; i++) {
-            if ((strcmp(argv[i], "--") == 0 && argv[i + 1]) ||
-                (strcmp(argv[i], "-") == 0 && argv[i + 1]) ||
-                    argv[i][0] != '-') {
-                fprintf(stderr, "pwd: too many arguments\n");
-                return false;
-            }
-            for (unsigned int j = 1; j < strlen(argv[i]); j++) {
-                if (argv[i][j] == 'P')
-                    pwd->flag_p = 1;
-                else if ((argv[i][j] != 'P' && argv[i][j] != 'L'
-                    && argv[i][j] != '-') || (argv[i][j] == '-' && j == 2)) {
-                    fprintf(stderr, "pwd: bad option: -%c\n", argv[i][j]);
-                    return false;
-                }
-            }
-        }
-        return true;
+  for (int i = 1; argv[i] != NULL; i++) {
+    if ((strcmp(argv[i], "--") == 0 && argv[i + 1])
+      || (strcmp(argv[i], "-") == 0 && argv[i + 1])
+      || argv[i][0] != '-') {
+      fprintf(stderr, "pwd: too many arguments\n");
+      return false;
+    }
+    for (unsigned int j = 1; j < strlen(argv[i]); j++) {
+      if (argv[i][j] == 'P')
+        pwd->flag_p = 1;
+      else if ((argv[i][j] != 'P' && argv[i][j] != 'L'
+        && argv[i][j] != '-') || (argv[i][j] == '-' && j == 2)) {
+        fprintf(stderr, "pwd: bad option: -%c\n", argv[i][j]);
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 static void check_last_simbols(t_app *pwd) {
@@ -56,7 +56,6 @@ int mx_pwd_builtin(char *argv[], t_app *pwd) {
     if(switch_flags(argv,pwd)) {
       check_double_slesh(pwd);
       check_last_simbols(pwd);
-      
     if (pwd->flag_p) {
         printf("%s\n", pwd->pwd_p);
     }
@@ -68,5 +67,4 @@ int mx_pwd_builtin(char *argv[], t_app *pwd) {
     return EXIT_SUCCESS;
     }
     return EXIT_FAILURE;
-
 }

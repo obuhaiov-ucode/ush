@@ -46,8 +46,8 @@ static void multi_assumption(t_config *term) {
     if (term->num > 1) {
         if (term->press > 0)
             single_assumption(term, term->buf[term->press - 1]);
+        print_assumptions(term, total_len);
     }
-    print_assumptions(term, total_len);
     term->press++;
     if (term->press > term->num)
         term->press = 1;
