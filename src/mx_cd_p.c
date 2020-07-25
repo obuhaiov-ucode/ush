@@ -24,8 +24,10 @@ static char *get_back_dir_p(t_app *app) {
 
 static char *check_path(char *argv[], t_app *app) {
     char *ch = NULL;
-
-    if (app->in_pwd) {
+    
+    if(!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
+        ch = mx_strdup(app->pwd_p);
+    else if (app->in_pwd) {
         ch = strndup(app->pwd_l,
                 strlen(app->pwd_l) - strlen(argv[app->cur_arg - 1]));
         ch = mx_strjoin(ch, argv[app->cur_arg]);

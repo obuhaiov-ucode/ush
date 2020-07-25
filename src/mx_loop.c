@@ -73,7 +73,7 @@ static void run_cat(t_st *st, char *cmd, char **tok, pid_t pid) {
 }
 
 void mx_loop(char *cmd, t_config* term, t_st *st) {
-    
+    //system("leaks -q ush");
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         if (cmd[0] != 39 && mx_check_quotes(cmd) == 1) {
@@ -87,8 +87,9 @@ void mx_loop(char *cmd, t_config* term, t_st *st) {
             st->commands = mx_split_line(st->cmd, 64, 0, 0);
             st->status = mx_simple_commands(st, st->commands, term);
             //mx_del_strarr(&st->commands);
+            //mx_del_chararr(st->cmd);
         }
-    } 
+    }
     fflush(stdin);
     fflush(stdout);
 }

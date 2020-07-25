@@ -1,10 +1,11 @@
 #include "ush.h"
 
 char *mx_free_str(char *str, char *buf) {
-    //char *tmp = mx_strdup(str);
+    char *tmp = NULL;
+
     mx_strdel(&str);
-    str = mx_strdup(buf);
+    tmp = mx_strdup(buf);
     mx_strdel(&buf);
-    return str;
+    return tmp;
 }
 

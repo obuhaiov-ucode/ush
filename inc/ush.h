@@ -86,7 +86,7 @@ typedef struct s_app {
     bool echo_flag_n;
     bool echo_flag_E;
     bool echo_flag_e;
-    int echo_start_of_file;
+    int st; //echo 
     bool echo_single_quotes;
     bool echo_double_quotes;
     bool echo_without_qoutes;
