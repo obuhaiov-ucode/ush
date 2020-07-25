@@ -27,6 +27,5 @@ int main(int argc, char **argv, char **env) {
         pipe_or_file(term, argv[1]);
     else
         mx_lp(term, hist);
-    // system("leaks -q ush");
     return 0;
 }

@@ -9,7 +9,8 @@ int mx_print_error_env(char ch, int err, char *str) {
         else if (err == 2)
             fprintf(stderr, "env: bad option: -- %c\n", ch);
         fprintf(stderr, "usage: env [-i] [-P utilpath] [-u name]\n");
-        fprintf(stderr, "           [name=value ...] [utility [argument ...]]\n");
+        fprintf(stderr, 
+            "           [name=value ...] [utility [argument ...]]\n");
     }
     return EXIT_FAILURE;
 }

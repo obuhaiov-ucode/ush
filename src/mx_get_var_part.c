@@ -1,7 +1,3 @@
-//
-// Created by Pavlo Symonov on 3/6/20.
-//
-
 #include "ush.h"
 
 char *mx_get_env_name(char *var) {

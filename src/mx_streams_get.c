@@ -27,12 +27,11 @@ static void streams_get_midl(t_st *st, int n) {
     st->fbuf[n] = NULL;
 }
 
-char ***mx_streams_get(t_st *st, char **tokens, t_app *app) {
+char ***mx_streams_get(t_st *st, char **tokens) {
     int n = mx_count_pipes(st, tokens) + 1;
     char ***tok = (char ***)malloc(sizeof(char **) * (n + 1));
     char **tmp = NULL;
 
-    (void)app;
     tok[n] = NULL;
     streams_get_midl(st, n);
     for (int i = 0; i < n; i++) {

@@ -22,95 +22,45 @@ static void switch_flags(char *argv[], t_app *app) {
     }
 }
 
-static void cheсk_all_quotes(char *argv[], t_app *app) {
-    char *buf = NULL;
+void check_sound(char *out, t_app *app) {
+    for (int i = 0; out[i] != '\0'; i++)
+        if (out[i] == '\a')
+            app->echo_only_sound = 1;
 
-    for (int i = app->st; argv[i] != NULL; i++) {
-        for (int j = 0; j < mx_strlen(argv[i]); j++) {
-            if(app->echo_single_quotes || app->echo_without_qoutes){
-                if(argv[i][j] == '\'') {
-                    buf = mx_replace_substr(argv[i], "\'", "");
-                    argv[i] = mx_free_str(argv[i], buf);
-                }
-            }
-            else if(app->echo_double_quotes || app->echo_without_qoutes) {
-                if(argv[i][j] == '\"') {
-                    buf = mx_replace_substr(argv[i], "\"", "");
-                    argv[i] = mx_free_str(argv[i], buf);
-                }
-            }
-        }
-    }
 }
 
-static void del_first(char *argv[], int lf, t_cmd *cmd, t_app *app) {
-    char *buf = NULL;
-    int ll = cmd->argc > 1 ? mx_strlen(argv[cmd->argc - 1]) : 0;
-
-    if(argv[app->st] && !argv[app->st + 1]) {
-        if ((argv[app->st][0] == '\"' && argv[app->st][lf - 1] == '\"')
-            || (argv[app->st][0] == '\'' 
-            && argv[app->st][lf - 1] == '\'')) {
-            buf = strndup(&argv[app->st][1], lf - 2);
-            mx_free_str(argv[app->st], buf);
-        }
-    }
-    else if (argv[app->st + 1]) {
-        if ((argv[app->st][0] == '\"' && argv[cmd->argc - 1][ll - 1] == '\"') 
-            || (argv[app->st][0] == '\'' && argv[cmd->argc - 1][ll] == '\'')) {
-            buf = mx_strdup(&argv[app->st][1]);      
-            argv[app->st] = mx_free_str(argv[app->st], buf);
-            buf = strndup(argv[cmd->argc - 1], ll - 1);
-            argv[cmd->argc - 1] = mx_free_str(argv[cmd->argc - 1], buf);
-        }
-    }  
-}
-
-static void cheсk_first_quotes(t_cmd *cmd, char *argv[], t_app *app) {
-    app->echo_flag_n = 0;
-    app->echo_flag_E = 0;
-    app->st = 1;
-    switch_flags(argv, app);
-        if(argv[app->st]) {
-    app->echo_single_quotes = 0;
-    app->echo_double_quotes = 0;
-    int lf = mx_strlen(argv[1]);
-
-    if((argv[app->st][0] == '\'') 
-        || (argv[app->st][lf - 1] == '\''))
-        app->echo_single_quotes = 1;
-    if((argv[app->st][0] == '\"') || (argv[app->st][lf - 1] == '\''))
-        app->echo_double_quotes = 1;
-    if(!app->echo_single_quotes && !app->echo_double_quotes)
-        app->echo_without_qoutes = 1;
+void echo_print_new_line(t_app *app, char *argv[]) {
+    char c = 7;
     
-    del_first(argv, lf, cmd, app);
-    cheсk_all_quotes(argv, app);
-    }
-}
-
-int mx_echo_builtin(char *argv[], t_app *app, t_cmd *cmd) {
-    char *checked_argv = NULL;
- 
-    cheсk_first_quotes(cmd, argv, app);
-        for (int i = app->st; argv[i] != NULL; i++) {
-            if(app->echo_flag_E )
-                write(1, argv[i], mx_strlen(argv[i])); // check without shesh; check_sound
-            else {
-                checked_argv = mx_control_chars(argv[i]);
-                write(1, checked_argv, mx_strlen(checked_argv));
-                mx_strdel(&checked_argv);
-            }
-            if(argv[i+1])
-                write(1, " ", 1);
-            }
+    if(app->echo_only_sound)
+        write(1, &c, 1);
     if(!app->echo_flag_n)
         write(1, "\n", 1);
-    if(app->echo_flag_n && argv[app->st]) {
+    if(app->echo_flag_n && (argv[app->st] 
+        && mx_strcmp(argv[app->st], "\\a") != 0)) {
+            write(2,argv[app->st], mx_strlen(argv[app->st]));
         write(1, "\x1b[30m\x1b[107m", strlen("\x1b[30m\x1b[107m"));
         write(1, "%", 1);
         write(1, "\x1b[0m", strlen("\x1b[0m"));
         write(1, "\n", 1);
     }
+}
+
+int mx_echo_builtin(char *argv[], t_app *app) {
+    char *checked_argv = NULL;
+ 
+    switch_flags(argv, app);
+    for (int i = app->st; argv[i] != NULL; i++) {
+        if(app->echo_flag_E )
+            write(1, argv[i], mx_strlen(argv[i]));
+        else {
+            checked_argv = mx_control_chars(argv[i]);
+            write(1, checked_argv, mx_strlen(checked_argv));
+            mx_strdel(&checked_argv);
+        }
+        if(argv[i+1])
+            write(1, " ", 1);
+        }
+    echo_print_new_line(app, argv);
     return EXIT_SUCCESS;
 }

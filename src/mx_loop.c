@@ -77,9 +77,6 @@ void mx_loop(char *c, int len, t_config* term, t_st *st) {
 
     if (len > 0)
         cmd = mx_strndup(c, len);
-    // for (int i = 0; cmd[i] != '\0'; i++)
-    //     write(1, &cmd[i], 1);
-    // printf("%s\n", cmd);
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
@@ -95,6 +92,4 @@ void mx_loop(char *c, int len, t_config* term, t_st *st) {
             st->status = mx_simple_commands(st, st->commands, term);
         }
     }
-    fflush(stdin);
-    fflush(stdout);
 }

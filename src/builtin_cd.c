@@ -37,8 +37,8 @@ static int *standart_check_flags(char *argv[], t_app *app, int *fl) {
 
 static int *get_flags(char *argv[], t_app *app) {
     int *fl = init_fl();
+    
     app->cur_arg = 0;
-
     if (argv[1] && argv[1][0] != '-') {
         app->cur_arg = 1;
         return fl;
@@ -59,13 +59,11 @@ static int check_arg(char *argv[], t_app *app, int *f) {
     char *our = f[1] ? strstr(app->pwd_p, argv[app->cur_arg]) :
             strstr(app->pwd_l, argv[app->cur_arg]) ;
 
-    if (our != NULL && mx_strcmp(argv[app->cur_arg], our) == 0)
-        app->in_pwd = 1;
-    else
-        app->in_pwd = 0;
+    mx_check_in_pwd(our, argv, app);
     if ((argv[app->cur_arg] && argv[app->cur_arg + 1]
-            && !argv[app->cur_arg + 2] && !app->in_pwd) ||
-            (strcmp(argv[app->cur_arg], "-") == 0 && argv[app->cur_arg + 1])) {
+            && !argv[app->cur_arg + 2] && !app->in_pwd) 
+            || (strcmp(argv[app->cur_arg], "-") == 0
+            && argv[app->cur_arg + 1])) {
             fprintf(stderr, "cd: string not in pwd: %s\n", argv[app->cur_arg]);
             return -1;
         }

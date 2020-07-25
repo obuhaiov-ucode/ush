@@ -227,8 +227,7 @@ void mx_sighandler(int signum);
 
 int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
-//char *mx_echo_builtin(char *argv[], t_app *app);
-int mx_echo_builtin(char *argv[], t_app *app, t_cmd *cmd);
+int mx_echo_builtin(char *argv[], t_app *app);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
 int mx_cd_p(char *argv[], t_app *pwd, int *flag);
 int mx_cd_l(char *argv[], t_app *app, int *flag);
@@ -240,6 +239,7 @@ int mx_swap_pwd (char *ch, char *argv[], t_app *app, int *flag);
 bool mx_is_builtin(char *str);
 char *mx_join(char *dst, char *str);
 char *mx_free_str(char *str, char *buf);
+void mx_check_in_pwd(char *our, char *argv[], t_app *app);
 
 int mx_match_search(char *str, char *regex);
 void mx_clearenv(void);
@@ -324,9 +324,11 @@ void mx_run_in_cat(t_st *st, char **tok);
 char *mx_get_clear_cmd(char *cmd, int k);
 char *mx_multinput(char *file, char *tmp, char *res);
 void mx_choose_way(t_config* term, t_hist **hist);
+int mx_echo_special(char c);
+int mx_not_need(char b, char c);
 
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
-char ***mx_streams_get(t_st *st, char **tokens, t_app *app);
+char ***mx_streams_get(t_st *st, char **tokens);
 int mx_counter(char cmd, char need, int count);
 int mx_ncounter(char cmd, char *need, int count, int n);
 int mx_combcounter(char cmd1, char cmd2, char *need, int count);
@@ -336,7 +338,6 @@ char *mx_get_com_sub(t_config *term, char *begin, char *midl, char *final);
 int mx_xcounter(char cmd, char *not_need, int n);
 char *mx_get_argv(char *file, char *res);
 int mx_xcombcounter(char cmd1, char cmd2, char *first_need, int count);
-void mx_del_conveer(t_st *st);
 int mx_get_start_sub(char *cmd);
 void mx_del_chararr(char *arr);
 int mx_builtin_alias(t_st *st, char **tokens, char *name, char *all);

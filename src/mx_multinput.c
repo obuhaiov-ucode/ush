@@ -12,8 +12,6 @@ char *mx_multinput(char *file, char *tmp, char *res) {
         perror("ush: ");
     fclose(mf);
     n = mx_strlen(line);
-    // for (; line[n] != '\n'; n--);
-    // line[n + 1] = '\0';
     if (tmp != NULL) {
         res = mx_strjoin(tmp, line);
         mx_del_chararr(tmp);

@@ -131,7 +131,6 @@ SRCOUT = main.c \
         mx_xcounter.c \
         mx_get_argv.c \
         mx_xcombcounter.c \
-        mx_del_conveer.c \
         mx_get_start_sub.c \
         mx_del_chararr.c \
         mx_get_commands.c \
@@ -215,6 +214,9 @@ SRCOUT = main.c \
         mx_free_str.c \
         mx_choose_way.c \
         mx_tokinize.c \
+        mx_echo_special.c \
+        mx_not_need.c \
+        mx_check_in_pwd.c
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

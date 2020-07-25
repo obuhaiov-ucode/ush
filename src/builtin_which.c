@@ -3,12 +3,12 @@
 static int get_flags(char *argv[], int *i) {
     int flag = 0;
 
-    while(argv[(*i)]) {
-        if(argv[*i][0] =='-') {
+    while (argv[(*i)]) {
+        if (argv[*i][0] =='-') {
             for (int j = 1; j < mx_strlen(argv[*i]) && flag != -1; j++) {
                 if (argv[*i][j] == 's')
                     flag = 1;
-                else if(argv[*i][j] == 'a')
+                else if (argv[*i][j] == 'a')
                     flag = (flag == 1) ? 1 : 2;
                 else {
                     fprintf(stderr, "which: bad option: -%c\n", argv[*i][j]);
@@ -22,11 +22,6 @@ static int get_flags(char *argv[], int *i) {
     }
     return flag;
 }
-
-//-1 = bad option;
-//0 = standart output;
-//1 = flag "s";
-//2 = flag "a";
 
 static bool is_command(char *str) {
     struct stat st;
@@ -43,7 +38,7 @@ static bool is_command(char *str) {
 static char *search_in_bin(char *argv, char **split_path) {
     char *full_dir;
 
-    for(int i = 0; split_path[i]; i++) {
+    for (int i = 0; split_path[i]; i++) {
         full_dir = mx_join(mx_strjoin(split_path[i], "/"), argv);
         if (is_command(full_dir)) {
             return full_dir;

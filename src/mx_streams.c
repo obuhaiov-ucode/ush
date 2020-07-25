@@ -49,7 +49,7 @@ static void run_builtin_command(t_cmd *cmd, t_app *app) {
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
         else if (cmd->builtin == b_echo)
-            app->status = mx_echo_builtin(cmd->argv, app, cmd);
+            app->status = mx_echo_builtin(cmd->argv, app);
         else if (cmd->builtin == b_pwd)
             app->status = mx_pwd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_env)
@@ -81,10 +81,7 @@ static void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    // for (int i = 0; tokens[i] != NULL; i++)
-    //     printf("%s  ", tokens[i]);
-    // printf("\n\n");
-    //st->status = app->status;
+    
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;
         cmd->argv = tokens;

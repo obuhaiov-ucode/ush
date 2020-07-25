@@ -18,9 +18,5 @@ int mx_parent_cat(t_st *st, int n, pid_t pid, char line[8192]) {
     wait(&pid);
     st->status = WEXITSTATUS(st->status);
     mx_file_output_cat(st);
-    // write(1, "X", 1);
-    // if (st->cout == 0 && st->cend == 0 && st->cin != 0)
-    //     write(1, "\n", 1);
-    // write(1, "X", 1);
     return st->status;
 }

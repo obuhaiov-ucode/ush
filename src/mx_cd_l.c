@@ -4,8 +4,8 @@ static char *get_back_dir_l(t_app *app) {
     char * link_path = NULL;
     char ** split_path = mx_strsplit(app->pwd_l, '/');
     int sum_strlen = 0;
-    app->dot_dir = app->dd_slesh ? app->dot_dir : app->dot_dir - 1;
 
+    app->dot_dir = app->dd_slesh ? app->dot_dir : app->dot_dir - 1;
     if (mx_arr_len(split_path) <= app->dot_dir) {
         mx_del_strarr(&split_path);
         return NULL;
@@ -61,7 +61,7 @@ static char *check_path(char *argv[], t_app *app) {
 int mx_cd_l(char *argv[], t_app *app, int *flag) {
     char *ch = NULL;
      
-    if(!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
+    if (!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
         ch = mx_strdup(app->pwd_l);
     else if (!mx_strcmp(argv[app->cur_arg], "-")) {
         if ((mx_is_link(app->old_pwd_l) == 1 && flag[0] == 1)) {

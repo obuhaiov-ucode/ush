@@ -7,7 +7,7 @@ void mx_liststr_push_back(t_liststr **head, char *key, char *value) {
     if (head == NULL)
         return;
 
-    if (*head == NULL) {  // if list is empty
+    if (*head == NULL) {
         mx_liststr_push_front(head, key, value);
         return;
     }
