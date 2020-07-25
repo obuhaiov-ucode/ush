@@ -19,24 +19,45 @@ static int count_processor(DIR *mydir) {
             count++;
     }
     return count;
+    printf("%d\n", count);
+}
+
+static void count_commands(t_config *term) {
+    char *cmd[3] = {"/usr/bin", "/bin", "/sbin"};
+    DIR *mydir;
+
+    for (int j = 0; j < 3; j++) {
+        if ((mydir = opendir(cmd[j])) != NULL)
+            term->count += count_processor(mydir);
+        closedir(mydir);
+    }
+}
+
+static void add_commands(t_config *term, int i) {
+    char *cmd[3] = {"exit", "history", "help"};
+
+    for (int j = 0; j < 3; j++, i++)
+        term->command[i] = mx_strdup(cmd[j]);
 }
 
 void mx_get_commands(t_config *term) {
+    char *cmd[3] = {"/usr/bin", "/bin", "/sbin"};
     struct dirent *dirptr;
     DIR *mydir;
     int i = 0;
+    int j = 0;
 
-    if ((mydir = opendir("/bin")) != NULL) {
-        term->count = count_processor(mydir);
-    }
-    closedir(mydir);
-    term->command = (char **)malloc(sizeof(char *) * (term->count));
-    if ((mydir = opendir("/bin")) != NULL) {
-        while((dirptr = readdir(mydir)) != NULL) {
-            if (dirptr->d_name[0] != '.'
-                && comparator(dirptr->d_name) == 0)
-                term->command[i++] = mx_strdup(dirptr->d_name);
+    count_commands(term);
+    term->command = (char **)malloc(sizeof(char *) * (term->count + 3));
+    for (j = 0; j < 3; j++) {
+        if ((mydir = opendir(cmd[j])) != NULL) {
+            while((dirptr = readdir(mydir)) != NULL) {
+                if (dirptr->d_name[0] != '.'
+                    && comparator(dirptr->d_name) == 0)
+                    term->command[i++] = mx_strdup(dirptr->d_name);
+            }
         }
+        closedir(mydir);
     }
-    closedir(mydir);
+    add_commands(term, i);
 }

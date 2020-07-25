@@ -14,7 +14,7 @@ static void single_assumption(t_config *term, char *str) {
 static void print_assumptions(t_config *term, int total_len) {
     write(1, "\n\r", 2);
     for (int i = 0; i < term->num;) {
-        total_len += term->max_len + 8;
+        total_len += term->max_len;
         if (total_len <= term->col) {
             write(1, term->buf[i], strlen(term->buf[i]));
             if ((int)strlen(term->buf[i]) < term->max_len) {
@@ -22,7 +22,6 @@ static void print_assumptions(t_config *term, int total_len) {
                      k <= term->max_len - (int)strlen(term->buf[i]); k++)
                     write(1, " ", 1);
             }
-            write(1, "\t", 1);
             i++;
         }
         else {
@@ -38,7 +37,7 @@ static void multi_assumption(t_config *term) {
 
     if (term->press == 0 && term->num > 1)
         term->mo_y = term->out->len + 1;
-    else if (term->press == 0 && term-> num == 1) {
+    else if (term->press == 0 && term->num == 1) {
         single_assumption(term, term->buf[0]);
         term->press = 0;
         term->num = 0;
@@ -68,7 +67,7 @@ void mx_tab_action(t_config *term) {
         write(1, "\x1b[J", 3);
         mx_get_cursor(&term->y, &term->x);
         if (term->press == 0) {
-            for (int i = 0; i < term->count; i++) {
+            for (int i = 0; i < term->count + 3; i++) {
                 if (!strncmp(term->out->line,
                     term->command[i], term->out->len))
                     term->buf[term->num++] = mx_strdup(term->command[i]);
