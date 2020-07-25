@@ -17,4 +17,5 @@ echo		exit		echo -n "sequence"		exit		echo -n "sequence"		echo -n "sequence"		ex
 "		echo "
 "		echo "
 "		echo		ls		exit		ex		first		second		echo "
+"		exit		echo "
 "		exit		
