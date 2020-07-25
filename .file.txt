@@ -12,4 +12,4 @@ asd"		echo "some
 "		'
 '		\'		\'		'\'		'\\\\\'		\'\'		'\'\'		"\"""		'\'''		`\```		echo \'\"\$\(\\\)\`file\ name		echo		echo 123		pwd		
 >>>>>>> 045dab90867573bb17cc668131229a1925d0e904
-echo		exit		echo -n "sequence"		exit		echo -n "sequence"		echo -n "sequence"		exit		
+echo		exit		echo -n "sequence"		exit		echo -n "sequence"		echo -n "sequence"		exit		echo		echo		echo		exit		echo		echo		echo		exit]		exit		

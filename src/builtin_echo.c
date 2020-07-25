@@ -53,7 +53,7 @@ static void del_first(char *argv[], int lf, t_cmd *cmd, t_app *app) {
             && argv[app->st][lf - 1] == '\'')) {
             buf = strndup(&argv[app->st][1], lf - 2);
             mx_free_str(argv[app->st], buf);
-       }
+        }
     }
     else if (argv[app->st + 1]) {
         if ((argv[app->st][0] == '\"' && argv[cmd->argc - 1][ll - 1] == '\"') 
@@ -71,7 +71,7 @@ static void cheсk_first_quotes(t_cmd *cmd, char *argv[], t_app *app) {
     app->echo_flag_E = 0;
     app->st = 1;
     switch_flags(argv, app);
-     if(argv[app->st]) {
+        if(argv[app->st]) {
     app->echo_single_quotes = 0;
     app->echo_double_quotes = 0;
     int lf = mx_strlen(argv[1]);
@@ -83,7 +83,7 @@ static void cheсk_first_quotes(t_cmd *cmd, char *argv[], t_app *app) {
         app->echo_double_quotes = 1;
     if(!app->echo_single_quotes && !app->echo_double_quotes)
         app->echo_without_qoutes = 1;
-     
+    
     del_first(argv, lf, cmd, app);
     cheсk_all_quotes(argv, app);
     }
