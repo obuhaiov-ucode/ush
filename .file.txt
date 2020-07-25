@@ -1,6 +1,4 @@
-eit		echo "some
-text"		exit		echo "some
-ttt"		echo 'some
-rrrt'		echo "some
-ttt"		exit		echo "some
-text"		exit		
+ls		echo "some
+text"		echo "edge
+"		echo		eho		echo		echo ""		echo "edge
+"		exit		
