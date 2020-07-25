@@ -76,10 +76,10 @@ void mx_loop(char *cmd, t_config* term, t_st *st) {
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
-        if (mx_check_quotes(st->cmd) == 1) {
-            write(2, "Odd number of quotes.\n", 22);
-            exit(1);
-        }
+        // if (mx_check_quotes(st->cmd) == 1) {
+        //     write(2, "Odd number of quotes.\n", 22);
+        //     exit(1);
+        // }
         if (strstr(cmd, "cat") && (int)strcspn(cmd, "|") == mx_strlen(cmd))
             run_cat(st, cmd, NULL, 0);
         else {

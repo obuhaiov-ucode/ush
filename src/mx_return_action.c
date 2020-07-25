@@ -10,6 +10,11 @@ static void history_entries(t_config *term) {
         memcpy(term->str + term->str_len, term->out->line, term->out->len);
         term->str_len = term->str_len + term->out->len;
     }
+    if (term->quo[0]) {
+        term->str_len = term->str_len + 2;
+        term->str = realloc(term->str, term->str_len);
+        strcat(term->str, "\r\n");
+    }
 }
 
 static void clean_up(t_config *term) {

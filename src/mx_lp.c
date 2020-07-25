@@ -24,10 +24,10 @@ static void clean_up(t_config* term) {
 
 static void write_hist(int len, char *str, char *file) {
     char *tmp = mx_strndup(str, len);
-    FILE * fp;
+    FILE *fp;
 
     fp = fopen (file, "a");
-    fprintf(fp, "%s\t", tmp);
+    fprintf(fp, "%s\t\t", tmp);
     fclose(fp);
     free(tmp);
 }
