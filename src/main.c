@@ -12,6 +12,7 @@ static void pipe_or_file(t_config *term, char *file) {
     else
         term->cmd = mx_get_argv(file, NULL);
     mx_loop(term->cmd, term, (t_st *)term->st);
+    mx_del_chararr(term->cmd);
 }
 
 int main(int argc, char **argv, char **env) {
@@ -26,6 +27,6 @@ int main(int argc, char **argv, char **env) {
         pipe_or_file(term, argv[1]);
     else
         mx_lp(term, hist);
-    //system("leaks -q ush");
+    // system("leaks -q ush");
     return 0;
 }

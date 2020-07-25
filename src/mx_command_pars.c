@@ -57,24 +57,12 @@ static int no_buf(char *c, int i, int n) {
     return 1;
 }
 
-// static int streams_echo(char *main_c, t_st *st, t_config* term, char *c) {
-//     char **tokens = malloc(sizeof(char *) * 3);
-//     char **res = NULL;
-
-//     res = mx_streams_cd(c, st, 64, main_c);
-//     tokens[0] = mx_strdup(main_c);
-//     tokens[1] = mx_echo_builtin(res, (t_app *)term->app);
-//     tokens[2] = NULL;
-//     mx_del_strarr(&res);
-//     st->status = mx_streams(st, tokens, (t_app *)term->app);
-//     return st->status;
-// }
-
 int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     char **tokens = NULL;
-    
+    //printf("c = %s\n", c);
     c = cmd_del_spaces(c);
-    c = mx_without_slash(c, NULL, 0, 0);
+    // if (c[0] != 39)
+    //     c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(c, 0, 0) == 1) {
         tokens = mx_streams_cd(c, st, 64, main_c);
@@ -84,6 +72,7 @@ int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
             st->status = mx_streams(st, tokens, (t_app *)term->app);
     }
     else {
+        free(main_c);
         tokens = midl_pars(st, c, 0, 64);
         st->status = mx_conveer(st, tokens, term);
     }

@@ -12,7 +12,6 @@ static int *init_fl() {
 //fl[1] = p;
 //fl[2] = dash;
 //fl[3] = home;
-
 static int *standart_check_flags(char *argv[], t_app *app, int *fl) {
     for (app->cur_arg = 1; argv[app->cur_arg] != NULL; app->cur_arg++) {
         if (strcmp(argv[app->cur_arg], "-") == 0) {
@@ -81,24 +80,21 @@ static int check_arg(char *argv[], t_app *app, int *f) {
 
 int mx_cd_builtin(char *argv[], t_app *app) {
     int *flag = get_flags(argv, app);
-
-    if(!argv[1] || argv[app->cur_arg] == NULL  || flag[3] == 1) {
-        if(mx_swap_pwd(app->home, argv, app, flag) == 0)
-            return EXIT_SUCCESS;
-    }
+  
+    if(!argv[1] || argv[app->cur_arg] == NULL  || flag[3] == 1)
+        mx_swap_pwd(app->home, argv, app, flag);
     else if (argv[app->cur_arg] && check_arg(argv, app, flag) == 0) {
         if (mx_is_link(argv[app->cur_arg]) == 1 && flag[0] == 1)
-           fprintf(stderr, "cd: not a directory: %s\n", argv[app->cur_arg]);
+            fprintf(stderr, "cd: not a directory: %s\n", argv[app->cur_arg]);
         else if (flag[1] == 1) {
-           if (mx_cd_p(argv, app, flag) == 0)
-               return EXIT_SUCCESS;
+            if (mx_cd_p(argv, app, flag) == 0)
+                return EXIT_SUCCESS;
         }
         else if (flag[1] == 0) {
-           if (mx_cd_l(argv, app, flag) == 0)
-               return EXIT_SUCCESS;
+            if (mx_cd_l(argv, app, flag) == 0)
+                return EXIT_SUCCESS;
         }
     }
-    else
-        free(flag);
+    free(flag);
     return EXIT_FAILURE;
 }

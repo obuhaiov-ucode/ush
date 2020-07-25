@@ -9,7 +9,7 @@ static int count_new(char *c, int n, int k, int i) {
                 if ((k - i) % 4 > 0)
                     n++;
             }
-            else if (mx_any_count(c[k]) && (k - i) > 2) {
+            else if (mx_any_count(c[k]) && k - i > 2) {
                 n += (k - i - 1) / 4;
                 if ((k - i - 1) % 4 > 0)
                     n++;
@@ -35,7 +35,7 @@ static int count_slash(char *c, int i, int n, int k) {
             else
                 n++;
         }
-        else if (mx_any_count(c[k]) && (k - i) > 2) {
+        else if (mx_any_count(c[k]) && k - i > 2) {
             for (int j = 0; j < (k - i - 1) / 4; j++)
                 n++;
             if ((k - i - 1) % 4 > 0)
@@ -46,18 +46,22 @@ static int count_slash(char *c, int i, int n, int k) {
 }
 
 char *mx_without_slash(char *c, char *res, int k, int n) {
+    char line[1024];
+
     if ((n = count_new(c, 0, 0, 0)) != mx_strlen(c)) {
-        res = malloc(sizeof(char) * (n + 1));
-        res[n] = '\0';
+        memset(line, 0, 1024);
         n = 0;
         for (int i = 0; c[i] != '\0'; i++) {
             k = count_slash(c, i, 0, 0);
+            if (c[i] == '\\' && c[i + 1] == ' ')
+                k = 1;
             for (int j = 0; j < k; j++)
-                res[n++] = c[i];
+                line[n++] = c[i];
             for (; c[i] == '\\' && c[i] != '\0'; i++);
             if (c[i] != '\\')
-                res[n++] = c[i];
+                line[n++] = c[i];
         }
+        res = mx_strdup(line);
         mx_del_chararr(c);
         return res;
     }
