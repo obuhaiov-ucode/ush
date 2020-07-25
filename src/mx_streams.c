@@ -82,9 +82,9 @@ static void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    // for (int i = 0; tokens[i] != NULL; i++)
-    //     printf("%s  ", tokens[i]);
-    // printf("\n\n");
+    for (int i = 0; tokens[i] != NULL; i++)
+        printf("%s  ", tokens[i]);
+    printf("\n\n");
     //st->status = app->status;
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;

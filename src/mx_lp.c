@@ -48,7 +48,7 @@ static void reset(t_config* term, t_hist **hist) {
     else if (!strncmp("help", term->str, 4))
         mx_help(term->str);
     else
-        mx_loop(term->str, term, (t_st *)term->st);
+        mx_loop(term->str, term->str_len, term, (t_st *)term->st);
     if (hist[0]->line != NULL) {
         for (int i = 0; i < term->entry; i++) {
             free(hist[i]->line);
