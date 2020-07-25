@@ -59,18 +59,8 @@ static void create_history(t_config* term, t_hist **hist) {
             tmp = mx_multinput(term->file_hist, res, tmp);
             fclose(fp);
         }
-        if (strlen(tmp)) {
-            char *token = strtok(tmp, "\t\t");
-
-            for (int i = 0; token != NULL; i++, term->entry++) {
-                hist[i]->line = mx_strdup(token);
-                hist[i]->len = strlen(hist[i]->line);
-                token = strtok(NULL, "\t\t");
-            }
-            free(token);
-            free(tmp);
-            term->total = term->entry;
-        }
+        if (strlen(tmp))
+            mx_tokinize(term, hist, tmp);
     }
 }
 
