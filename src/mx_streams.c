@@ -31,7 +31,6 @@ static void run_system_command(t_cmd *cmd, t_app *app) {
         if ((cmd->argv[0][0] == 39 && cmd->argv[0][n] == 39)
             || (cmd->argv[0][0] == '"' && cmd->argv[0][n] == '"'))
             cmd->argv[0] = mx_get_clear_cmd(cmd->argv[0], 0);
-        // printf("binarniki\n");
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
             fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
             app->status = 127;
@@ -82,9 +81,9 @@ static void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    for (int i = 0; tokens[i] != NULL; i++)
-        printf("%s  ", tokens[i]);
-    printf("\n\n");
+    // for (int i = 0; tokens[i] != NULL; i++)
+    //     printf("%s  ", tokens[i]);
+    // printf("\n\n");
     //st->status = app->status;
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;

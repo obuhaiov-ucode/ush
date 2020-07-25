@@ -32,6 +32,8 @@ static void write_hist(int len, char *str, char *file) {
     free(tmp);
 }
 
+//void mx_choose
+
 static void reset(t_config* term, t_hist **hist) {
     write_hist(term->str_len, term->str, term->file_hist);
     term->reset = 0;
@@ -41,6 +43,7 @@ static void reset(t_config* term, t_hist **hist) {
     signal(SIGINT, mx_sighandler);
     signal(SIGQUIT, mx_sighandler);
     signal(SIGTSTP, SIG_IGN);
+
     if (!strncmp("clear", term->str, 5))
         mx_clear(term->str);
     else if (!strncmp("history", term->str, 7))
@@ -56,6 +59,7 @@ static void reset(t_config* term, t_hist **hist) {
             hist[i]->len = 0;
         }
     }
+
     clean_up(term);
     mx_raw_mode_on();
     mx_get_cursor(&term->y, &term->x);

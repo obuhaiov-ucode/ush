@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 ls		echo "some
 text"		echo "edge
 "		echo		eho		echo		echo ""		echo "edge
 "		exit		
+=======
+echo 123 | cat -e		echo 123 | cat -e		pwd | cat -e		ls | cat -e		echo "some
+files"		echo "some
+files"		exit		echo \'		echo '\'		echo '\'\'		echo "$(echo -n "Ave, Ceasr"), $(echo -n "morituri te salutant"\!)"		mkdir /tmp/dir\ \`\\name		cd /tmp/dir\ \`\\name		touch \'\"\$\(\\\)\`file\ name		ls		cd -		rm -rf /tmp/dir\ \`\\name		echo '\'		echo "some
+asd"		echo "some
+"		"
+"		'
+'		\'		\'		'\'		'\\\\\'		\'\'		'\'\'		"\"""		'\'''		`\```		echo \'\"\$\(\\\)\`file\ name		echo		echo 123		pwd		
+>>>>>>> 045dab90867573bb17cc668131229a1925d0e904
+echo		exit		echo -n "sequence"		exit		echo -n "sequence"		echo -n "sequence"		exit		
