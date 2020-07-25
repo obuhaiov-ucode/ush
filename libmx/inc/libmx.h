@@ -75,5 +75,6 @@ void mx_pop_back(t_list **head);
 int mx_list_size(t_list *list);
 void mx_swap_list(t_list *a, t_list *b); //
 t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
+char *mx_itoa(int number);
 
 #endif

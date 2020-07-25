@@ -5,6 +5,7 @@ INC =  ./inc/libmx.h
 HEAD = libmx.h 
 
 SRCS = ./src/mx_printchar.c \
+	./src/mx_itoa.c \
 	./src/mx_strlen.c \
 	./src/mx_print_unicode.c \
 	./src/mx_printstr.c \
@@ -65,6 +66,7 @@ SRCS = ./src/mx_printchar.c \
 	./src/mx_replace_substr.c \
 		
 SRCOUT = mx_printchar.c \
+	mx_itoa.c \
 	mx_print_unicode.c \
 	mx_strlen.c \
 	mx_printstr.c \
@@ -125,6 +127,7 @@ SRCOUT = mx_printchar.c \
 	mx_replace_substr.c \
 
 OBJS = ./obj/mx_printchar.o \
+	./obj/mx_itoa.o \
 	./obj/mx_print_unicode.o \
 	./obj/mx_strlen.o \
 	./obj/mx_printstr.o \
@@ -185,6 +188,7 @@ OBJS = ./obj/mx_printchar.o \
 	./obj/mx_replace_substr.o \
 
 OBJOUT = mx_printchar.o \
+	mx_itoa.o \
 	mx_print_unicode.o \
 	mx_strlen.o \
 	mx_printstr.o \
