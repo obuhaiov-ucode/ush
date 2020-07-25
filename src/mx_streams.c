@@ -23,13 +23,19 @@ static enum builtin_t parse_builtin(t_cmd *cmd) {
 
 static void run_system_command(t_cmd *cmd, t_app *app) {
     pid_t childPid;
+    int n = mx_strlen(cmd->argv[0]) - 1;
 
     if ((childPid = fork()) < 0)
         perror("ush: ");
     else if (childPid == 0) {
+        if ((cmd->argv[0][0] == 39 && cmd->argv[0][n] == 39)
+            || (cmd->argv[0][0] == '"' && cmd->argv[0][n] == '"'))
+            cmd->argv[0] = mx_get_clear_cmd(cmd->argv[0], 0);
+        // printf("binarniki\n");
         if (execvp(cmd->argv[0], cmd->argv) < 0) {
             fprintf(stderr, "ush: command not found: %s\n", cmd->argv[0]);
-            exit(1);
+            app->status = 127;
+            exit(127);
         }
     }
     if (!WIFEXITED(app->status) && !WIFSIGNALED(app->status))
@@ -44,7 +50,7 @@ static void run_builtin_command(t_cmd *cmd, t_app *app) {
         else if (cmd->builtin == b_which)
             app->status = mx_which(cmd->argv, app);
         else if (cmd->builtin == b_echo)
-            app->status = mx_echo_builtin(cmd->argv, app);
+            app->status = mx_echo_builtin(cmd->argv, app, cmd);
         else if (cmd->builtin == b_pwd)
             app->status = mx_pwd_builtin(cmd->argv, app);
         else if (cmd->builtin == b_env)
@@ -76,11 +82,10 @@ static void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    // for (int i = 0; tokens[i] != NULL; i++)
-    //     printf("%s\n", tokens[i]);
-
-
-    //app->status = st->status;
+    for (int i = 0; tokens[i] != NULL; i++)
+        printf("%s  ", tokens[i]);
+    printf("\n");
+    //st->status = app->status;
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;
         cmd->argv = tokens;

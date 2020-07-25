@@ -72,12 +72,17 @@ static int no_buf(char *c, int i, int n) {
 
 int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     char **tokens = NULL;
-    
+    //printf("c = %s\n", c);
     c = cmd_del_spaces(c);
-    c = mx_without_slash(c, NULL, 0, 0);
+    if (c[0] != 39)
+        c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));
     if (no_buf(c, 0, 0) == 1) {
+        //printf("c = %s\n", c);
         tokens = mx_streams_cd(c, st, 64, main_c);
+        // for (int i = 0; tokens[i] != NULL; i++)
+        //     printf("1 = %s\n", tokens[i]);
+        //tokens = mx_weird_slash(tokens, NULL, st, NULL);
         if (mx_strcmp(main_c, "alias") == 0)
             st->status = mx_builtin_alias(st, tokens, NULL, NULL);
         else

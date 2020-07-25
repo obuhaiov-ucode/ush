@@ -44,7 +44,7 @@ static char *search_in_bin(char *argv, char **split_path) {
     char *full_dir;
 
     for(int i = 0; split_path[i]; i++) {
-        full_dir = mx_join_to_path(mx_strjoin(split_path[i], "/"), argv);
+        full_dir = mx_join(mx_strjoin(split_path[i], "/"), argv);
         if (is_command(full_dir)) {
             return full_dir;
         }
@@ -94,7 +94,4 @@ int mx_which(char *argv[], t_app *app) {
     mx_del_strarr(&spl_path);
 return not_found;
 }
-
-
-
 

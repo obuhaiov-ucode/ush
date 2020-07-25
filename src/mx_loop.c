@@ -73,19 +73,20 @@ static void run_cat(t_st *st, char *cmd, char **tok, pid_t pid) {
 }
 
 void mx_loop(char *cmd, t_config* term, t_st *st) {
+    
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
-        st->cmd = cmd;
-        if (mx_check_quotes(st->cmd) == 1) {
+        if (cmd[0] != 39 && mx_check_quotes(cmd) == 1) {
             write(2, "Odd number of quotes.\n", 22);
             exit(1);
         }
         if (strstr(cmd, "cat") && (int)strcspn(cmd, "|") == mx_strlen(cmd))
             run_cat(st, cmd, NULL, 0);
         else {
+            st->cmd = cmd;
             st->commands = mx_split_line(st->cmd, 64, 0, 0);
             st->status = mx_simple_commands(st, st->commands, term);
-            mx_del_strarr(&st->commands);
+            //mx_del_strarr(&st->commands);
         }
     } 
     fflush(stdin);

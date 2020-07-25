@@ -87,6 +87,9 @@ typedef struct s_app {
     bool echo_flag_E;
     bool echo_flag_e;
     int echo_start_of_file;
+    bool echo_single_quotes;
+    bool echo_double_quotes;
+    bool echo_without_qoutes;
     t_environment *vars;
 
 } t_app;
@@ -225,7 +228,7 @@ void mx_sighandler(int signum);
 int mx_which(char *argv[], t_app *app);
 int mx_cd_builtin(char *argv[], t_app *app);
 //char *mx_echo_builtin(char *argv[], t_app *app);
-int mx_echo_builtin(char *argv[], t_app *app);
+int mx_echo_builtin(char *argv[], t_app *app, t_cmd *cmd);
 int mx_pwd_builtin(char *argv[], t_app *pwd);
 int mx_cd_p(char *argv[], t_app *pwd, int *flag);
 int mx_cd_l(char *argv[], t_app *app, int *flag);
@@ -234,10 +237,9 @@ bool mx_is_link(char *file);
 int mx_arr_len(char **arr);
 int mx_is_dot(char *argv, t_app *app);
 int mx_swap_pwd (char *ch, char *argv[], t_app *app, int *flag);
-char *mx_join_to_path(char *dst, char *str);
 bool mx_is_builtin(char *str);
-
-
+char *mx_join(char *dst, char *str);
+char *mx_free_str(char *str, char *buf);
 
 int mx_match_search(char *str, char *regex);
 void mx_clearenv(void);
@@ -318,6 +320,8 @@ int mx_parent_cat(t_st *st, int n, pid_t pid, char line[8192]);
 void mx_run_out_cat(t_st *st, char **tok);
 void mx_run_inout_cat(t_st *st, char **tok);
 void mx_run_in_cat(t_st *st, char **tok);
+char *mx_get_clear_cmd(char *cmd, int k);
+char *mx_multinput(char *file, char *tmp, char *res);
 
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
 char ***mx_streams_get(t_st *st, char **tokens, t_app *app);

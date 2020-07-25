@@ -20,13 +20,13 @@ static int check_any_cmd(char *c, int n, int i) {
     for (; c[n] != '\0'; n++) {
         for (; c[n] != '\0' && c[n] != '\\'; n++);
         for (i = n; c[i] == '\\' && c[i] != '\0'; i++);
-        if ((i - n) % 2 == 1 && mx_any_count(c[i]) != 1) {
+        if ((i - n) % 2 == 1 && c[i] == '\0') {
             write (2, "Odd number of backslashes.\n", 27);
             exit(1);
         }
         n = i;
     }
-    if (c[n - 1] == '\\' && c[n - 2] == ' ') {
+    if (n > 1 && c[n - 1] == '\\' && c[n - 2] == ' ') {
         write (2, "Odd number of backslashes.\n", 27);
         exit(1);
     }

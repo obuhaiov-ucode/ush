@@ -94,7 +94,7 @@ SRCOUT = main.c \
 		builtin_init_stract.c \
 		builtin_which.c \
 		mx_is_builtin.c \
-		mx_join_to_path.c \
+		mx_join.c \
         mx_init_struct.c \
         mx_replace_cmd.c \
         mx_malloc_err.c \
@@ -210,7 +210,9 @@ SRCOUT = main.c \
         mx_run_out_cat.c \
         mx_run_in_cat.c \
         mx_run_inout_cat.c \
-
+        mx_get_clear_cmd.c \
+        mx_multinput.c \
+        mx_free_str.c
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 
