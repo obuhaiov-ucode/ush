@@ -214,6 +214,7 @@ SRCOUT = main.c \
         mx_multinput.c \
         mx_free_str.c \
         mx_choose_way.c \
+        mx_tokinize.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

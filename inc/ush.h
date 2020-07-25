@@ -288,6 +288,7 @@ void mx_malloc_err();
 char **mx_split_line(char *line, int bufsize, int j, int k);
 char **mx_split_backup(char **tokens, int bufsize, int k);
 void mx_loop(char *c, int len, t_config* term, t_st *st);
+void mx_tokinize(t_config* term, t_hist **hist, char *tmp);
 int mx_simple_commands(t_st *st, char **commands, t_config* term);
 int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term);
 int mx_check_slash(char *line, int end);
