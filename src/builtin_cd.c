@@ -95,6 +95,7 @@ int mx_cd_builtin(char *argv[], t_app *app) {
                 return EXIT_SUCCESS;
         }
     }
-    free(flag);
+    else
+        free(flag);
     return EXIT_FAILURE;
 }
