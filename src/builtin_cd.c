@@ -81,7 +81,7 @@ static int check_arg(char *argv[], t_app *app, int *f) {
 int mx_cd_builtin(char *argv[], t_app *app) {
     int *flag = get_flags(argv, app);
   
-    if(!argv[1] || argv[app->cur_arg] == NULL  || flag[3] == 1)
+    if (!argv[1] || argv[app->cur_arg] == NULL  || flag[3] == 1)
         mx_swap_pwd(app->home, argv, app, flag);
     else if (argv[app->cur_arg] && check_arg(argv, app, flag) == 0) {
         if (mx_is_link(argv[app->cur_arg]) == 1 && flag[0] == 1)

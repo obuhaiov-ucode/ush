@@ -15,7 +15,6 @@ SRCS = ./src/mx_printchar.c \
 	./src/mx_hex_to_nbr.c \
 	./src/mx_strnew.c \
 	./src/mx_nbr_to_hex.c \
-	./src/mx_itoa.c \
 	./src/mx_foreach.c \
 	./src/mx_binary_search.c \
 	./src/mx_bubble_sort.c \
@@ -34,6 +33,7 @@ SRCS = ./src/mx_printchar.c \
 	./src/mx_strstr.c \
 	./src/mx_get_substr_index.c \
 	./src/mx_strncmp.c \
+	./src/mx_strncmp1.c \
 	./src/mx_count_substr.c \
 	./src/mx_count_words.c \
 	./src/mx_strtrim.c \
@@ -75,7 +75,6 @@ SRCOUT = mx_printchar.c \
 	mx_hex_to_nbr.c \
 	mx_strnew.c \
 	mx_nbr_to_hex.c \
-	mx_itoa.c \
 	mx_foreach.c \
 	mx_binary_search.c \
 	mx_bubble_sort.c \
@@ -94,6 +93,7 @@ SRCOUT = mx_printchar.c \
 	mx_strstr.c \
 	mx_get_substr_index.c \
 	mx_strncmp.c \
+	mx_strncmp1.c \
 	mx_count_substr.c \
 	mx_count_words.c \
 	mx_strtrim.c \
@@ -135,7 +135,6 @@ OBJS = ./obj/mx_printchar.o \
 	./obj/mx_hex_to_nbr.o \
 	./obj/mx_strnew.o \
 	./obj/mx_nbr_to_hex.o \
-	./obj/mx_itoa.o \
 	./obj/mx_foreach.o \
 	./obj/mx_binary_search.o \
 	./obj/mx_bubble_sort.o \
@@ -154,6 +153,7 @@ OBJS = ./obj/mx_printchar.o \
 	./obj/mx_strstr.o \
 	./obj/mx_get_substr_index.o \
 	./obj/mx_strncmp.o \
+	./obj/mx_strncmp1.o \
 	./obj/mx_count_substr.o \
 	./obj/mx_count_words.o \
 	./obj/mx_strtrim.o \
@@ -195,7 +195,6 @@ OBJOUT = mx_printchar.o \
 	mx_hex_to_nbr.o \
 	mx_strnew.o \
 	mx_nbr_to_hex.o \
-	mx_itoa.o \
 	mx_foreach.o \
 	mx_binary_search.o \
 	mx_bubble_sort.o \
@@ -214,6 +213,7 @@ OBJOUT = mx_printchar.o \
 	mx_strstr.o \
 	mx_get_substr_index.o \
 	mx_strncmp.o \
+	mx_strncmp1.o \
 	mx_count_substr.o \
 	mx_count_words.o \
 	mx_strtrim.o \
@@ -258,6 +258,7 @@ install:
 	@rm -rf $(SRCOUT) $(HEAD)
 
 uninstall: clean
+	@rm -rf libmx.a
 	@rm -rf $(NAME)
 
 clean:

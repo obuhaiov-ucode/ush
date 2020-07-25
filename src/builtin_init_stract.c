@@ -7,4 +7,3 @@ void mx_init (t_app *pwd) {
     pwd->pwd_p = getwd(NULL);
     pwd->old_pwd_p = mx_strdup(pwd->pwd_p);
 }
-

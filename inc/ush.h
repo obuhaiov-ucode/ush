@@ -323,6 +323,7 @@ void mx_run_inout_cat(t_st *st, char **tok);
 void mx_run_in_cat(t_st *st, char **tok);
 char *mx_get_clear_cmd(char *cmd, int k);
 char *mx_multinput(char *file, char *tmp, char *res);
+void mx_choose_way(t_config* term, t_hist **hist);
 
 char **mx_streams_term(t_st *st, char **tokens, int pipe, int i);
 char ***mx_streams_get(t_st *st, char **tokens, t_app *app);
