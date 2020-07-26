@@ -137,7 +137,8 @@ SRCOUT = main.c \
         mx_tokinize.c \
         mx_echo_special.c \
         mx_not_need.c \
-        mx_check_in_pwd.c
+        mx_check_in_pwd.c \
+        mx_single_qoute.c \
 
 SRCS = $(addprefix ./src/, $(SRCOUT))
 

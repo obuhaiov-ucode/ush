@@ -50,11 +50,14 @@ static char *midl_without(char *c, char *res, int n) {
     return res;
 }
 
+int mx_get_end_pos(char *del)
+
 static char *without_qoutes(char *del, char *c, char *res, int n) {
     char tmp[1024];
 
     if (del != NULL) {
         n = mx_strlen(del) - 1;
+        //mx_get_end_pos(del);
         if (del[n] == 39 || del[n] == '"') {
             n = 0;
             memset(tmp, 0, 1024);
@@ -91,6 +94,6 @@ char *mx_without_slash(char *c, char *res, int k, int n) {
         }
         res = mx_strndup(line, n);
     }
-    res = without_qoutes(res, c, NULL, 0);
+    res = without_qoutes(res, c, NULL, 0);  
     return res;
 }
