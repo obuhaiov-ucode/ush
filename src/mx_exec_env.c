@@ -72,5 +72,3 @@ int mx_exec_env(char **arr, char *path) {
     mx_strdel(&file_name);
     return status;
 }
-
-

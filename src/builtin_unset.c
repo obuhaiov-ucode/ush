@@ -10,7 +10,7 @@ int mx_builtin_unset(t_cmd *cmd, t_app *app) {
     for (int i = 1; cmd->argv[i] != NULL; i++) {
         if (unsetenv(cmd->argv[i]) != -1
             && mx_match_search(cmd->argv[i], MX_UNSET_ARG))
-                mx_env_del_var(cmd->argv[i], &app->vars);
+            mx_env_del_var(cmd->argv[i], &app->vars);
         else {
             fprintf(stderr, "unset: %s: invalid parameter name\n",
                     cmd->argv[i]);
@@ -19,4 +19,3 @@ int mx_builtin_unset(t_cmd *cmd, t_app *app) {
     }
     return res;
 }
-

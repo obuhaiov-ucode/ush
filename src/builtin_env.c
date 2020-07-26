@@ -7,7 +7,7 @@ int mx_print_error_env(char ch, int err, char *str) {
         if (err == 1)
             fprintf(stderr, "env: option requires an argument -- %c\n", ch);
         else if (err == 2)
-            fprintf(stderr, "env: bad option: -- %c\n", ch);
+            fprintf(stderr, "env: illegal option: -- %c\n", ch);
         fprintf(stderr, "usage: env [-i] [-P utilpath] [-u name]\n");
         fprintf(stderr, 
             "           [name=value ...] [utility [argument ...]]\n");
@@ -44,4 +44,3 @@ int mx_env_builtin(char *argv[]) {
     mx_strdel(&path);
     return status;
 }
-

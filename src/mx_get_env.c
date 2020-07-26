@@ -10,11 +10,11 @@ char *mx_get_env(char *c, int k) {
             n++;
     }
     else if ((c[k] >= 'a' && c[k] <= 'z')
-        || (c[k] >= 'A' && c[k] <= 'Z')) {
-        for (; (c[k] >= '0' && c[k] <= '9')
-            || (c[k] >= 'a' && c[k] <= 'z')
-            || (c[k] >= 'A' && c[k] <= 'Z'); k++)
-            n++;
+             || (c[k] >= 'A' && c[k] <= 'Z')) {
+            for (; (c[k] >= '0' && c[k] <= '9')
+                 || (c[k] >= 'a' && c[k] <= 'z')
+                 || (c[k] >= 'A' && c[k] <= 'Z'); k++)
+                n++;
     }
     res = mx_strndup(&c[first], n);
     return res;

@@ -28,4 +28,3 @@ int mx_swap_pwd (char *ch, char *argv[], t_app *app, int *flag) {
     else
         return -1;
 }
-

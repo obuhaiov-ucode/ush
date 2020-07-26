@@ -6,7 +6,7 @@ char *mx_get_argv(char *file, char *res) {
 
     if ((mf = fopen(file, "r")) == NULL)
         return NULL;
-    while(!feof(mf))
+    while (!feof(mf))
         fgets(line, 8191, mf);
     fclose(mf);
     res = mx_strdup(line);

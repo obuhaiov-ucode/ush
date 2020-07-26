@@ -21,4 +21,3 @@ char *mx_join(char *dst, char *str) {
         return mx_strdup(str);
     return mx_strdup(str);
 }
-

@@ -8,10 +8,14 @@ static int *init_fl() {
     }
     return fl;
 }
-//fl[0] = s;
-//fl[1] = p;
-//fl[2] = dash;
-//fl[3] = home;
+
+/*
+fl[0] = s;
+fl[1] = p;
+fl[2] = dash;
+fl[3] = home;
+*/
+
 static int *standart_check_flags(char *argv[], t_app *app, int *fl) {
     for (app->cur_arg = 1; argv[app->cur_arg] != NULL; app->cur_arg++) {
         if (strcmp(argv[app->cur_arg], "-") == 0) {
@@ -37,7 +41,7 @@ static int *standart_check_flags(char *argv[], t_app *app, int *fl) {
 
 static int *get_flags(char *argv[], t_app *app) {
     int *fl = init_fl();
-    
+
     app->cur_arg = 0;
     if (argv[1] && argv[1][0] != '-') {
         app->cur_arg = 1;
@@ -57,15 +61,15 @@ static int *get_flags(char *argv[], t_app *app) {
 
 static int check_arg(char *argv[], t_app *app, int *f) {
     char *our = f[1] ? strstr(app->pwd_p, argv[app->cur_arg]) :
-            strstr(app->pwd_l, argv[app->cur_arg]) ;
+                strstr(app->pwd_l, argv[app->cur_arg]) ;
 
     mx_check_in_pwd(our, argv, app);
     if ((argv[app->cur_arg] && argv[app->cur_arg + 1]
-            && !argv[app->cur_arg + 2] && !app->in_pwd) 
-            || (strcmp(argv[app->cur_arg], "-") == 0
-            && argv[app->cur_arg + 1])) {
-            fprintf(stderr, "cd: string not in pwd: %s\n", argv[app->cur_arg]);
-            return -1;
+        && !argv[app->cur_arg + 2] && !app->in_pwd) 
+        || (strcmp(argv[app->cur_arg], "-") == 0
+        && argv[app->cur_arg + 1])) {
+        fprintf(stderr, "cd: string not in pwd: %s\n", argv[app->cur_arg]);
+        return -1;
         }
     else if (argv[app->cur_arg] && argv[app->cur_arg + 2]) {
         fprintf(stderr, "cd: too many arguments\n");
@@ -78,7 +82,7 @@ static int check_arg(char *argv[], t_app *app, int *f) {
 
 int mx_cd_builtin(char *argv[], t_app *app) {
     int *flag = get_flags(argv, app);
-  
+
     if (!argv[1] || argv[app->cur_arg] == NULL  || flag[3] == 1)
         mx_swap_pwd(app->home, argv, app, flag);
     else if (argv[app->cur_arg] && check_arg(argv, app, flag) == 0) {

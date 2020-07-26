@@ -63,7 +63,7 @@ static void print_which(char *argv, int flag, t_app *app) {
             if (app->in_bin)
                 printf("%s\n", app->in_bin);
         }
-        else 
+        else
             printf("%s not found\n", argv);
     }
 }
@@ -82,11 +82,10 @@ int mx_which(char *argv[], t_app *app) {
     for (int i = index_of_command; argv[i] != NULL; i++) {
         app->wch_is_biltin = mx_is_builtin(argv[i]);
         app->in_bin = search_in_bin(argv[i], spl_path);
-        if((!app->in_bin && !app->wch_is_biltin) || flag == -1)
+        if ((!app->in_bin && !app->wch_is_biltin) || flag == -1)
             not_found = 1;
         print_which(argv[i], flag, app);
     }
     mx_del_strarr(&spl_path);
 return not_found;
 }
-

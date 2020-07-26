@@ -41,6 +41,7 @@ static int flags_finding(char **arr,  char **path, int *i) {
         }
         else if (arr[0][j] == 'u') {
             char *delname = get_flag_arg(arr, &j, &status, i);
+
             check_delname(delname, &status);
             delete_name(&delname);
         }

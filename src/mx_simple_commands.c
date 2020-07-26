@@ -12,7 +12,7 @@ int mx_simple_commands(t_st *st, char **commands, t_config* term) {
                 && (commands[i + 1][0] == '{' || commands[i + 1][0] == '('))
                 i += mx_complex_cmd(st, commands, i, i);
             else if ((commands[i][0] == '|' && st->status == 0)
-                || (commands[i][0] == '&' && st->status == 1))
+                     || (commands[i][0] == '&' && st->status == 1))
                 i += 2;
         }
     }

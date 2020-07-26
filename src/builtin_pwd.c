@@ -12,13 +12,13 @@ static bool switch_flags(char *argv[], t_app *pwd) {
             if (argv[i][j] == 'P')
                 pwd->flag_p = 1;
             else if ((argv[i][j] != 'P' && argv[i][j] != 'L'
-                && argv[i][j] != '-') || (argv[i][j] == '-' && j == 2)) {
+                     && argv[i][j] != '-') || (argv[i][j] == '-' && j == 2)) {
                 fprintf(stderr, "pwd: bad option: -%c\n", argv[i][j]);
                 return false;
             }
         }
-  }
-  return true;
+    }
+    return true;
 }
 
 static void check_last_simbols(t_app *pwd) {
@@ -38,12 +38,12 @@ static void check_double_slesh(t_app *app) {
     int len = mx_strlen(app->pwd_l);
 
     while (i < len) {
-      if(app->pwd_l[i] == '/')
-        i++;
-      else
-        break;
+        if(app->pwd_l[i] == '/')
+            i++;
+        else
+            break;
     }
-    if(app->pwd_l[0] == '/' && app->pwd_l[1] == '/') {
+    if (app->pwd_l[0] == '/' && app->pwd_l[1] == '/') {
         buf = mx_strndup(&app->pwd_l[i - 1], (mx_strlen(app->pwd_l) - i + 1));
         free(app->pwd_l);
         app->pwd_l = mx_strdup(buf);
@@ -53,7 +53,7 @@ static void check_double_slesh(t_app *app) {
 
 int mx_pwd_builtin(char *argv[], t_app *pwd) {
     pwd->flag_p = 0;
-    if(switch_flags(argv,pwd)) {
+    if (switch_flags(argv,pwd)) {
         check_double_slesh(pwd);
         check_last_simbols(pwd);
         if (pwd->flag_p) {

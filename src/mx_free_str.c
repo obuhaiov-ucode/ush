@@ -8,4 +8,3 @@ char *mx_free_str(char *str, char *buf) {
     mx_strdel(&buf);
     return tmp;
 }
-

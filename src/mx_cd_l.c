@@ -26,8 +26,8 @@ static char *standart_argv(char *argv[], t_app *app) {
     char *ch = NULL;
 
     if (!mx_strcmp(argv[app->cur_arg], "/")
-          || !mx_strcmp(argv[app->cur_arg],"/."))
-            ch = mx_strdup("/");
+        || !mx_strcmp(argv[app->cur_arg], "/."))
+        ch = mx_strdup("/");
     else {
         if (argv[app->cur_arg][0] == '/')
             ch = mx_strdup(argv[app->cur_arg]);
@@ -41,7 +41,7 @@ static char *standart_argv(char *argv[], t_app *app) {
 
 static char *check_path(char *argv[], t_app *app) {
     char * ch = NULL;
-    
+
     if (argv[app->cur_arg][0] == '.'
         && mx_is_dot(argv[app->cur_arg], app) == 0) {
         ch = get_back_dir_l(app);
@@ -49,7 +49,7 @@ static char *check_path(char *argv[], t_app *app) {
     }
     else if (app->in_pwd && mx_strcmp(argv[app->cur_arg],"/.") != 0) {
         ch = strndup(app->pwd_l,
-                strlen(app->pwd_l) - strlen(argv[app->cur_arg - 1]));
+                     strlen(app->pwd_l) - strlen(argv[app->cur_arg - 1]));
         ch = mx_strjoin(ch, argv[app->cur_arg]);
     }
     else if (argv[app->cur_arg] && argv[app->cur_arg][0] != '.') {
@@ -60,7 +60,7 @@ static char *check_path(char *argv[], t_app *app) {
 
 int mx_cd_l(char *argv[], t_app *app, int *flag) {
     char *ch = NULL;
-     
+
     if (!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
         ch = mx_strdup(app->pwd_l);
     else if (!mx_strcmp(argv[app->cur_arg], "-")) {

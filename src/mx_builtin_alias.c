@@ -44,7 +44,7 @@ static char **new_alias(char *cmd, char **alias) {
     for (; alias[i] != NULL; i++);
     res = malloc(sizeof(char *) * (i + 2));
     for (int j = 0; alias[j] != NULL; j++)
-        res[j] = mx_strdup(alias[j]);
+         res[j] = mx_strdup(alias[j]);
     res[i] = mx_strdup(cmd);
     res[i + 1] = NULL;
     mx_del_strarr(&alias);

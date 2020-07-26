@@ -61,4 +61,3 @@ int mx_is_dot(char *argv, t_app *app) {
         }
     }
 }
-

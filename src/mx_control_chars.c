@@ -3,8 +3,8 @@
 static void check_replace(char **argv, char *str, char *repl_char) {
     char *res = mx_strdup(*argv);
     char *repl = mx_strdup(repl_char);
-    
-    if(mx_get_substr_index(*argv, str) != -1) {
+
+    if (mx_get_substr_index(*argv, str) != -1) {
         mx_strdel(argv);
         *argv = mx_replace_substr(res, str, repl);
     }

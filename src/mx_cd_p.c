@@ -4,9 +4,9 @@ static char *get_back_dir_p(t_app *app) {
     char * real_path = NULL;
     char ** split_path = mx_strsplit(app->pwd_l, '/');
     int sum_strlen = 0;
-    app->dot_dir = !app->dd_slesh ? app->dot_dir - 1 : app->dot_dir;
 
-    if(mx_arr_len(split_path) <= app->dot_dir) {
+    app->dot_dir = !app->dd_slesh ? app->dot_dir - 1 : app->dot_dir;
+    if (mx_arr_len(split_path) <= app->dot_dir) {
         mx_del_strarr(&split_path);
         return NULL;
     }
@@ -25,20 +25,21 @@ static char *get_back_dir_p(t_app *app) {
 static char *check_path(char *argv[], t_app *app) {
     char *ch = NULL;
 
-    if(!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
+    if (!mx_strcmp(argv[app->cur_arg], ".") && !argv[app->cur_arg + 1])
         ch = mx_strdup(app->pwd_p);
     else if (app->in_pwd) {
-        if(!mx_strcmp(argv[app->cur_arg], "/tmp"))
+        if (!mx_strcmp(argv[app->cur_arg], "/tmp"))
             ch = mx_strdup(argv[app->cur_arg]);
         else {
-            ch = strndup(app->pwd_l,
-                strlen(app->pwd_l) - strlen(argv[app->cur_arg - 1]));
+            ch = strndup(app->pwd_l, strlen(app->pwd_l)
+                         - strlen(argv[app->cur_arg - 1]));
             ch = mx_strjoin(ch, argv[app->cur_arg]);
         }
     }
     else if (argv[app->cur_arg] && argv[app->cur_arg][0] != '.') 
         ch = mx_strdup(argv[app->cur_arg]);
-    else if (argv[app->cur_arg][0] == '.'  && mx_is_dot(argv[app->cur_arg], app) == 0) {
+    else if (argv[app->cur_arg][0] == '.'
+             && mx_is_dot(argv[app->cur_arg], app) == 0) {
         ch = get_back_dir_p(app);
         ch = ch == NULL ? mx_strdup("/") : ch;
     }

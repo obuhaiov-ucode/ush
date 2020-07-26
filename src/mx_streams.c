@@ -44,24 +44,24 @@ static void run_system_command(t_cmd *cmd, t_app *app) {
 }
 
 static void run_builtin_command(t_cmd *cmd, t_app *app) {
-        if (cmd->builtin == b_cd)
-            app->status = mx_cd_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_which)
-            app->status = mx_which(cmd->argv, app);
-        else if (cmd->builtin == b_echo)
-            app->status = mx_echo_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_pwd)
-            app->status = mx_pwd_builtin(cmd->argv, app);
-        else if (cmd->builtin == b_env)
-            app->status = mx_env_builtin(cmd->argv);
-        else if (cmd->builtin == b_export)
-            app->status = mx_builtin_export(app, cmd);
-        else if (cmd->builtin == b_unset)
-            app->status = mx_builtin_unset(cmd, app);
-        else if (cmd->builtin == b_exit)
-            mx_builtin_exit(cmd, app);
-        else
-            return;
+    if (cmd->builtin == b_cd)
+        app->status = mx_cd_builtin(cmd->argv, app);
+    else if (cmd->builtin == b_which)
+        app->status = mx_which(cmd->argv, app);
+    else if (cmd->builtin == b_echo)
+        app->status = mx_echo_builtin(cmd->argv, app);
+    else if (cmd->builtin == b_pwd)
+        app->status = mx_pwd_builtin(cmd->argv, app);
+    else if (cmd->builtin == b_env)
+        app->status = mx_env_builtin(cmd->argv);
+    else if (cmd->builtin == b_export)
+        app->status = mx_builtin_export(app, cmd);
+    else if (cmd->builtin == b_unset)
+        app->status = mx_builtin_unset(cmd, app);
+    else if (cmd->builtin == b_exit)
+        mx_builtin_exit(cmd, app);
+    else
+        return;
 }
 
 static void eval(t_app *app, t_cmd *cmd) {
@@ -81,7 +81,7 @@ static void eval(t_app *app, t_cmd *cmd) {
 
 int mx_streams(t_st *st, char **tokens, t_app *app) {
     t_cmd *cmd = malloc(sizeof(t_cmd));
-    
+
     if (mx_status_check(tokens, app)) {
         cmd->argc = 0;
         cmd->argv = tokens;

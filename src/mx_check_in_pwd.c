@@ -6,4 +6,3 @@ void mx_check_in_pwd(char *our, char *argv[], t_app *app) {
     else
         app->in_pwd = 0;
 }
-

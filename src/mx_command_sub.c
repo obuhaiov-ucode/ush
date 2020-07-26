@@ -77,6 +77,3 @@ char *mx_command_sub(t_st *st, char *cmd, char *begin, t_config* term) {
         cmd = mx_command_sub(st, cmd, NULL, term);
     return cmd;
 }
-
-
-
