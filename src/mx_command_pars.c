@@ -60,7 +60,6 @@ static int no_buf(char *c, int i, int n) {
 int mx_command_pars(t_st *st, char *c, char *main_c, t_config* term) {
     char **tokens = NULL;
 
-    printf("%s\n", c);
     c = cmd_del_spaces(c);
     c = mx_without_slash(c, NULL, 0, 0);
     main_c = strndup(c, strcspn(c, " \0"));

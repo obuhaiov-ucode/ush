@@ -31,8 +31,6 @@ void check_sound(char *out, t_app *app) {
 void echo_print_new_line(t_app *app, char *argv[]) {
     char c = 7;
 
-    // if (app->have_sub == true)
-    //     write(2, "HEREHERE\n", 9);
     if (app->echo_only_sound)
         write(1, &c, 1);
     if (!app->echo_flag_n)

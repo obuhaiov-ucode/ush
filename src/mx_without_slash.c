@@ -23,52 +23,55 @@ static int count_slash(char *c, int i, int n, int k) {
     return n;
 }
 
-static char *cycle_handler(char *del, int n, char tmp[1024]) {
-    char *res = NULL;
-
+int mx_get_start_pos(char *del, int n) {
     for (int i = 0; del[i] != '\0'; i++) {
-        if ((del[i + 1] == '"' || del[i + 1] == 39)
-            && (del[i] == ' ' || del[i + 2] == '\0'))
-            tmp[n++] = del[i++];
-        else
-            tmp[n++] = del[i];
-        }
-    res = mx_strndup(tmp, n);
-    mx_del_chararr(del);
-    return res;
+        if (del[i + 1] == del[n] && del[i] != '\\')
+            return i + 1;
+    }
+    return -1;
 }
 
-static char *midl_without(char *c, char *res, int n) {
-    char tmp[1024];
-    int k = mx_strlen(c) - 1;
+static char *cycle_handler(char *del, int n, char tmp[1024], int k) {
+    char *res = NULL;
+    int start = mx_get_start_pos(del, n);
 
-    if (c[k] == 39 || c[k] == '"') {
-        res = cycle_handler(c, n, tmp);
+    if (start > -1 && start != n) {
+        for (int i = 0; del[i] != '\0'; i++) {
+            if (start != i && n != i)
+                tmp[k++] = del[i];
+        }
+        res = mx_strndup(tmp, k);
+        mx_del_chararr(del);
     }
     else
-        return c;
+        return del;
     return res;
 }
 
-int mx_get_end_pos(char *del)
+
+int mx_get_end_pos(char *del) {
+    int n = mx_strlen(del) - 1;
+
+    for (; n > 0 ; n--) {
+        if ((del[n] == 39 || del[n] == '"')
+            && n > 0 && del[n - 1] != '\\')
+            return n;  
+    }
+    return -1;
+}
 
 static char *without_qoutes(char *del, char *c, char *res, int n) {
     char tmp[1024];
 
     if (del != NULL) {
-        n = mx_strlen(del) - 1;
-        //mx_get_end_pos(del);
-        if (del[n] == 39 || del[n] == '"') {
-            n = 0;
+        if ((n = mx_get_end_pos(del)) != -1) {
             memset(tmp, 0, 1024);
-            res = cycle_handler(del, n, tmp);
+            res = cycle_handler(del, n, tmp, 0);
         }
     }
-    else {
-        if (del != NULL)
-            res = midl_without(del, NULL, 0);
-        else if (c != NULL)
-            res = midl_without(c, NULL, 0);
+    else if ((n = mx_get_end_pos(c)) != -1) {
+        memset(tmp, 0, 1024);
+        res = cycle_handler(c, n, tmp, 0);
     }
     if (res != NULL)
         return res;
