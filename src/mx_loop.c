@@ -77,6 +77,8 @@ void mx_loop(char *c, int len, t_config* term, t_st *st) {
 
     if (len > 0)
         cmd = mx_strndup(c, len);
+    else
+        cmd = c; 
     if (cmd != NULL && mx_check_cmd(cmd, 0)) {
         cmd = mx_shlvl_check(cmd, 0, NULL);
         st->cmd = cmd;
@@ -87,8 +89,7 @@ void mx_loop(char *c, int len, t_config* term, t_st *st) {
         if (strstr(cmd, "cat") && (int)strcspn(cmd, "|") == mx_strlen(cmd))
             run_cat(st, cmd, NULL, 0);
         else {
-            st->cmd = cmd;
-            st->commands = mx_split_line(st->cmd, 64, 0, 0);
+            st->commands = mx_split_line(cmd, 64, 0, 0);
             st->status = mx_simple_commands(st, st->commands, term);
         }
     }

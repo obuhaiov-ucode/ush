@@ -12,13 +12,12 @@ static void pipe_or_file(t_config *term, char *file) {
     else
         term->cmd = mx_get_argv(file, NULL);
     mx_loop(term->cmd, 0, term, (t_st *)term->st);
-    mx_del_chararr(term->cmd);
 }
 
 int main(int argc, char **argv, char **env) {
     t_config *term = mx_config_init();
     t_hist **hist = mx_hist_init();
-    
+
     term->st = malloc(sizeof(t_st));
     mx_init_struct((t_st *)term->st, env);
     term->app = malloc(sizeof(t_app));

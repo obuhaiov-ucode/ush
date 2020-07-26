@@ -38,7 +38,6 @@ void echo_print_new_line(t_app *app, char *argv[]) {
         write(1, "\n", 1);
     if(app->echo_flag_n && (argv[app->st] 
         && mx_strcmp(argv[app->st], "\\a") != 0)) {
-            write(2,argv[app->st], mx_strlen(argv[app->st]));
         write(1, "\x1b[30m\x1b[107m", strlen("\x1b[30m\x1b[107m"));
         write(1, "%", 1);
         write(1, "\x1b[0m", strlen("\x1b[0m"));

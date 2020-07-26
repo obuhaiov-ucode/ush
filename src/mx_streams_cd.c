@@ -52,7 +52,6 @@ static int midl_pars_cd(char *c, t_st *st, char **tokens) {
     return st->i;
 }
 
-
 char **mx_streams_cd(char *c, t_st *st, int bufsize, char *main_c) {
     char **tokens = malloc(bufsize * sizeof(char*));
     st->i = strcspn(c, " \0");
